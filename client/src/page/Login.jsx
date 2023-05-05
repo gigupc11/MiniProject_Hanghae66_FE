@@ -3,19 +3,55 @@ import styled from "styled-components";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import logo from "../assets/logo.png"
+import useInput from "../hooks/useInput";
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 function Login() {
+  const [username, handleNameChange, resetName] = useInput('');
+  const [password, handlePasswordChange, resetPassword] = useInput('');
+
+  const handleSubmitButtonClick = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post('/auth/login', {
+        username,
+        userpassword: password,
+      }, {
+        headers: {
+        },
+      });
+
+      const { token } = response.data;
+      Cookies.set('token', token, { expires: 1 / 24 });
+      alert('로그인에 성공했습니다!');
+      // dispatch(setIsAuthenticated(true));
+      // dispatch(setUserId(id));
+      // navigate(`/`)
+    } catch (error) {
+      console.error('로그인 오류:', error.response.data);
+      alert(JSON.stringify(error.response.data));
+      console.log(username, password)
+    }
+  }
+
   return (
     <StLayout>
       <StLoginBox>
-        <Stlogo src={logo} alt="logo"/>
+        <Stlogo src={logo} alt="logo" />
         <StInputbox>
-          <Input placeholder = {"아이디를 입력해주세요"} size = "large"/>
-          <Input placeholder = {"비밀번호를 입력해주세요"} size = "large"/>
+          <Input
+            value={username}
+            onChange={handleNameChange}
+            placeholder={"아이디를 입력해주세요"} size="large" />
+          <Input
+            value={password}
+            onChange={handlePasswordChange}
+            placeholder={"비밀번호를 입력해주세요"} type="password" size="large" />
         </StInputbox>
         <StButtonbox>
-          <Button size = "large">회원가입</Button>
-          <Button size = "large">로그인</Button>
+          <Button size="large">회원가입</Button>
+          <Button onClick={(event) => { handleSubmitButtonClick(event) }} size="large">로그인</Button>
         </StButtonbox>
       </StLoginBox>
     </StLayout>
