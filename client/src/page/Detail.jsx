@@ -74,7 +74,7 @@ const CommentWrap = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px ;
+    padding: 10px 0 ;
     gap:10px;
 `
 
@@ -82,7 +82,7 @@ const CommentList = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 10px 0;
 `
 const TextWrap = styled.div`
     display: flex;
@@ -121,7 +121,7 @@ function Detail() {
                                     용내용내용내용내용내용내용내용내용내용</h4>
                             </ContentsWrap>
                             <CommentWrap>
-                                덧글 <Input size="custom" height={"30px"} width={"470px"} /><Button >입력</Button>
+                                덧글 <Input size="custom" height={"30px"} width={"490px"} /><Button >입력</Button>
                             </CommentWrap>
                             <CommentList>
                                 <CommentList>
