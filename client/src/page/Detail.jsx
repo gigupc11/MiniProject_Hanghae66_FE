@@ -66,6 +66,8 @@ function Detail() {
             <PostSection>
                 <DetailBox>
                     <BtnWrap>
+                        조회수
+                        좋아요
                         <BtnRed>수정</BtnRed>
                         <BtnRed>삭제</BtnRed>
                     </BtnWrap>
