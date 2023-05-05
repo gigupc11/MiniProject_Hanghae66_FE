@@ -33,7 +33,7 @@ const StButton = styled.button`
     color: ${({ hovercolor }) => hovercolor};
   }
 
-    ${({ size }) => {
+  ${({ size }) => {
     switch (size) {
       case "large":
         return css`
@@ -46,6 +46,13 @@ const StButton = styled.button`
           width: 118px;
           height: 46px;
           font-size: 14px;
+        `;
+      case "custom":
+        return css`
+          width: 220px;
+          height: 58px;
+          font-size: 14px;
+          background-color: gray;
         `;
 
       default:

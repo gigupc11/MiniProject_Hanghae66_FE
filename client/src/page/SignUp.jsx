@@ -1,44 +1,68 @@
 import React from "react";
 import styled from "styled-components";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import Select from "../components/Select";
 
 function SignUp() {
   return (
     <StLayout>
-      <StLoginBox>
-        회원가입
+      <StsignBox>
+        <Stheadtext>회원가입</Stheadtext>
         <StInputbox>
+            <StIDtext>아이디</StIDtext>
+          <StIdbox>
+            <Input size="medium" placeholder = "아이디는 4 ~ 12자 이내로 입력해주세요"/>
+            <Button size="medium">중복체크</Button>
+          </StIdbox>
           <div>
-            <div>아이디</div>
-            <input />
-            <button>중복체크</button>
+            <Sttext>패스워드</Sttext>
+            <Input size="custom" width="460px" height="46px" fsize ="16px" placeholder = "비밀번호는 4 ~ 12자 이내로 입력해주세요" />
           </div>
           <div>
-            <div>패스워드</div>
-            <input />
+            <Sttext>패스워드 확인</Sttext>
+            <Input size="custom" width="460px" height="46px" fsize ="16px" placeholder = "비밀번호를 확인해주세요"/>
           </div>
           <div>
-            <div>패스워드 확인</div>
-            <input />
+            <Sttext>기수</Sttext>
+            <Select.SelectboxA/>
           </div>
           <div>
-            <div>기수</div>
-            <select />
-          </div>
-          <div>
-            <div>주특기</div>
-            <select />
+            <Sttext>주특기</Sttext>
+            <Select.SelectboxB />
           </div>
         </StInputbox>
-        <div>
-          <button>취소</button>
-          <button>가입완료</button>
-        </div>
-      </StLoginBox>
+        <StButtonbox>
+          <Button size="custom">취소</Button>
+          <Button size="large">가입완료</Button>
+        </StButtonbox>
+      </StsignBox>
     </StLayout>
   );
 }
 
 export default SignUp;
+
+const StIdbox = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const StIDtext = styled.div`
+  font-size: 12px;
+  font-weight: 700;
+  transform: translateY(14px);
+`
+
+const Sttext = styled.div`
+  font-size: 12px;
+  font-weight: 700;
+`
+
+const Stheadtext = styled.p`
+  font-size: 40px;
+  font-weight: 700;
+`;
 
 const StLayout = styled.div`
   display: flex;
@@ -47,10 +71,12 @@ const StLayout = styled.div`
   width: 100%;
   height: 100vh;
 `;
-const StLoginBox = styled.div`
+const StsignBox = styled.div`
   width: 640px;
   height: 742px;
   display: flex;
+  border-radius: 18px;
+  gap: 38px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -62,3 +88,9 @@ const StInputbox = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
+
+const StButtonbox = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+`
