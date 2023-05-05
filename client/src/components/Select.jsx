@@ -31,6 +31,7 @@ const SelectboxA = ({setUserYear}) => {
       border: "1px solid black",
       borderRadius: "10px",
       height: "46px",
+      paddingleft: "10px"
     }),
     option:(styles, { data, isDisabled, isFocused, isSelected }) => {
         // const color = chroma(data.color);
@@ -38,7 +39,7 @@ const SelectboxA = ({setUserYear}) => {
         return {
           ...styles,
           backgroundColor: isFocused ? "red" : "null",
-          color: "#333333"
+          color: isFocused ? "white" : "#333333",
         };
       },
     menu: (provided) => ({
@@ -95,7 +96,7 @@ const SelectboxB = ({setUserSkill}) => {
           return {
             ...styles,
             backgroundColor: isFocused ? "red" : "null",
-            color: "#333333"
+            color: isFocused ? "white" : "#333333",
           };
         },
       menu: (provided) => ({
@@ -152,13 +153,18 @@ const SelectboxB = ({setUserSkill}) => {
           return {
             ...styles,
             backgroundColor: isFocused ? "red" : "null",
-            color: "#333333"
+            color: isFocused ? "white" : "#333333",
+            fontweight : "700",
+
           };
         },
       menu: (provided) => ({
         ...provided,
         border: "1px solid #2b2d42",
         borderRadius: "8px",
+        width : "270px",
+        fontweight : "700"
+
       }),
     };
   

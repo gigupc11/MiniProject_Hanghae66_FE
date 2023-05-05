@@ -3,7 +3,7 @@ import Login from "../page/Login";
 import SignUp from "../page/SignUp";
 import Main from "../page/Main";
 import Detail from "../page/Detail";
-import Write from "../page/Write";
+import Write from "../components/Write";
 
 
 const Router = () => {
