@@ -11,7 +11,7 @@ const StInput = styled.input`
   border-radius: 10px;
   font-weight: 600;
   padding: 15px;
-  border: 1px solid black;
+  border: 1px solid gray;
 
   ${({ size }) => {
     switch (size) {

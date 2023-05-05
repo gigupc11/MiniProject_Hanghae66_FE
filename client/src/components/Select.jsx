@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Select from "react-select";
 
-const SelectboxA = () => {
+const SelectboxA = ({setUserYear}) => {
   const [choice, setChoice] = useState(0);
 
   const onChange = (value) => {
     // 콜백 함수 정의
   };
+
 
   const options = [
     { value: "14", label: "14기" },
@@ -33,7 +34,7 @@ const SelectboxA = () => {
     }),
     option:(styles, { data, isDisabled, isFocused, isSelected }) => {
         // const color = chroma(data.color);
-        console.log({ data, isDisabled, isFocused, isSelected });
+        // console.log({ data, isDisabled, isFocused, isSelected });
         return {
           ...styles,
           backgroundColor: isFocused ? "red" : "null",
@@ -56,8 +57,12 @@ const SelectboxA = () => {
           return op.value === choice;
         })}
         placeholder="기수를 선택해주세요."
-        onChange={(value) => {
-          onChange(value.value);
+        // onChange={(value) => {
+        //   onChange(value.value);
+        // }}
+        onChange={(selectedOption) => {
+          setChoice(selectedOption.value);
+          setUserYear(selectedOption.value);
         }}
         options={options}
       />
@@ -65,7 +70,7 @@ const SelectboxA = () => {
   );
 };
 
-const SelectboxB = () => {
+const SelectboxB = ({setUserSkill}) => {
     const [choice, setChoice] = useState(0);
   
     const onChange = (value) => {
@@ -86,7 +91,7 @@ const SelectboxB = () => {
       }),
       option:(styles, { data, isDisabled, isFocused, isSelected }) => {
           // const color = chroma(data.color);
-          console.log({ data, isDisabled, isFocused, isSelected });
+          // console.log({ data, isDisabled, isFocused, isSelected });
           return {
             ...styles,
             backgroundColor: isFocused ? "red" : "null",
@@ -109,8 +114,12 @@ const SelectboxB = () => {
             return op.value === choice;
           })}
           placeholder="주특기를 선택해주세요."
-          onChange={(value) => {
-            onChange(value.value);
+          // onChange={(value) => {
+          //   onChange(value.value);
+          // }}
+          onChange={(selectedOption) => {
+            setChoice(selectedOption.value);
+            setUserSkill(selectedOption.value);
           }}
           options={options}
         />
