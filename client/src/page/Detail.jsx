@@ -2,6 +2,7 @@ import React from 'react'
 import Header from './Header'
 import styled from 'styled-components'
 import Button from "../components/Button";
+import Input from "../components/Input";
 
 const Container = styled.div`
     display: flex;
@@ -22,33 +23,35 @@ const PostSection = styled.div`
     padding-top: 70px;
     min-height: 100vh;
 `
-const BtnRed = styled.button`
+const DetailBox2 = styled.div`
     background-color: #F50000;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    width: 100px;
-    height: 30px;
-    font-size: 15px;
-    padding: 10;
-    margin: 10;
-`
+    border-radius: 20px 20px 0 0;
+    width: 70%;
+    height: 50px;
+    box-shadow: 0 0 -10px rgba(0, 0, 0, 0.5); /* 원래 그림자 */
+    overflow: hidden; /* 필요한 경우 오버플로우 숨김 */
+    /* display: flex; */
+    position: absolute;
+    flex-direction: column;
+    z-index: 12;
+`;
 
 const DetailBox = styled.div`
     background-color: #fff;
-    border-radius: 2px solid black;
-    width: 500px;
-    height: 500px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* 그림자 추가 */
+    border-radius: 20px;
+    width: 70%;
+    height: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
     overflow: hidden; /* 필요한 경우 오버플로우 숨김 */
-    justify-content: center;
-    align-items: center;
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px;
+    padding: 70px 30px;
+    z-index: 11;
 `
 
 const InputWrap = styled.div`
-    width: 400px;
+    width: auto;
     justify-content: center;
     align-items: center;
     display: flex;
@@ -56,15 +59,48 @@ const InputWrap = styled.div`
 `
 
 const BtnWrap = styled.div`
-    position: absolute;
-    top:12%;
-    right: 27%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    `
+
+const ContentsWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0px;
 `
+
+const CommentWrap = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px ;
+    gap:10px;
+`
+
+const CommentList = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+`
+const TextWrap = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    padding: 13px 30px ;
+    font-weight: 900;
+`
+
 function Detail() {
     return (
         <Container>
             <Header />
             <PostSection>
+                <DetailBox2>
+                    <TextWrap>게시글</TextWrap>
+                </DetailBox2>
                 <DetailBox>
                     <BtnWrap>
                         조회수
@@ -73,13 +109,31 @@ function Detail() {
                         <Button>삭제</Button>
                     </BtnWrap>
                     <InputWrap>
-                        {/* 제목 <input />
-                        내용 <input /> */}
 
-                    <div class="title">제목</div> 
-                    <div class="content">내용</div> 
-                    덧글 <input /> <Button>입력</Button>
-                    <div class="comment">덧글리스트</div>  
+                        <div>
+                            {/* <ContentsWrap>
+                                제목 <Input size="custom" height={"30px"} width={"auto"} />
+                                내용 <Input size="custom" height={"300px"} width={"auto"} />
+                            </ContentsWrap> */}
+                            <ContentsWrap>
+                                <h2>제목</h2> <br />
+                                <h4 class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내
+                                    용내용내용내용내용내용내용내용내용내용</h4>
+                            </ContentsWrap>
+                            <CommentWrap>
+                                덧글 <Input size="custom" height={"30px"} width={"470px"} /><Button >입력</Button>
+                            </CommentWrap>
+                            <CommentList>
+                                <CommentList>
+                                    <div>덧글작성자</div>
+                                    <div>덧글내용</div>
+                                </CommentList>
+                                <CommentList>
+                                    <Button bc={"lightgray"} hoverbc={"gray"}>수정</Button>
+                                    <Button bc={"lightgray"} hoverbc={"gray"}>삭제</Button>
+                                </CommentList>
+                            </CommentList>
+                        </div>
                     </InputWrap>
                 </DetailBox>
             </PostSection>

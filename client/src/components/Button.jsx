@@ -8,11 +8,11 @@ const ButtonFrame = ({ children, ...restProps }) => {
 const Button = (props) => {
   return (
     <ButtonFrame
-      {...props}
-      color="white"
-      bc="#F50000"
-      hoverbc="#770000"
-      hovercolor="white"
+    {...props}
+    color={props.color || "white"}
+    bc={props.bc || "#F50000"}
+    hoverbc={props.hoverbc || "#770000"}
+    hovercolor={props.hovercolor || "white"}
     />
   );
 };
