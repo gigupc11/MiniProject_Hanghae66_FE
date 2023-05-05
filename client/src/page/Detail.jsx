@@ -71,11 +71,12 @@ function Detail() {
                     </BtnWrap>
                     <InputWrap>
                         {/* 제목 <input />
-                        내용 <input />
-                        덧글 <input /> */}
+                        내용 <input /> */}
+
                     <div class="title">제목</div> 
                     <div class="content">내용</div> 
-                    <div class="comment">덧글</div>  
+                    덧글 <input /> <BtnRed>입력</BtnRed>
+                    <div class="comment">덧글리스트</div>  
                     </InputWrap>
                 </DetailBox>
             </PostSection>

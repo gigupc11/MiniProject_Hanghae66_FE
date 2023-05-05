@@ -64,7 +64,11 @@ function Main() {
                             <span>닉네임1</span> &nbsp;
                             <span class="title">제목1</span>
                         </div>
-                        <span>아이콘</span>
+                        <div>
+                            <span>조회수</span>
+                            <span>좋아요</span>
+                            <span>코멘트</span>
+                        </div>
                     </TitleBox>
                     <br />
                     <TitleBox class="title-box">
@@ -72,7 +76,11 @@ function Main() {
                             <span>닉네임1</span> &nbsp;
                             <span class="title">제목1</span>
                         </div>
-                        <span>아이콘</span>
+                        <div>
+                            <span>조회수</span>
+                            <span>좋아요</span>
+                            <span>코멘트</span>
+                        </div>
                     </TitleBox>
                     <br />
                     <TitleBox class="title-box">
@@ -80,7 +88,11 @@ function Main() {
                             <span>닉네임1</span> &nbsp;
                             <span class="title">제목1</span>
                         </div>
-                        <span>아이콘</span>
+                        <div>
+                            <span>조회수</span>
+                            <span>좋아요</span>
+                            <span>코멘트</span>
+                        </div>
                     </TitleBox>
                 </div>
             </PostSection>
