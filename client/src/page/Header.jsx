@@ -12,7 +12,7 @@ const HeaderBar = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 15%;
+    padding: 15px 5%;
     background: #000;
 `
 

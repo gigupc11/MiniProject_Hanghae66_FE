@@ -7,11 +7,12 @@ import Input from "../components/Input";
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    max-width: 1000px;
-    min-width: 1000px;
+    max-width: 1200px;
+    min-width: 1200px;
     margin: 0 auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); 
     overflow: hidden;
+    height: 100vh;
 `
 const PostSection = styled.div`
     width: 100%;
@@ -19,26 +20,27 @@ const PostSection = styled.div`
     flex-direction: column;
     display: flex;
     align-items: center;
-    gap: 2rem;
-    padding-top: 70px;
-    min-height: 100vh;
+    justify-content: center;
+    height: 100vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
 `
 const DetailBox2 = styled.div`
     background-color: #F50000;
     border-radius: 20px 20px 0 0;
     width: 70%;
     height: 50px;
-    box-shadow: 0 0 -10px rgba(0, 0, 0, 0.5); /* 원래 그림자 */
+    box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 7px;
     overflow: hidden; /* 필요한 경우 오버플로우 숨김 */
     /* display: flex; */
-    position: absolute;
+    /* position: absolute; */
     flex-direction: column;
     z-index: 12;
 `;
 
 const DetailBox = styled.div`
+position: relative;
     background-color: #fff;
-    border-radius: 20px;
+    border-radius: 0 0 20px 20px;
     width: 70%;
     height: auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
@@ -93,11 +95,16 @@ const TextWrap = styled.div`
     font-weight: 900;
 `
 
+const Box = styled.div`
+
+`
+
 function Detail() {
     return (
         <Container>
             <Header />
             <PostSection>
+
                 <DetailBox2>
                     <TextWrap>게시글</TextWrap>
                 </DetailBox2>
@@ -121,7 +128,7 @@ function Detail() {
                                     용내용내용내용내용내용내용내용내용내용</h4>
                             </ContentsWrap>
                             <CommentWrap>
-                                덧글 <Input size="custom" height={"30px"} width={"490px"} /><Button >입력</Button>
+                                덧글 <Input size="custom" height={"30px"} width={"620px"} /><Button >입력</Button>
                             </CommentWrap>
                             <CommentList>
                                 <CommentList>
@@ -129,13 +136,14 @@ function Detail() {
                                     <div>덧글내용</div>
                                 </CommentList>
                                 <CommentList>
-                                    <Button bc={"lightgray"} hoverbc={"gray"}>수정</Button>
-                                    <Button bc={"lightgray"} hoverbc={"gray"}>삭제</Button>
+                                    <Button bc={"white"} hoverbc={"gray"} color={"lightgray"}>수정</Button>
+                                    <Button bc={"white"} hoverbc={"gray"} color={"lightgray"}>삭제</Button>
                                 </CommentList>
                             </CommentList>
                         </div>
                     </InputWrap>
                 </DetailBox>
+
             </PostSection>
         </Container>
     )
