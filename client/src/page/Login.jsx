@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import Button from "../components/Button";
+
 
 function Login() {
   return (
@@ -11,8 +13,8 @@ function Login() {
           <input />
         </StInputbox>
         <div>
-          <button>회원가입</button>
-          <button>로그인</button>
+          <Button size = "large">회원가입</Button>
+          <Button size = "large">로그인</Button>
         </div>
       </StLoginBox>
     </StLayout>
