@@ -25,6 +25,8 @@ function Login() {
       const { token } = response.data;
       Cookies.set('token', token, { expires: 1 / 24 });
       alert('로그인에 성공했습니다!');
+      resetName("")
+      resetPassword("")
       // dispatch(setIsAuthenticated(true));
       // dispatch(setUserId(id));
       // navigate(`/`)
