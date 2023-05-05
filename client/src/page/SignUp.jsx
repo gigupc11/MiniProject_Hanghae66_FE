@@ -23,7 +23,7 @@ function SignUp() {
     try {
       const response = await axios.post('/auth/signup', {
         username,
-        password,
+        userpassword: password,
         userYear,
         userSkill,
         role:userType,
