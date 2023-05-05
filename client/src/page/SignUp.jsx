@@ -11,9 +11,12 @@ function SignUp() {
   const [password, setPassword] = useState('');
   const [userYear, setUserYear] = useState('');
   const [userSkill, setUserSkill] = useState('');
+  const [userType, setUserType] = useState('');
 
-  console.log(userYear, userSkill)
-
+  console.log(userType)
+  const handleChange = (event) => {
+    setUserType(event.target.value);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -23,6 +26,7 @@ function SignUp() {
         password,
         userYear,
         userSkill,
+        role:userType,
       }, {
         headers: {
         },
@@ -74,11 +78,36 @@ function SignUp() {
             <Sttext>주특기</Sttext>
             <Select.SelectboxB setUserSkill={setUserSkill} />
           </div>
+          <StButtonbox>
+        <div>
+        <input
+          type="radio"
+          id="admin"
+          name="userType"
+          value="admin"
+          // checked={userType === 'admin'}
+          onChange={handleChange}
+        />
+        <label htmlFor="admin">Admin</label>
+      </div>
+      <div>
+        <input
+          type="radio"
+          id="user"
+          name="userType"
+          value="user"
+          // checked={userType === 'user'}
+          onChange={handleChange}
+        />
+        <label htmlFor="user">User</label>
+      </div>
+      </StButtonbox>
         </StInputbox>
         <StButtonbox>
           <Button size="custom">취소</Button>
           <Button onClick={handleSubmit} size="large">가입완료</Button>
         </StButtonbox>
+
       </StsignBox>
     </StLayout>
   );
