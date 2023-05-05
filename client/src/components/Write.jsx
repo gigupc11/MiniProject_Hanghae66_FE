@@ -1,10 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../page/Header";
 import styled from "styled-components";
 import Button from "./Button";
 import Input from "./Input";
 import Selectbox from "./Select";
+import useInput from "../hooks/useInput";
+import { useQueryClient } from "react-query";
+import { useMutation } from "react-query";
+import { addPosts } from "../api/post";
 
+function Write() {
+  const [title, handleTitleChange, resetTitle] = useInput('');
+  const [content, handleContentChange, resetContent] = useInput('');
+  const [userSkill, setUserSkill] = useState('');
+
+  console.log(title,content,userSkill)
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(addPosts, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("posts")
+      console.log("성공")
+    }
+  })
+
+  const handleSubmitButtonClick = (event) => {
+    event.preventDefault();
+
+    const addPost = {
+      title,
+      contents: content,
+      userSkill,
+    };
+
+    mutation.mutate(addPost);
+    resetTitle();
+    resetContent();
+
+  }
+
+  return (
+    <Container>
+      <Modalbox>
+        <DetailBox2>
+          <TextWrap>게시글작성</TextWrap>
+        </DetailBox2>
+        <InputWrap>
+          <div>
+            <ContentsWrap>
+              카테고리
+              <div>
+                <Selectbox.SelectboxB setUserSkill={setUserSkill} />
+              </div>
+              제목
+              <div>
+                <Input 
+                value={title}
+                onChange={handleTitleChange}
+                placeholder = "제목을 입력해주세요" size="custom" width ="100%"/>
+              </div>
+              내용
+              <div>
+                <Input 
+                value={content}
+                onChange={handleContentChange}
+                size="custom" width ="100%" height ="440px"/>
+              </div>
+            </ContentsWrap>
+            <WriteBtnWrap>
+              <Button onClick={(event)=>handleSubmitButtonClick(event)} size ="medium">작성완료</Button>
+            </WriteBtnWrap>
+          </div>
+        </InputWrap>
+      </Modalbox>
+    </Container>
+  );
+}
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -59,38 +130,5 @@ const Modalbox = styled.div`
   border-radius: 20px 20px 20px 20px;
   overflow: hidden; /*필요한 경우 오버플로우 숨김 */
 `;
-
-function Write() {
-  return (
-    <Container>
-      <Modalbox>
-        <DetailBox2>
-          <TextWrap>게시글작성</TextWrap>
-        </DetailBox2>
-        <InputWrap>
-          <div>
-            <ContentsWrap>
-              카테고리
-              <div>
-                <Selectbox.SelectboxC />
-              </div>
-              제목
-              <div>
-                <Input placeholder = "제목을 입력해주세요" size="custom" width ="100%"/>
-              </div>
-              내용
-              <div>
-                <Input size="custom" width ="100%" height ="440px"/>
-              </div>
-            </ContentsWrap>
-            <WriteBtnWrap>
-              <Button size ="medium">작성완료</Button>
-            </WriteBtnWrap>
-          </div>
-        </InputWrap>
-      </Modalbox>
-    </Container>
-  );
-}
 
 export default Write;

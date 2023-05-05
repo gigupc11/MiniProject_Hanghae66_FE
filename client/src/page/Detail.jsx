@@ -1,8 +1,163 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import styled from "styled-components";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import { useQuery, useQueryClient } from 'react-query';
+import { useParams } from 'react-router-dom';
+import { useMutation } from 'react-query';
+import { getPosts, deletePost, updatePost } from "../api/post";
+import { Link, useNavigate } from "react-router-dom";
+
+// const
+
+function Detail() {
+
+
+    // 이전 컴포넌트에서 넘어온 parameter를 조회
+    const params = useParams();
+    // 리액트 쿼리 관련 코드
+    const queryClient = useQueryClient();
+    
+    const navigate = useNavigate();
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [update, setUpdate] = useState(false);
+
+    const deleteMutation = useMutation(deletePost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts")
+            console.log("성공")
+            navigate(-1)
+        }
+    })
+    const updateMutation = useMutation(updatePost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts")
+            console.log("성공")
+            navigate(-1)
+        }
+    })
+
+    const { isLoading, isError, data } = useQuery("posts", getPosts);
+
+    if (isLoading) {
+        return <h1>로딩중</h1>
+    }
+
+    if (isError) {
+        return <h1>오류가 발생하였습니다</h1>
+    }
+
+    const filteredData = data.filter(item => item.id === parseInt(params.id));
+
+    const oldTitle = filteredData[0].title
+    const oldContent = filteredData[0].content
+
+    const handleDeleteButtonClick = (event) => {
+        event.preventDefault();
+        const postId = filteredData[0].id
+        deleteMutation.mutate(parseInt(postId))
+    }
+
+    const handleSubmitButtonClick = (event) => {
+        event.preventDefault();
+        const postId = parseInt(filteredData[0].id)
+
+        const updatedPost = {
+            title,
+            content,
+        };
+        updateMutation.mutate({ postId, updatedPost });
+    }
+    return (
+        <Container>
+            <Header />
+            <PostSection>
+                <DetailBox2>
+                    <TextWrap>게시글</TextWrap>
+                </DetailBox2>
+                <DetailBox>
+                    <BtnWrap>
+                        {update ?
+                        <Sttitle>
+                        제목 <Input
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                        </Sttitle> :
+                        <Sttitle>{oldTitle}</Sttitle>}
+
+                        <StView>
+                            <span>5View</span>
+                            <span>
+                                <LikeBtn>❤️</LikeBtn> 10
+                            </span>
+                        </StView>
+                        <Button onClick={()=>setUpdate(true)}>수정</Button>
+                        <Button onClick={handleSubmitButtonClick}>수정완료</Button>
+                        <Button onClick={handleDeleteButtonClick}>삭제</Button>
+                    </BtnWrap>
+                    <InputWrap>
+                        <div>
+                            <ContentsWrap>
+                                {update ? 
+                                    <Input
+                                    value={content}
+                                    onChange={(e) => setContent(e.tartget.value)}
+                                /> :
+                                <h4 class="content">{oldContent}</h4> }
+                            </ContentsWrap>
+                            <CommentWrap>
+                                <StText>Comment</StText>
+                                <Input size="custom" height={"30px"} width={"580px"} />
+                                <Button>입력</Button>
+                            </CommentWrap>
+                            <div>
+                                <CommentBox>
+                                    <UserIDLine>
+                                        <StText>14th Spring u*****</StText>
+                                    </UserIDLine>
+                                    <CommentLine>
+                                        <Stcommentbox>짧은 댓글</Stcommentbox>
+                                    </CommentLine>
+                                    <ButtonLine>
+                                        <Stbtn>수정</Stbtn>
+                                        <Stbtn>삭제</Stbtn>
+                                    </ButtonLine>
+                                </CommentBox>
+                                <CommentBox>
+                                    <UserIDLine>
+                                        <StText>14th React u*****</StText>
+                                    </UserIDLine>
+                                    <CommentLine>
+                                        <Stcommentbox>긴댓글을을을을을을을을ㅇ릉을을을을을을ㅇ릉을을을을을을ㅇ릉을을을ㅇ릉릉ㄹ</Stcommentbox>
+                                    </CommentLine>
+                                    <ButtonLine>
+                                        <Stbtn>수정</Stbtn>
+                                        <Stbtn>삭제</Stbtn>
+                                    </ButtonLine>
+                                </CommentBox>
+                                <CommentBox>
+                                    <UserIDLine>
+                                        <StText>14th Node.js u*****</StText>
+                                    </UserIDLine>
+                                    <CommentLine>
+                                        <Stcommentbox>적당한 댓글 길이 인건가요</Stcommentbox>
+                                    </CommentLine>
+                                    <ButtonLine>
+                                        <Stbtn>수정</Stbtn>
+                                        <Stbtn>삭제</Stbtn>
+                                    </ButtonLine>
+                                </CommentBox>
+                            </div>
+                        </div>
+                    </InputWrap>
+                </DetailBox>
+            </PostSection>
+        </Container>
+    );
+}
 
 const Container = styled.div`
   display: flex;
@@ -155,86 +310,4 @@ const Stcommentbox = styled.div`
   width: 500px;
   font-weight: 700;
 `;
-
-// const
-
-function Detail() {
-  return (
-    <Container>
-      <Header />
-      <PostSection>
-        <DetailBox2>
-          <TextWrap>게시글</TextWrap>
-        </DetailBox2>
-        <DetailBox>
-          <BtnWrap>
-            <Sttitle>여기에 제목이 들어갑니다</Sttitle>
-            <StView>
-              <span>5View</span>
-              <span>
-                <LikeBtn>❤️</LikeBtn> 10
-              </span>
-            </StView>
-            <Button>수정</Button>
-            <Button>삭제</Button>
-          </BtnWrap>
-          <InputWrap>
-            <div>
-              <ContentsWrap>
-                <h4 class="content">
-                  내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내
-                  용내용내용내용내용내용내용내용내용내용
-                </h4>
-              </ContentsWrap>
-              <CommentWrap>
-                <StText>Comment</StText>
-                <Input size="custom" height={"30px"} width={"580px"} />
-                <Button>입력</Button>
-              </CommentWrap>
-              <div>
-                <CommentBox>
-                  <UserIDLine>
-                    <StText>14th Spring u*****</StText>
-                  </UserIDLine>
-                  <CommentLine>
-                    <Stcommentbox>짧은 댓글</Stcommentbox>
-                  </CommentLine>
-                  <ButtonLine>
-                    <Stbtn>수정</Stbtn>
-                    <Stbtn>삭제</Stbtn>
-                  </ButtonLine>
-                </CommentBox>
-                <CommentBox>
-                  <UserIDLine>
-                    <StText>14th React u*****</StText>
-                  </UserIDLine>
-                  <CommentLine>
-                    <Stcommentbox>긴댓글을을을을을을을을ㅇ릉을을을을을을ㅇ릉을을을을을을ㅇ릉을을을ㅇ릉릉ㄹ</Stcommentbox>
-                  </CommentLine>
-                  <ButtonLine>
-                    <Stbtn>수정</Stbtn>
-                    <Stbtn>삭제</Stbtn>
-                  </ButtonLine>
-                </CommentBox>
-                <CommentBox>
-                  <UserIDLine>
-                    <StText>14th Node.js u*****</StText>
-                  </UserIDLine>
-                  <CommentLine>
-                    <Stcommentbox>적당한 댓글 길이 인건가요</Stcommentbox>
-                  </CommentLine>
-                  <ButtonLine>
-                    <Stbtn>수정</Stbtn>
-                    <Stbtn>삭제</Stbtn>
-                  </ButtonLine>
-                </CommentBox>
-              </div>
-            </div>
-          </InputWrap>
-        </DetailBox>
-      </PostSection>
-    </Container>
-  );
-}
-
 export default Detail;

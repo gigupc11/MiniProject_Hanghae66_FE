@@ -2,7 +2,84 @@ import React from 'react'
 import Header from './Header'
 import styled from 'styled-components'
 import Button from "../components/Button";
+import { getPosts } from '../api/post';
+import { useQuery } from "react-query";
+import { Link, useNavigate } from "react-router-dom";
 
+function Main() {
+    const navigate = useNavigate();
+
+    const { isLoading, isError, data } = useQuery("posts", getPosts);
+
+    if (isLoading) {
+        return <h1>로딩중</h1>
+    }
+
+    if (isError) {
+        return <h1>오류가 발생하였습니다</h1>
+    }
+
+    const handleDetailPageLinkClick = (id) => {
+        navigate(`/detail/${id}`);
+    };
+
+    return (
+        <Container>
+            <Header />
+            <PostSection>
+                <div class="left-align">
+                    <div>
+                        <Button>react</Button>
+                        <Button>node.js</Button>
+                        <Button>spring</Button>
+                    </div>
+                </div>
+                <div class="posts-box">
+                    {data.map((post) => {
+                        return (
+                            <TitleBox onClick={()=>handleDetailPageLinkClick(post.id)} class="title-box">
+                                <div>
+                                    <span>{post.id}</span> &nbsp;
+                                    <span class="title">{post.title}</span>
+                                </div>
+                                <div>
+                                    <span>조회수</span>
+                                    <span>좋아요</span>
+                                    <span>코멘트</span>
+                                </div>
+                            </TitleBox>
+                        )
+                    })
+                    }
+                    <br />
+                    {/* <TitleBox class="title-box">
+                        <div>
+                            <span>닉네임1</span> &nbsp;
+                            <span class="title">제목1</span>
+                        </div>
+                        <div>
+                            <span>조회수</span>
+                            <span>좋아요</span>
+                            <span>코멘트</span>
+                        </div>
+                    </TitleBox>
+                    <br />
+                    <TitleBox class="title-box">
+                        <div>
+                            <span>닉네임1</span> &nbsp;
+                            <span class="title">제목1</span>
+                        </div>
+                        <div>
+                            <span>조회수</span>
+                            <span>좋아요</span>
+                            <span>코멘트</span>
+                        </div>
+                    </TitleBox> */}
+                </div>
+            </PostSection>
+        </Container>
+    )
+}
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -32,59 +109,4 @@ const TitleBox = styled.div`
     width: 600px;
     text-align: left;
 `
-function Main() {
-    return (
-        <Container>
-            <Header />
-            <PostSection>
-                <div class="left-align">
-                    <div>
-                        <Button>react</Button>
-                        <Button>node.js</Button>
-                        <Button>spring</Button>
-                    </div>
-                </div>
-                <div class="posts-box">
-
-                    <TitleBox class="title-box">
-                        <div>
-                            <span>닉네임1</span> &nbsp;
-                            <span class="title">제목1</span>
-                        </div>
-                        <div>
-                            <span>조회수</span>
-                            <span>좋아요</span>
-                            <span>코멘트</span>
-                        </div>
-                    </TitleBox>
-                    <br />
-                    <TitleBox class="title-box">
-                        <div>
-                            <span>닉네임1</span> &nbsp;
-                            <span class="title">제목1</span>
-                        </div>
-                        <div>
-                            <span>조회수</span>
-                            <span>좋아요</span>
-                            <span>코멘트</span>
-                        </div>
-                    </TitleBox>
-                    <br />
-                    <TitleBox class="title-box">
-                        <div>
-                            <span>닉네임1</span> &nbsp;
-                            <span class="title">제목1</span>
-                        </div>
-                        <div>
-                            <span>조회수</span>
-                            <span>좋아요</span>
-                            <span>코멘트</span>
-                        </div>
-                    </TitleBox>
-                </div>
-            </PostSection>
-        </Container>
-    )
-}
-
 export default Main
