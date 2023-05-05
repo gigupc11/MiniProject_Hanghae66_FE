@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from './Header'
 import styled from 'styled-components'
+import Button from "../components/Button";
 
 const Container = styled.div`
     display: flex;
@@ -68,8 +69,8 @@ function Detail() {
                     <BtnWrap>
                         조회수
                         좋아요
-                        <BtnRed>수정</BtnRed>
-                        <BtnRed>삭제</BtnRed>
+                        <Button>수정</Button>
+                        <Button>삭제</Button>
                     </BtnWrap>
                     <InputWrap>
                         {/* 제목 <input />
@@ -77,7 +78,7 @@ function Detail() {
 
                     <div class="title">제목</div> 
                     <div class="content">내용</div> 
-                    덧글 <input /> <BtnRed>입력</BtnRed>
+                    덧글 <input /> <Button>입력</Button>
                     <div class="comment">덧글리스트</div>  
                     </InputWrap>
                 </DetailBox>

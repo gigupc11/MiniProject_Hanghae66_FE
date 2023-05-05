@@ -1,9 +1,7 @@
 import React from 'react'
 import Header from './Header'
 import styled from 'styled-components'
-
-
-export const btnColor_red = "#F50000"
+import Button from "../components/Button";
 
 const Container = styled.div`
     display: flex;
@@ -25,17 +23,6 @@ const PostSection = styled.div`
     padding-top: 70px;
     min-height: 100vh;
 `
-const BtnRed = styled.button`
-    background-color: #F50000;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    width: 100px;
-    height: 30px;
-    font-size: 15px;
-    padding: 10;
-    margin: 10;
-`
 
 const TitleBox = styled.div`
     display: flex;
@@ -52,9 +39,9 @@ function Main() {
             <PostSection>
                 <div class="left-align">
                     <div>
-                        <BtnRed>react</BtnRed>
-                        <BtnRed>node.js</BtnRed>
-                        <BtnRed>spring</BtnRed>
+                        <Button>react</Button>
+                        <Button>node.js</Button>
+                        <Button>spring</Button>
                     </div>
                 </div>
                 <div class="posts-box">

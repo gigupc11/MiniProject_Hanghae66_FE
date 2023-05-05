@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import logo from '../assets/logo.png'
+import Button from "../components/Button";
 
 const HeaderBar = styled.div`
     position: relative;
@@ -21,18 +22,6 @@ const Logo = styled.img`
     width: 100px;
 `
 
-const BtnRed = styled.button`
-    background-color: #F50000;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    width: 100px;
-    height: 30px;
-    font-size: 15px;
-    padding: 10;
-    margin: 10;
-`
-
 const BtnBox = styled.div`
     display: flex;
     gap: 10px;
@@ -43,8 +32,8 @@ function Header() {
         <HeaderBar>
             <Logo class="logo" src={logo} />
                 <BtnBox class="btn-box">
-                    <BtnRed>글쓰기</BtnRed>
-                    <BtnRed>로그아웃</BtnRed>
+                    <Button>글쓰기</Button>
+                    <Button>로그아웃</Button>
                 </BtnBox>
         </HeaderBar>
     )
