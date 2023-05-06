@@ -72,4 +72,4 @@ const addPosts = async (newPost) => {
   };
 
 
-export { getPosts, addPosts,deletePost, updatePost};
+export { getPosts, addPosts, deletePost, updatePost};

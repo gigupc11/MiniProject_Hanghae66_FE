@@ -21,7 +21,7 @@ function Detail() {
     
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
+    const [contents, setContents] = useState("");
     const [update, setUpdate] = useState(false);
 
     const deleteMutation = useMutation(deletePost, {
@@ -52,7 +52,7 @@ function Detail() {
     const filteredData = data.filter(item => item.id === parseInt(params.id));
 
     const oldTitle = filteredData[0].title
-    const oldContent = filteredData[0].content
+    const oldContents = filteredData[0].contents
 
     const handleDeleteButtonClick = (event) => {
         event.preventDefault();
@@ -66,7 +66,7 @@ function Detail() {
 
         const updatedPost = {
             title,
-            content,
+            contents,
         };
         updateMutation.mutate({ postId, updatedPost });
     }
@@ -103,10 +103,10 @@ function Detail() {
                             <ContentsWrap>
                                 {update ? 
                                     <Input
-                                    value={content}
-                                    onChange={(e) => setContent(e.tartget.value)}
+                                    value={contents}
+                                    onChange={(e) => setContents(e.tartget.value)}
                                 /> :
-                                <h4 class="content">{oldContent}</h4> }
+                                <h4 class="contents">{oldContents}</h4> }
                             </ContentsWrap>
                             <CommentWrap>
                                 <StText>Comment</StText>

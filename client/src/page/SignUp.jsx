@@ -10,8 +10,8 @@ function SignUp() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [userYear, setUserYear] = useState('');
-  const [userSkill, setUserSkill] = useState('');
-  const [userType, setUserType] = useState('');
+  const [userSkill, setUserSkill] = useState(''); // 0=spring, 2=react, 3=nodejs
+  const [userType, setUserType] = useState(''); // admin || user
 
   console.log(userType)
   const handleChange = (event) => {
@@ -84,7 +84,7 @@ function SignUp() {
           type="radio"
           id="admin"
           name="userType"
-          value="admin"
+          value="0" //admin
           // checked={userType === 'admin'}
           onChange={handleChange}
         />
@@ -95,7 +95,7 @@ function SignUp() {
           type="radio"
           id="user"
           name="userType"
-          value="user"
+          value="1" //user
           // checked={userType === 'user'}
           onChange={handleChange}
         />

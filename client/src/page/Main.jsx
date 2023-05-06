@@ -29,23 +29,24 @@ function Main() {
             <PostSection>
                 <div class="left-align">
                     <div>
+                        <Button>all</Button>
+                        <Button>spring</Button>
                         <Button>react</Button>
                         <Button>node.js</Button>
-                        <Button>spring</Button>
                     </div>
                 </div>
                 <div class="posts-box">
                     {data.map((post) => {
                         return (
-                            <TitleBox onClick={()=>handleDetailPageLinkClick(post.id)} class="title-box">
+                            <TitleBox onClick={() => handleDetailPageLinkClick(post.id)} class="title-box">
                                 <div>
-                                    <span>{post.id}</span> &nbsp;
+                                    <span>{post.postSkill}</span> &nbsp;
                                     <span class="title">{post.title}</span>
                                 </div>
                                 <div>
-                                    <span>조회수</span>
-                                    <span>좋아요</span>
-                                    <span>코멘트</span>
+                                    <span>{post.viewCount}</span>
+                                    <span>{post.postLikeCount}</span>
+                                    <span>{post.commentCount}</span>
                                 </div>
                             </TitleBox>
                         )
