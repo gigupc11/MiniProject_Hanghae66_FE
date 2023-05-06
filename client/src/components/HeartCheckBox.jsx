@@ -4,19 +4,19 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
-const HeartCheckbox = ({checked, setChecked}) => {
+const HeartCheckbox = ({checked, setChecked, handleSubmitLikeButtonClick}) => {
 
   
-    const handleChange = (event) => {
-      setChecked(event.target.checked);
-    };
+    // const handleChange = (event) => {
+    //   setChecked(event.target.checked);
+    // };
   
     return (
       <FormControlLabel
         control={
           <Checkbox
             checked={checked}
-            onChange={handleChange}
+            onChange={(e)=>handleSubmitLikeButtonClick(e.target.checked)}
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}
             name="heartCheckbox"
