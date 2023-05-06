@@ -71,7 +71,7 @@ const addPosts = async (newPost) => {
     }
   };
 
-  const addLikePost = async (postId) => {
+  const likePost = async (postId) => {
     const token = getToken();
     try {
       const response = await axios.post(
@@ -90,4 +90,4 @@ const addPosts = async (newPost) => {
       console.error('인증에 실패했습니다:', error.response.data);
     }
   };
-export { getPosts, addPosts, deletePost, updatePost, addLikePost};
+export { getPosts, addPosts, deletePost, updatePost, likePost};

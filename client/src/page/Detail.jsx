@@ -6,7 +6,7 @@ import Input from "../components/Input";
 import { useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useMutation } from 'react-query';
-import { getPosts, deletePost, updatePost, addLikePost } from "../api/post";
+import { getPosts, deletePost, updatePost, likePost } from "../api/post";
 import { Link, useNavigate } from "react-router-dom";
 import { addComment, deleteComment, updateComment } from "../api/comment";
 import HeartCheckbox from "../components/HeartCheckBox";
@@ -64,6 +64,13 @@ function Detail() {
             queryClient.invalidateQueries("posts")
             console.log("성공")
             navigate(-1)
+        }
+    })
+
+    const likePostMutation = useMutation(likePost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts")
+            console.log("성공")
         }
     })
 
@@ -125,6 +132,13 @@ function Detail() {
         };
         updateCommentMutation.mutate({ commentId, updatedComment });
     }
+    const handleSubmitLikeButtonClick = (e) => {
+        // event.preventDefault();
+        const postId = parseInt(filteredData[0]?.id)
+        setChecked(e)
+        likePostMutation.mutate(postId);
+    }
+
 
     return (
         <Container>
@@ -148,7 +162,7 @@ function Detail() {
                             <span>5View</span>
                             <span>
                                 <LikeBtn>
-                                    <HeartCheckbox checked={checked} setChecked={setChecked} />
+                                    <HeartCheckbox handleSubmitLikeButtonClick={handleSubmitLikeButtonClick} checked={checked} setChecked={setChecked} />
                                 </LikeBtn>
                                 {/* <LikeBtn>❤️</LikeBtn> 10 */}
                             </span>
