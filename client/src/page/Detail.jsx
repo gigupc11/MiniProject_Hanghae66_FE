@@ -9,6 +9,7 @@ import { useMutation } from 'react-query';
 import { getPosts, deletePost, updatePost } from "../api/post";
 import { Link, useNavigate } from "react-router-dom";
 import { addComment, deleteComment, updateComment } from "../api/comment";
+import HeartCheckbox from "../components/HeartCheckBox";
 
 // const
 
@@ -26,6 +27,7 @@ function Detail() {
     const [comment, setComment] = useState("");
     const [update, setUpdate] = useState(false);
     const [updateComment, setUpdateComment] = useState(false);
+    const [checked, setChecked] = useState(false);
 
     const deleteMutation = useMutation(deletePost, {
         onSuccess: () => {
@@ -145,7 +147,10 @@ function Detail() {
                         <StView>
                             <span>5View</span>
                             <span>
-                                <LikeBtn>❤️</LikeBtn> 10
+                                <LikeBtn>
+                                    <HeartCheckbox checked={checked} setChecked={setChecked} />
+                                </LikeBtn>
+                                {/* <LikeBtn>❤️</LikeBtn> 10 */}
                             </span>
                         </StView>
                         <Button onClick={() => setUpdate(true)}>수정</Button>
