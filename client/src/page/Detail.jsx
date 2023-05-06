@@ -14,66 +14,6 @@ import HeartCheckbox from "../components/HeartCheckBox";
 // const
 
 function Detail() {
-  // 이전 컴포넌트에서 넘어온 parameter를 조회
-  const params = useParams();
-  // 리액트 쿼리 관련 코드
-  const queryClient = useQueryClient();
-
-  const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [contents, setContents] = useState("");
-  const [comment, setComment] = useState("");
-  const [update, setUpdate] = useState(false);
-  const [updateCommentState, setUpdateCommentState] = useState(false);
-  const [checked, setChecked] = useState(false);
-
-  const deleteMutation = useMutation(deletePost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
-  const updateMutation = useMutation(updatePost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
-
-  const addCommentMutation = useMutation(addComment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
-  const deleteCommentMutation = useMutation(deleteComment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
-
-  const updateCommentMutation = useMutation(updateComment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
-
-  const { isLoading, isError, data } = useQuery("posts", getPosts);
-
-  if (isLoading) {
-    return <h1>로딩중</h1>;
-  }
-
-  if (isError) {
-    return <h1>오류가 발생하였습니다</h1>;
-  }
 
 
     // 이전 컴포넌트에서 넘어온 parameter를 조회
@@ -288,7 +228,6 @@ function Detail() {
                                         ))
                                     }
                                     {/* <UserIDLine>
-
                                         <StText>14th Spring u*****</StText>
                                     </UserIDLine>
                                     <CommentLine>
@@ -322,14 +261,14 @@ function Detail() {
                                         <Stbtn>수정</Stbtn>
                                         <Stbtn>삭제</Stbtn>
                                     </ButtonLine> */}
-                </CommentBox>
-              </div>
-            </div>
-          </InputWrap>
-        </DetailBox>
-      </PostSection>
-    </Container>
-  );
+                                </CommentBox>
+                            </div>
+                        </div>
+                    </InputWrap>
+                </DetailBox>
+            </PostSection>
+        </Container>
+    );
 }
 
 const Container = styled.div`
