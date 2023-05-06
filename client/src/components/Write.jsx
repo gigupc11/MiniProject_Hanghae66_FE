@@ -11,10 +11,10 @@ import { addPosts } from "../api/post";
 
 function Write() {
   const [title, handleTitleChange, resetTitle] = useInput('');
-  const [content, handleContentChange, resetContent] = useInput('');
+  const [contents, handleContentsChange, resetContents] = useInput('');
   const [userSkill, setUserSkill] = useState('');
 
-  console.log(title,content,userSkill)
+  console.log(title,contents,userSkill)
   const queryClient = useQueryClient();
 
   const mutation = useMutation(addPosts, {
@@ -29,13 +29,13 @@ function Write() {
 
     const addPost = {
       title,
-      contents: content,
+      contents,
       userSkill,
     };
 
     mutation.mutate(addPost);
     resetTitle();
-    resetContent();
+    resetContents();
 
   }
 
@@ -62,8 +62,8 @@ function Write() {
               내용
               <div>
                 <Input 
-                value={content}
-                onChange={handleContentChange}
+                value={contents}
+                onChange={handleContentsChange}
                 size="custom" width ="100%" height ="440px"/>
               </div>
             </ContentsWrap>
