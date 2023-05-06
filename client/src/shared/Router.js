@@ -4,6 +4,7 @@ import SignUp from "../page/SignUp";
 import Main from "../page/Main";
 import Detail from "../page/Detail";
 import Write from "../components/Write";
+import Mypage from "../page/Mypage";
 
 
 const Router = () => {
@@ -13,6 +14,7 @@ const Router = () => {
             <Route path="/" element={<Main />} />
             <Route path="/detail/:id" element={<Detail />} />
             <Route path="/write" element={<Write />} />
+            <Route path="/mypage" element={<Mypage />}/>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             </Routes>
