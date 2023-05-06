@@ -167,7 +167,7 @@ function Detail() {
                                 <StText>Comment</StText>
                                 <Input
                                     value={comment}
-                                    onChange={(e) => setComment(e.tartget.value)}
+                                    onChange={(e) => setComment(e.target.value)}
                                     size="custom" height={"30px"} width={"580px"} />
                                 <Button onClick={handleCommentSubmitButtonClick}>입력</Button>
                             </CommentWrap>
