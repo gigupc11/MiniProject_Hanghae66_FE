@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import logo from '../assets/logo.png'
 import Button from "../components/Button";
 import Write from '../components/Write';
+import { useNavigate } from 'react-router-dom';
+
 
 const HeaderBar = styled.div`
     position: relative;
@@ -20,15 +22,28 @@ const Logo = styled.img`
     font-size: 30px;
     font-weight: 700;
     width: 100px;
+    cursor: pointer;
 `
 
 const BtnBox = styled.div`
     display: flex;
     gap: 10px;
 `
+const IdBtn = styled.button`
+    all: unset;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    margin-left: 600px;
+    :hover {
+        border-bottom: 2px solid white;
+    }
+`
 
 function Header() {
     const [modal,setModal] = useState(false)
+    const navigate = useNavigate();
+
 
     return (
         <>
@@ -39,7 +54,12 @@ function Header() {
         </div>
         
         <HeaderBar>
-            <Logo class="logo" src={logo} />
+            <Logo class="logo" src={logo} onClick={()=>{
+                navigate("/")
+            }}/>
+                <IdBtn onClick={()=>{
+                navigate("/mypage")
+            }}>HangHae 님</IdBtn>
                 <BtnBox class="btn-box">
                     <Button onClick = {() => {
                         setModal(true)

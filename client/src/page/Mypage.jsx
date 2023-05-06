@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 
-function Main() {
+function Mypage() {
   const navigate = useNavigate();
 
   const { isLoading, isError, data } = useQuery("posts", getPosts);
@@ -28,20 +28,26 @@ function Main() {
   return (
     <Container>
       <Header />
+      <Allsection>
+      <Infosection>
+        <Mypagetext>마이 페이지</Mypagetext>
+        <Infotext>
+          <div>ID : HangHae @ gmail.com</div>
+          <div>Username : HangHae66</div>
+          <div>기수 : 14기</div>
+          <div>주특기 : React</div>
+          <div>생성일 : 23.05.05</div>
+        </Infotext>
+        <Linesection>내 글 목록</Linesection>
+      </Infosection>
       <PostSection>
-        <StText>항해66 게시판</StText>
-        <Buttonbox>
-          <div>
-            <Button>All</Button>
-            <Button>Spring</Button>
-            <Button>React</Button>
-            <Button>Node.js</Button>
-          </div>
-        </Buttonbox>
         <div class="posts-box">
           {data.map((post) => {
             return (
-                            <TitleBox onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
+              <TitleBox
+                onClick={() => handleDetailPageLinkClick(post.postId)}
+                class="title-box"
+              >
                 <Skillbox>{post.postSkill}</Skillbox>
                 <Stunderbar>
                   <Commentbox>{post.title}</Commentbox>
@@ -62,6 +68,7 @@ function Main() {
           })}
         </div>
       </PostSection>
+      </Allsection>
     </Container>
   );
 }
@@ -75,6 +82,42 @@ const Container = styled.div`
   overflow: hidden;
   height: 100vh;
 `;
+const Allsection = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+`
+const Infosection = styled.div`
+  width: 800px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 450px;
+`;
+
+const Linesection = styled.div`
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 1px solid gray;
+    margin-bottom: 10px;
+`
+
+const Mypagetext = styled.div`
+    font-size: 60px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    height: 100px;
+    margin-top: 100px;
+`
+
+const Infotext = styled.div`
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 500px;
+    margin-top: 40px;
+`
 
 const PostSection = styled.div`
   width: 100%;
@@ -83,15 +126,7 @@ const PostSection = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
-  padding-top: 70px;
-  min-height: 100vh;
 `;
-
-const StText = styled.div`
-    font-size: 40px;
-    font-weight: 800;
-    margin-right: 500px;
-`
 
 const TitleBox = styled.div`
   display: flex;
@@ -108,36 +143,36 @@ const Viewbox = styled.span`
 `;
 
 const Commentbox = styled.span`
-    width: 400px;
-    padding-left:10px;
-`
+  width: 400px;
+  padding-left: 10px;
+`;
 
 const Skillbox = styled.span`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 120px;
-`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+`;
 
 const Likecommentbox = styled.span`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 120px;
-    gap: 4px;
-    height: 30px;
-`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  gap: 4px;
+  height: 30px;
+`;
 
 const Stunderbar = styled.div`
-    width: 760px;
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid gray;
-    align-items: center;
-`
+  width: 760px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid gray;
+  align-items: center;
+`;
 const Buttonbox = styled.div`
-    width: 730px;
-`
+  width: 730px;
+`;
 
-export default Main;
+export default Mypage;
