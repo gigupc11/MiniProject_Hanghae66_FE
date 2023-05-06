@@ -1,0 +1,28 @@
+{
+  "posts":[
+    {
+      "postId" : 1,
+      "title" : "안녕하세요. 인사박습니다.",
+      "postSkill" : 0,
+    "postLikeCount" : 5,
+    "viewCount" : 6,
+    "commentCount" : 2
+    },
+    {
+    "postId" : 2,
+    "title" : "안녕하세요. 인사올립니다.",
+    "PostSkill" : 0,
+    "PostLikeCount" : 5,
+    "viewCount" : 6,
+    "commentCount" : 2
+    },
+    {
+    "postId" : 3,
+    "title" : "안녕하세요. 인사내립니다.",
+    "PostSkill" : 0,
+    "PostLikeCount" : 5,
+    "viewCount" : 6,
+    "commentCount" : 2
+    }
+  ]
+}

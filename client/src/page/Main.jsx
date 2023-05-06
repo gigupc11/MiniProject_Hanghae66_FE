@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import { getPosts } from '../api/post';
 import { useQuery } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
+import {AiFillHeart} from "react-icons/ai"
 
 function Main() {
     const navigate = useNavigate();
@@ -52,15 +53,15 @@ function Main() {
                         )
                     })
                     }
-                    <br />
-                    {/* <TitleBox class="title-box">
+                    {/* <br />
+                    <TitleBox class="title-box">
                         <div>
                             <span>닉네임1</span> &nbsp;
                             <span class="title">제목1</span>
                         </div>
                         <div>
-                            <span>조회수</span>
-                            <span>좋아요</span>
+                            <span>5 View</span>
+                              <span><AiFillHeart color='red'/>10</span>
                             <span>코멘트</span>
                         </div>
                     </TitleBox>
