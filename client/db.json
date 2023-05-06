@@ -3,14 +3,15 @@
       {
       "postId": 1,
       "postTitle": "안녕하세요. 인사박습니다.",
-      "postSkill": 0,
+      "postSkill": "REACT",
       "postLikes": 5,
-      "postVistCnt": 6,
-      "commentCount": 2,
+      "postVisitCnt": 6,
+      "cmtCount": 2,
       "comments": [
       {
       "cmtId": 1,
       "cmtContent": "안녕하세요. 인사박습니다.",
+      "userYear" : 14,
       "cmtLikes": 5,
       "cmtCrdat": "2022-12-01T12:56:36.821474",
       "modifiedAt": "2022-12-01T12:56:36.821474",
@@ -31,18 +32,18 @@
       {
       "postId": 2,
       "postTitle": "안녕하세요. 인사올립니다.",
-      "postSkill": 0,
+      "postSkill": "NODE",
       "postLikes": 5,
-      "postVistCnt": 6,
-      "commentCount": 2
+      "postVisitCnt": 6,
+      "cmtCount": 2
       },
       {
       "postId": 3,
       "postTitle": "안녕하세요. 인사내립니다.",
-      "postSkill": 0,
+      "postSkill": "SPRING",
       "postLikes": 5,
-      "postVistCnt": 6,
-      "commentCount": 2
+      "postVisitCnt": 6,
+      "cmtCount": 2
       }
       ]
       }

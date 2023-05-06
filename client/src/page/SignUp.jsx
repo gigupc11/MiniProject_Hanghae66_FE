@@ -7,26 +7,28 @@ import useInput from "../hooks/useInput";
 import axios from 'axios';
 
 function SignUp() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userPassword, setUserPassword] = useState('');
   const [userYear, setUserYear] = useState('');
   const [userSkill, setUserSkill] = useState(''); // 0=spring, 2=react, 3=nodejs
-  const [userType, setUserType] = useState(''); // admin || user
+  const [userRole, setUserRole] = useState(''); // admin || user
 
-  console.log(userType)
+  console.log(userRole)
   const handleChange = (event) => {
-    setUserType(event.target.value);
+    setUserRole(event.target.value);
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
       const response = await axios.post('/auth/signup', {
-        username,
-        userpassword: password,
+        userId,
+        userName,
+        userPassword,
         userYear,
         userSkill,
-        role:userType,
+        userRole,
       }, {
         headers: {
         },
@@ -40,7 +42,7 @@ function SignUp() {
       // }
       alert('회원가입에 성공했습니다!');
       // navigate('/')
-      console.log(username, password, userYear, userSkill)
+      console.log(userId,userName, userPassword, userYear, userSkill,userRole)
     } catch (error) {
       console.error('회원가입 오류:', error.response.data);
       alert(JSON.stringify(error.response.data));
@@ -54,17 +56,24 @@ function SignUp() {
         <StInputbox>
           <StIDtext>아이디</StIDtext>
           <StIdbox>
-            <Input value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              size="medium" placeholder="아이디는 4 ~ 12자 이내로 입력해주세요" />
+            <Input value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              size="medium" placeholder="아이디는 4 ~ 10자 이내로 입력해주세요" />
             <Button size="medium">중복체크</Button>
+          </StIdbox>
+          <StIDtext>닉네임</StIDtext>
+          <StIdbox>
+            <Input value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              size="custom" width="460px" height="46px" fsize="16px" placeholder="닉네임은 10자 이내로 입력해주세요" />
+            {/* <Button size="medium">중복체크</Button> */}
           </StIdbox>
           <div>
             <Sttext>패스워드</Sttext>
             <Input type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              size="custom" width="460px" height="46px" fsize="16px" placeholder="비밀번호는 4 ~ 12자 이내로 입력해주세요" />
+              value={userPassword}
+              onChange={(e) => setUserPassword(e.target.value)}
+              size="custom" width="460px" height="46px" fsize="16px" placeholder="비밀번호는 8~15자 이내로 입력해주세요" />
           </div>
           {/* <div>
             <Sttext>패스워드 확인</Sttext>
@@ -83,24 +92,24 @@ function SignUp() {
         <input
           type="radio"
           id="admin"
-          name="userType"
+          name="userRole"
           value="0" //admin
           // checked={userType === 'admin'}
           onChange={handleChange}
         />
         <label htmlFor="admin">Admin</label>
       </div>
-      <div>
+      {/* <div>
         <input
           type="radio"
           id="user"
-          name="userType"
+          name="userRole"
           value="1" //user
           // checked={userType === 'user'}
           onChange={handleChange}
         />
         <label htmlFor="user">User</label>
-      </div>
+      </div> */}
       </StButtonbox>
         </StInputbox>
         <StButtonbox>

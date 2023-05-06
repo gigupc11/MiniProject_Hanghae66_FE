@@ -79,9 +79,9 @@ const SelectboxB = ({setUserSkill}) => {
     };
   
     const options = [
-      { value: "0", label: "Spring" },
-      { value: "1", label: "React" },
-      { value: "2", label: "Node.js" },
+      { value: "SPRING", label: "Spring" },
+      { value: "REACT", label: "React" },
+      { value: "NODE", label: "Node.js" },
     ];
     const customStyles = {
       control: (provided) => ({
@@ -135,9 +135,9 @@ const SelectboxB = ({setUserSkill}) => {
     };
   
     const options = [
-        { value: "0", label: "Spring" },
-        { value: "1", label: "React" },
-        { value: "2", label: "Node.js" },
+        { value: "SPRING", label: "Spring" },
+        { value: "REACT", label: "React" },
+        { value: "NODE", label: "Node.js" },
     ];
     const customStyles = {
       control: (provided) => ({

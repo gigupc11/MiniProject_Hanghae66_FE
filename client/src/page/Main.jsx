@@ -44,17 +44,17 @@ function Main() {
                             <TitleBox onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
                 <Skillbox>{post.postSkill}</Skillbox>
                 <Stunderbar>
-                  <Commentbox>{post.title}</Commentbox>
-                  <Viewbox>{post.viewCount} View</Viewbox>
+                  <Commentbox>{post.postTitle}</Commentbox>
+                  <Viewbox>{post.postVisitCnt} View</Viewbox>
                   <Likecommentbox>
                     <span>
                       <AiFillHeart color="red" />
                     </span>
-                    <span> {post.postLikeCount}</span>
+                    <span> {post.postLikes}</span>
                     <span>
                       <BiCommentDetail />
                     </span>
-                    <span>{post.commentCount}</span>
+                    <span>{post.cmtCount}</span>
                   </Likecommentbox>
                 </Stunderbar>
               </TitleBox>
