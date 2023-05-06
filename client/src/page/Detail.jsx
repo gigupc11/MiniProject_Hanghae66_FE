@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { getPosts, deletePost, updatePost } from "../api/post";
 import { Link, useNavigate } from "react-router-dom";
+import { addComment, deleteComment, updateComment } from "../api/comment";
 
 // const
 
@@ -18,11 +19,13 @@ function Detail() {
     const params = useParams();
     // 리액트 쿼리 관련 코드
     const queryClient = useQueryClient();
-    
+
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [contents, setContents] = useState("");
+    const [comment, setComment] = useState("");
     const [update, setUpdate] = useState(false);
+    const [updateComment, setUpdateComment] = useState(false);
 
     const deleteMutation = useMutation(deletePost, {
         onSuccess: () => {
@@ -32,6 +35,29 @@ function Detail() {
         }
     })
     const updateMutation = useMutation(updatePost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts")
+            console.log("성공")
+            navigate(-1)
+        }
+    })
+
+    const addCommentMutation = useMutation(addComment, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts")
+            console.log("성공")
+            navigate(-1)
+        }
+    })
+    const deleteCommentMutation = useMutation(deleteComment, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts")
+            console.log("성공")
+            navigate(-1)
+        }
+    })
+
+    const updateCommentMutation = useMutation(updateComment, {
         onSuccess: () => {
             queryClient.invalidateQueries("posts")
             console.log("성공")
@@ -49,20 +75,24 @@ function Detail() {
         return <h1>오류가 발생하였습니다</h1>
     }
 
-    const filteredData = data.filter(item => item.id === parseInt(params.id));
+    const filteredData = data?.filter(item => item.id === parseInt(params.id));
 
-    const oldTitle = filteredData[0].title
-    const oldContents = filteredData[0].contents
+    const oldTitle = filteredData[0]?.title
+    const oldContents = filteredData[0]?.contents
 
+    const comments = filteredData[0]?.contentsList;
+
+    // 게시글 삭제
     const handleDeleteButtonClick = (event) => {
         event.preventDefault();
-        const postId = filteredData[0].id
+        const postId = filteredData[0]?.id
         deleteMutation.mutate(parseInt(postId))
     }
 
+    // 게시글 수정
     const handleSubmitButtonClick = (event) => {
         event.preventDefault();
-        const postId = parseInt(filteredData[0].id)
+        const postId = parseInt(filteredData[0]?.id)
 
         const updatedPost = {
             title,
@@ -70,6 +100,31 @@ function Detail() {
         };
         updateMutation.mutate({ postId, updatedPost });
     }
+
+    // 덧글 추가
+    const handleCommentSubmitButtonClick = (event) => {
+        event.preventDefault();
+        const postId = parseInt(filteredData[0]?.id)
+
+        const newComment = {
+            comment,
+        };
+        addCommentMutation.mutate({ postId, newComment });
+    }
+
+    // 덧글 삭제
+    const handleCommentDeleteButtonClick = (commentId) => {
+        deleteCommentMutation.mutate(parseInt(commentId))
+    }
+
+    // 덧글 수정
+    const handleCommentUpdateButtonClick = (commentId) => {
+        const updatedComment = {
+            comment,
+        };
+        updateCommentMutation.mutate({ commentId, updatedComment });
+    }
+
     return (
         <Container>
             <Header />
@@ -80,13 +135,13 @@ function Detail() {
                 <DetailBox>
                     <BtnWrap>
                         {update ?
-                        <Sttitle>
-                        제목 <Input
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                        </Sttitle> :
-                        <Sttitle>{oldTitle}</Sttitle>}
+                            <Sttitle>
+                                제목 <Input
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                />
+                            </Sttitle> :
+                            <Sttitle>{oldTitle}</Sttitle>}
 
                         <StView>
                             <span>5View</span>
@@ -94,28 +149,67 @@ function Detail() {
                                 <LikeBtn>❤️</LikeBtn> 10
                             </span>
                         </StView>
-                        <Button onClick={()=>setUpdate(true)}>수정</Button>
+                        <Button onClick={() => setUpdate(true)}>수정</Button>
                         <Button onClick={handleSubmitButtonClick}>수정완료</Button>
                         <Button onClick={handleDeleteButtonClick}>삭제</Button>
                     </BtnWrap>
                     <InputWrap>
                         <div>
                             <ContentsWrap>
-                                {update ? 
+                                {update ?
                                     <Input
-                                    value={contents}
-                                    onChange={(e) => setContents(e.tartget.value)}
-                                /> :
-                                <h4 class="contents">{oldContents}</h4> }
+                                        value={contents}
+                                        onChange={(e) => setContents(e.tartget.value)}
+                                    /> :
+                                    <h4 class="contents">{oldContents}</h4>}
                             </ContentsWrap>
+
                             <CommentWrap>
                                 <StText>Comment</StText>
-                                <Input size="custom" height={"30px"} width={"580px"} />
-                                <Button>입력</Button>
+                                <Input
+                                    value={comment}
+                                    onChange={(e) => setComment(e.tartget.value)}
+                                    size="custom" height={"30px"} width={"580px"} />
+                                <Button onClick={handleCommentSubmitButtonClick}>입력</Button>
                             </CommentWrap>
+
                             <div>
                                 <CommentBox>
-                                    <UserIDLine>
+                                    {
+                                        comments?.map((comment) => (
+                                            <CommentBox key={comment.commentId}>
+
+                                                <UserIDLine>
+                                                    <StText>{comment.userYear}기 {comment.username}</StText>
+                                                </UserIDLine>
+                                                {
+                                                    updateComment ?
+                                                        <CommentLine>
+                                                            <Stcommentbox>
+                                                                <Input
+                                                                    value={comment}
+                                                                    onChange={(e) => setComment(e.tartget.value)} />
+                                                            </Stcommentbox>
+                                                        </CommentLine> :
+                                                        <CommentLine>
+                                                            <Stcommentbox>{comment.contents}</Stcommentbox>
+                                                        </CommentLine>
+                                                }
+                                                {
+                                                    updateComment ?
+                                                        <ButtonLine>
+                                                            <Stbtn onClick={() => setUpdateComment(true)}>수정</Stbtn>
+                                                        </ButtonLine> :
+                                                        <ButtonLine>
+                                                            <Stbtn onClick={() => handleCommentUpdateButtonClick(comment.commentId)}>수정완료</Stbtn>
+                                                            <Stbtn onClick={() => handleCommentDeleteButtonClick(comment.commentId)}>삭제</Stbtn>
+                                                        </ButtonLine>
+                                                }
+
+                                            </CommentBox>
+                                        ))
+                                    }
+                                    {/* <UserIDLine>
                                         <StText>14th Spring u*****</StText>
                                     </UserIDLine>
                                     <CommentLine>
@@ -148,7 +242,7 @@ function Detail() {
                                     <ButtonLine>
                                         <Stbtn>수정</Stbtn>
                                         <Stbtn>삭제</Stbtn>
-                                    </ButtonLine>
+                                    </ButtonLine> */}
                                 </CommentBox>
                             </div>
                         </div>
