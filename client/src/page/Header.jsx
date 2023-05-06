@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import logo from '../assets/logo.png'
 import Button from "../components/Button";
+import Write from '../components/Write';
 
 const HeaderBar = styled.div`
     position: relative;
     right: 0;
     top: 0;
-    z-index: 1000;
     width: 100%;
     display: flex;
     align-items: center;
@@ -28,14 +28,26 @@ const BtnBox = styled.div`
 `
 
 function Header() {
+    const [modal,setModal] = useState(false)
+
     return (
+        <>
+        <div>
+            {modal && (<Write Open = {() => {
+                setModal(false)
+            }} />)}
+        </div>
+        
         <HeaderBar>
             <Logo class="logo" src={logo} />
                 <BtnBox class="btn-box">
-                    <Button>글쓰기</Button>
+                    <Button onClick = {() => {
+                        setModal(true)
+                    }}>글쓰기</Button>
                     <Button>로그아웃</Button>
                 </BtnBox>
         </HeaderBar>
+        </>
     )
 }
 

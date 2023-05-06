@@ -144,7 +144,7 @@ const SelectboxB = ({setUserSkill}) => {
         ...provided,
         border: "1px solid black",
         borderRadius: "10px",
-        height: "30px",
+        height: "45px",
         width:"270px"
       }),
       option:(styles, { data, isDisabled, isFocused, isSelected }) => {
