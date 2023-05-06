@@ -6,7 +6,7 @@ import Input from "../components/Input";
 import { useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useMutation } from 'react-query';
-import { getPosts, deletePost, updatePost } from "../api/post";
+import { getPosts, deletePost, updatePost, addLikePost } from "../api/post";
 import { Link, useNavigate } from "react-router-dom";
 import { addComment, deleteComment, updateComment } from "../api/comment";
 import HeartCheckbox from "../components/HeartCheckBox";
@@ -26,7 +26,7 @@ function Detail() {
     const [contents, setContents] = useState("");
     const [comment, setComment] = useState("");
     const [update, setUpdate] = useState(false);
-    const [updateComment, setUpdateComment] = useState(false);
+    const [updateCommentState, setUpdateCommentState] = useState(false);
     const [checked, setChecked] = useState(false);
 
     const deleteMutation = useMutation(deletePost, {
@@ -187,7 +187,7 @@ function Detail() {
                                                     <StText>{comment.userYear}기 {comment.username}</StText>
                                                 </UserIDLine>
                                                 {
-                                                    updateComment ?
+                                                    updateCommentState ?
                                                         <CommentLine>
                                                             <Stcommentbox>
                                                                 <Input
@@ -200,9 +200,9 @@ function Detail() {
                                                         </CommentLine>
                                                 }
                                                 {
-                                                    updateComment ?
+                                                    updateCommentState ?
                                                         <ButtonLine>
-                                                            <Stbtn onClick={() => setUpdateComment(true)}>수정</Stbtn>
+                                                            <Stbtn onClick={() => setUpdateCommentState(true)}>수정</Stbtn>
                                                         </ButtonLine> :
                                                         <ButtonLine>
                                                             <Stbtn onClick={() => handleCommentUpdateButtonClick(comment.commentId)}>수정완료</Stbtn>

@@ -71,5 +71,23 @@ const addPosts = async (newPost) => {
     }
   };
 
-
-export { getPosts, addPosts, deletePost, updatePost};
+  const addLikePost = async (postId) => {
+    const token = getToken();
+    try {
+      const response = await axios.post(
+        `/like/${postId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      console.log('인증에 성공했습니다:', response.data);
+    } catch (error) {
+      alert(JSON.stringify(error.response.data));
+      console.log(token);
+      console.error('인증에 실패했습니다:', error.response.data);
+    }
+  };
+export { getPosts, addPosts, deletePost, updatePost, addLikePost};
