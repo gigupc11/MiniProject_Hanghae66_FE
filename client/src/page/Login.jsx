@@ -22,8 +22,11 @@ function Login() {
         },
       });
 
-      const { token } = response.data;
+      // const { token } = response.data;
+      const rowToken = response.headers.get('access_token');
+      const token = rowToken.split(" ")[1]
       Cookies.set('token', token, { expires: 1 / 24 });
+      
       alert('로그인에 성공했습니다!');
       resetName("")
       resetPassword("")
