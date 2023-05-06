@@ -39,7 +39,7 @@ function Main() {
                 <div class="posts-box">
                     {data.map((post) => {
                         return (
-                            <TitleBox onClick={() => handleDetailPageLinkClick(post.id)} class="title-box">
+                            <TitleBox onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
                                 <div>
                                     <span>{post.postSkill}</span> &nbsp;
                                     <span class="title">{post.title}</span>

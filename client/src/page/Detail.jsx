@@ -75,11 +75,10 @@ function Detail() {
         return <h1>오류가 발생하였습니다</h1>
     }
 
-    const filteredData = data?.filter(item => item.id === parseInt(params.id));
+    const filteredData = data.filter(item => item.postId === parseInt(params.id));
 
     const oldTitle = filteredData[0]?.title
     const oldContents = filteredData[0]?.contents
-
     const comments = filteredData[0]?.contentsList;
 
     // 게시글 삭제
@@ -159,7 +158,7 @@ function Detail() {
                                 {update ?
                                     <Input
                                         value={contents}
-                                        onChange={(e) => setContents(e.tartget.value)}
+                                        onChange={(e) => setContents(e.target.value)}
                                     /> :
                                     <h4 class="contents">{oldContents}</h4>}
                             </ContentsWrap>
