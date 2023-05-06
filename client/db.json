@@ -1,28 +1,59 @@
 {
-  "posts":[
-    {
-      "postId" : 1,
-      "title" : "안녕하세요. 인사박습니다.",
-      "postSkill" : "0",
-    "postLikeCount" : 5,
-    "viewCount" : 6,
-    "commentCount" : 2
-    },
-    {
-    "postId" : 2,
-    "title" : "안녕하세요. 인사올립니다.",
-    "postSkill" : 0,
-    "postLikeCount" : 3,
-    "viewCount" : 6,
-    "commentCount" : 2
-    },
-    {
-    "postId" : 3,
-    "title" : "안녕하세요. 인사내립니다.",
-    "postSkill" : 0,
-    "postLikeCount" : 1,
-    "viewCount" : 6,
-    "commentCount" : 2
-    }
-  ]
-}
+      "posts": [
+      {
+      "postId": 1,
+      "postTitle": "안녕하세요. 인사박습니다.",
+      "postSkill": 0,
+      "postLikes": 5,
+      "postVistCnt": 6,
+      "commentCount": 2,
+      "comments": [
+      {
+      "cmtId": 1,
+      "cmtContent": "안녕하세요. 인사박습니다.",
+      "cmtLikes": 5,
+      "cmtCrdat": "2022-12-01T12:56:36.821474",
+      "modifiedAt": "2022-12-01T12:56:36.821474",
+      "cmtUserId" : "코멘트 작성자 아이디",
+      "cmtUserName" : "코멘트 작성자 닉네임"
+      },
+      {
+      "cmtId": 2,
+      "cmtContent": "안녕하세요. 인사올립니다.",
+      "cmtLikes": 5,
+      "cmtCrdat": "2022-12-01T12:56:36.821474",
+      "modifiedAt": "2022-12-01T12:56:36.821474",
+      "cmtUserId" : "코멘트 작성자 아이디",
+      "cmtUserName" : "코멘트 작성자 닉네임"
+      }
+      ]
+      },
+      {
+      "postId": 2,
+      "postTitle": "안녕하세요. 인사올립니다.",
+      "postSkill": 0,
+      "postLikes": 5,
+      "postVistCnt": 6,
+      "commentCount": 2
+      },
+      {
+      "postId": 3,
+      "postTitle": "안녕하세요. 인사내립니다.",
+      "postSkill": 0,
+      "postLikes": 5,
+      "postVistCnt": 6,
+      "commentCount": 2
+      }
+      ]
+      }
+      
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
