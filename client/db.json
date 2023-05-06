@@ -16,16 +16,17 @@
       "cmtCrdat": "2022-12-01T12:56:36.821474",
       "modifiedAt": "2022-12-01T12:56:36.821474",
       "cmtUserId" : "코멘트 작성자 아이디",
-      "cmtUserName" : "코멘트 작성자 닉네임"
+      "cmtUserName" : "아아아아아아아아아아"
       },
       {
       "cmtId": 2,
       "cmtContent": "안녕하세요. 인사올립니다.",
+      "userYear" : 14,
       "cmtLikes": 5,
       "cmtCrdat": "2022-12-01T12:56:36.821474",
       "modifiedAt": "2022-12-01T12:56:36.821474",
       "cmtUserId" : "코멘트 작성자 아이디",
-      "cmtUserName" : "코멘트 작성자 닉네임"
+      "cmtUserName" : "닉네임"
       }
       ]
       },

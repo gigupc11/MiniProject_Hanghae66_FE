@@ -180,14 +180,15 @@ function Detail() {
           <InputWrap>
             <div>
               <ContentsWrap>
-                {update ? (
+                {/* 여기 내용들어가는 부분 코드인데 확인한번만 부탁드리겠습니다! */}
+                {/* {update ? (
                   <Input
                     value={postContents}
                     onChange={(e) => setPostContents(e.target.value)}
                   />
                 ) : (
                   <h4 class="contents">{oldContents}</h4>
-                )}
+                )} */}
               </ContentsWrap>
 
               <CommentWrap>
@@ -249,57 +250,8 @@ function Detail() {
                           </Stbtn>
                         </ButtonLine>
                       )}
-                      {/*                                                 
-                                            </CommentBox>
-                                        ))
-                                    }
-                                </CommentBox>
-                            </div>
-                        </div>
-                    </InputWrap>
-                </DetailBox>
-            </PostSection>
-        </Container>
-    );
-} */}
                     </CommentBox>
                   ))}
-                  <UserIDLine>
-                    <StText>14th Spring u*****</StText>
-                  </UserIDLine>
-                  <CommentLine>
-                    <Stcommentbox>짧은 댓글</Stcommentbox>
-                  </CommentLine>
-                  <ButtonLine>
-                    <Stbtn>수정</Stbtn>
-                    <Stbtn>삭제</Stbtn>
-                  </ButtonLine>
-                </CommentBox>
-                <CommentBox>
-                  <UserIDLine>
-                    <StText>14th React u*****</StText>
-                  </UserIDLine>
-                  <CommentLine>
-                    <Stcommentbox>
-                      긴댓글을을을을을을을을ㅇ릉을을을을을을ㅇ릉을을을을을을ㅇ릉을을을ㅇ릉릉ㄹ
-                    </Stcommentbox>
-                  </CommentLine>
-                  <ButtonLine>
-                    <Stbtn>수정</Stbtn>
-                    <Stbtn>삭제</Stbtn>
-                  </ButtonLine>
-                </CommentBox>
-                <CommentBox>
-                  <UserIDLine>
-                    <StText>14th Node.js u*****</StText>
-                  </UserIDLine>
-                  <CommentLine>
-                    <Stcommentbox>적당한 댓글 길이 인건가요</Stcommentbox>
-                  </CommentLine>
-                  <ButtonLine>
-                    <Stbtn>수정</Stbtn>
-                    <Stbtn>삭제</Stbtn>
-                  </ButtonLine>
                 </CommentBox>
               </div>
             </div>
@@ -309,6 +261,8 @@ function Detail() {
     </Container>
   );
 }
+
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -392,26 +346,34 @@ const CommentLine = styled.div`
   align-items: center;
   position: fixed;
   margin-left: 175px;
+  width: 600px;
   border-bottom: 1px solid lightgray;
+  /* background-color: red; */
 `;
 const ButtonLine = styled.div`
-  gap: 10px;
+  gap: 20px;
   height: 40px;
+  /* width: 200px; */
   display: flex;
   align-items: center;
   width: 80px;
+
+  margin-left: 700px;
+  justify-content: center;
 `;
 const UserIDLine = styled.div`
   height: 40px;
   display: flex;
   align-items: center;
+  position: fixed;
+
 `;
 const CommentBox = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   margin-top: 10px;
   height: 40px;
+  justify-content: center;
 `;
 const TextWrap = styled.div`
   display: flex;
