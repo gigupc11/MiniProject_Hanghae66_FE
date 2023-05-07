@@ -62,8 +62,8 @@ const SelectboxA = ({setUserYear}) => {
         //   onChange(value.value);
         // }}
         onChange={(selectedOption) => {
-          setChoice(selectedOption.value);
-          setUserYear(selectedOption.value);
+          setChoice(Number(selectedOption.value));
+          setUserYear(Number(selectedOption.value));
         }}
         options={options}
       />

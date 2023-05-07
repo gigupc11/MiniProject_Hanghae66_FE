@@ -33,6 +33,7 @@
       {
       "postId": 2,
       "postTitle": "안녕하세요. 인사올립니다.",
+      "postContents" : "d" ,
       "postSkill": "NODE",
       "postLikes": 5,
       "postVisitCnt": 6,

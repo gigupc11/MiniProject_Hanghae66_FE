@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import styled from "styled-components";
 import Button from "../components/Button";
@@ -14,121 +14,130 @@ import HeartCheckbox from "../components/HeartCheckBox";
 // const
 
 function Detail() {
-  // 이전 컴포넌트에서 넘어온 parameter를 조회
-  const params = useParams();
-  // 리액트 쿼리 관련 코드
-  const queryClient = useQueryClient();
+    // 이전 컴포넌트에서 넘어온 parameter를 조회
+    const params = useParams();
+    // 리액트 쿼리 관련 코드
+    const queryClient = useQueryClient();
 
-  const navigate = useNavigate();
-  const [postTitle, setPostTitle] = useState("");
-  const [postContents, setPostContents] = useState("");
-  const [cmtContent, setCmtContent] = useState("");
-  const [update, setUpdate] = useState(false);
-  const [updateCommentState, setUpdateCommentState] = useState(false);
-  const [checked, setChecked] = useState(false);
+    const navigate = useNavigate();
+    const [postTitle, setPostTitle] = useState("");
+    const [postContents, setPostContents] = useState("");
+    const [cmtContent, setCmtContent] = useState("");
+    const [oldCmtContent, setOldCmtContent] = useState("");
+    const [update, setUpdate] = useState(false);
+    const [updateCommentState, setUpdateCommentState] = useState(false);
+    const [checked, setChecked] = useState(false);
 
-  const deleteMutation = useMutation(deletePost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
-  const updateMutation = useMutation(updatePost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
+    console.log(updateCommentState)
+    useEffect(() => {
+        const filteredData = data.filter(
+            (item) => item.postId === parseInt(params.id)
+        );
+        const oldTitle = filteredData[0]?.postTitle;
+        const oldContents = filteredData[0]?.postContents;
+        const comments = filteredData[0]?.comments;
 
-  const addCommentMutation = useMutation(addComment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
-  const deleteCommentMutation = useMutation(deleteComment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
+        console.log(filteredData)
+        setPostTitle(oldTitle)
+        setPostContents(oldContents)
+        setOldCmtContent(comments[0]?.cmtContent)
+    })
+    const deleteMutation = useMutation(deletePost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+            console.log("성공");
+            navigate(-1);
+        },
+    });
+    const updateMutation = useMutation(updatePost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+            console.log("성공");
+            navigate(-1);
+        },
+    });
 
-  const updateCommentMutation = useMutation(updateComment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
+    const addCommentMutation = useMutation(addComment, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+            console.log("성공");
+            navigate(-1);
+        },
+    });
+    const deleteCommentMutation = useMutation(deleteComment, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+            console.log("성공");
+            navigate(-1);
+        },
+    });
 
-  const likePostMutation = useMutation(likePost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-    },
-  });
+    const updateCommentMutation = useMutation(updateComment, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+            console.log("성공");
+            navigate(-1);
+        },
+    });
 
-  const { isLoading, isError, data } = useQuery("posts", getPosts);
+    const likePostMutation = useMutation(likePost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+            console.log("성공");
+        },
+    });
 
-  if (isLoading) {
-    return <h1>로딩중</h1>;
-  }
+    const { isLoading, isError, data } = useQuery("posts", getPosts);
 
-  if (isError) {
-    return <h1>오류가 발생하였습니다</h1>;
-  }
+    if (isLoading) {
+        return <h1>로딩중</h1>;
+    }
 
-  const filteredData = data.filter(
-    (item) => item.postId === parseInt(params.id)
-  );
+    if (isError) {
+        return <h1>오류가 발생하였습니다</h1>;
+    }
 
-  const oldTitle = filteredData[0]?.postTitle;
-  const oldContents = filteredData[0]?.postContents;
-  const comments = filteredData[0]?.comments;
-  console.log(comments);
-  // 게시글 삭제
-  const handleDeleteButtonClick = (event) => {
-    event.preventDefault();
-    const postId = filteredData[0]?.id;
-    deleteMutation.mutate(parseInt(postId));
-  };
+    const filteredData = data.filter(
+        (item) => item.postId === parseInt(params.id)
+    );
 
-  // 게시글 수정
-  const handleSubmitButtonClick = (event) => {
-    event.preventDefault();
-    const postId = parseInt(filteredData[0]?.id);
-
-    const updatedPost = {
-      postTitle,
-      postContents,
+    const oldTitle = filteredData[0]?.postTitle;
+    const oldContents = filteredData[0]?.postContents;
+    const comments = filteredData[0]?.comments;
+    console.log(comments);
+    // 게시글 삭제
+    const handleDeleteButtonClick = (event) => {
+        event.preventDefault();
+        const postId = filteredData[0]?.id;
+        deleteMutation.mutate(parseInt(postId));
     };
-    updateMutation.mutate({ postId, updatedPost });
-  };
 
-  // 덧글 추가
-  const handleCommentSubmitButtonClick = (event) => {
-    event.preventDefault();
-    const postId = parseInt(filteredData[0]?.id);
+    // 게시글 수정
+    const handleSubmitButtonClick = (event) => {
+        event.preventDefault();
+        const postId = parseInt(filteredData[0]?.id);
 
-    const newComment = {
-      cmtContent,
+        const updatedPost = {
+            postTitle,
+            postContents,
+        };
+        updateMutation.mutate({ postId, updatedPost });
     };
-    addCommentMutation.mutate({ postId, newComment });
-  };
 
-  // 덧글 삭제
-  const handleCommentDeleteButtonClick = (commentId) => {
-    deleteCommentMutation.mutate(parseInt(commentId));
-  };
+    // 덧글 추가
+    const handleCommentSubmitButtonClick = (event) => {
+        event.preventDefault();
+        const postId = parseInt(filteredData[0]?.id);
 
-  // 덧글 수정
-  const handleCommentUpdateButtonClick = (commentId) => {
-    const updatedComment = {
-      cmtContent,
+        const newComment = {
+            cmtContent,
+        };
+        addCommentMutation.mutate({ postId, newComment });
+    };
+
+    // 덧글 삭제
+    const handleCommentDeleteButtonClick = (commentId) => {
+        deleteCommentMutation.mutate(parseInt(commentId));
     };
     updateCommentMutation.mutate({ commentId, updatedComment });
   };
