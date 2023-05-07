@@ -6,13 +6,15 @@ import Write from '../components/Write';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserId } from '../redux/modules/authReducer';
-
+import { logout } from '../api/logout';
 
 function Header() {
     const [modal, setModal] = useState(false)
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
     const userId = useSelector((state) => state.auth.userId)
+    console.log(isAuthenticated)
 
     return (
         <>
@@ -26,17 +28,23 @@ function Header() {
                 <Logo class="logo" src={logo} onClick={() => {
                     navigate("/")
                 }} />
-                {
-                    <IdBtn onClick={() => {
-                        navigate("/mypage")
-                    }}>{userId} 님</IdBtn>
+                {isAuthenticated ?
+                    <>
+                        <IdBtn onClick={() => {
+                            navigate("/mypage")
+                        }}>{userId} 님</IdBtn>
+
+
+                        <BtnBox class="btn-box">
+                            <Button onClick={() => {
+                                setModal(true)
+                            }}>글쓰기</Button>
+                            <Button onClick={() => logout(dispatch)}>로그아웃</Button>
+                        </BtnBox>
+                    </>
+                    : <Button onClick={() => navigate('/login')}>로그인</Button>
                 }
-                <BtnBox class="btn-box">
-                    <Button onClick={() => {
-                        setModal(true)
-                    }}>글쓰기</Button>
-                    <Button>로그아웃</Button>
-                </BtnBox>
+
             </HeaderBar>
         </>
     )

@@ -7,11 +7,14 @@ import useInput from "../hooks/useInput";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { setUserId } from "../redux/modules/authReducer";
 
 function Login() {
   const [userId, handleIdChange, resetId] = useInput('');
   const [userPassword, handlePasswordChange, resetPassword] = useInput('');
   const navigate = useNavigate()
+  const dispatch = useDispatch();
   const handleSubmitButtonClick = async (event) => {
     event.preventDefault();
     try {
@@ -32,8 +35,9 @@ function Login() {
         resetId("")
         resetPassword("")
         // dispatch(setIsAuthenticated(true));
-        // dispatch(setUserId(id));
-        // navigate(`/`)
+        dispatch(setUserId(userId));
+        window.location.reload();
+        navigate(`/`)
       } else {
         alert(response.data.msg);
         console.error(response.data.msg);

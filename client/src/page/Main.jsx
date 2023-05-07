@@ -9,61 +9,62 @@ import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 
 function Main() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const { isLoading, isError, data } = useQuery("posts", getPosts);
+    const { isLoading, isError, data, error } = useQuery("posts", getPosts);
 
-  if (isLoading) {
-    return <h1>로딩중</h1>;
-  }
+    // if (isLoading) {
+    //     return <h1>로딩중</h1>;
+    // }
 
-  if (isError) {
-    return <h1>오류가 발생하였습니다</h1>;
-  }
+    // if (isError) {
+    //     console.error(error);
+    //     return <h1>오류가 발생하였습니다</h1>;
+    //   }
 
-  const handleDetailPageLinkClick = (id) => {
-    navigate(`/detail/${id}`);
-  };
+    const handleDetailPageLinkClick = (id) => {
+        navigate(`/detail/${id}`);
+    };
 
-  return (
-    <Container>
-      <Header />
-      <PostSection>
-        <StText>항해66 게시판</StText>
-        <Buttonbox>
-          <div>
-            <Button>All</Button>
-            <Button>Spring</Button>
-            <Button>React</Button>
-            <Button>Node.js</Button>
-          </div>
-        </Buttonbox>
-        <div class="posts-box">
-          {data.map((post) => {
-            return (
+    return (
+        <Container>
+            <Header />
+            <PostSection>
+                <StText>항해66 게시판</StText>
+                <Buttonbox>
+                    <div>
+                        <Button>All</Button>
+                        <Button>Spring</Button>
+                        <Button>React</Button>
+                        <Button>Node.js</Button>
+                    </div>
+                </Buttonbox>
+                <div class="posts-box">
+                    {/* {data?.map((post) => {
+                        return (
                             <TitleBox onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
-                <Skillbox>{post.postSkill}</Skillbox>
-                <Stunderbar>
-                  <Commentbox>{post.postTitle}</Commentbox>
-                  <Viewbox>{post.postVisitCnt} View</Viewbox>
-                  <Likecommentbox>
-                    <span>
-                      <AiFillHeart color="red" />
-                    </span>
-                    <span> {post.postLikes}</span>
-                    <span>
-                      <BiCommentDetail />
-                    </span>
-                    <span>{post.cmtCount}</span>
-                  </Likecommentbox>
-                </Stunderbar>
-              </TitleBox>
-            );
-          })}
-        </div>
-      </PostSection>
-    </Container>
-  );
+                                <Skillbox>{post.postSkill}</Skillbox>
+                                <Stunderbar>
+                                    <Commentbox>{post.postTitle}</Commentbox>
+                                    <Viewbox>{post.postVisitCnt} View</Viewbox>
+                                    <Likecommentbox>
+                                        <span>
+                                            <AiFillHeart color="red" />
+                                        </span>
+                                        <span> {post.postLikes}</span>
+                                        <span>
+                                            <BiCommentDetail />
+                                        </span>
+                                        <span>{post.cmtCount}</span>
+                                    </Likecommentbox>
+                                </Stunderbar>
+                            </TitleBox>
+                        );
+                    })} */}
+                </div>
+            </PostSection>
+        </Container>
+    );
 }
 const Container = styled.div`
   display: flex;

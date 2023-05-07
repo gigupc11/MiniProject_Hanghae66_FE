@@ -33,7 +33,7 @@ function SignUp() {
         userYear,
         userSkill,
         userRole,
-      }, {
+      }, {},{
         headers: {
         },
       });
@@ -44,7 +44,7 @@ function SignUp() {
 
     if (responseCode !== 'BAD_REQUEST') {
       alert('회원가입에 성공했습니다!');
-      // navigate('/')
+      navigate('/')
       console.log(userId, userName, userPassword, userYear, userSkill, userRole);
     } else {
       alert(response.data.msg);

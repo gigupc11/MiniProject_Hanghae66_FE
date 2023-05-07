@@ -30,9 +30,9 @@ function Write({ Open }) {
     event.preventDefault();
 
     const addPost = {
-      title,
-      contents,
-      userSkill,
+      postTitle: title,
+      postContent: contents,
+      postSkill: userSkill,
     };
 
     mutation.mutate(addPost);

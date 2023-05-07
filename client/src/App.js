@@ -21,7 +21,6 @@ function App() {
         dispatch(setUserId(decoded.sub))
         dispatch(setIsAuthenticated(true))
 
-        
       } catch (error) {
         console.error("토큰 디코드 오류:", error)
         dispatch(setIsAuthenticated(false))

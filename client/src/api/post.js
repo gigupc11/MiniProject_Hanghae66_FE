@@ -4,8 +4,7 @@ import Cookies from 'js-cookie';
 const getToken = () => Cookies.get('token');
 
 const getPosts = async () => {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/posts`);
-    
+    const response = await axios.get('http://localhost:8080/post');
     return response.data;
 }
 
@@ -14,7 +13,7 @@ const addPosts = async (newPost) => {
     const token = getToken();
     try {
       const response = await axios.post(
-        `/post`,
+        `http://localhost:8080/post`,
         newPost,
         {
           headers: {
