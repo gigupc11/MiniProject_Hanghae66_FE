@@ -25,10 +25,10 @@ function Detail() {
     const [cmtContent, setCmtContent] = useState("");
     const [oldCmtContent, setOldCmtContent] = useState("");
     const [update, setUpdate] = useState(false);
-    const [updateCommentState, setUpdateCommentState] = useState(false);
+    const [updateCommentState, setUpdateCommentState] = useState(null);
     const [checked, setChecked] = useState(false);
 
-    console.log(updateCommentState)
+    console.log(update)
     useEffect(() => {
         const filteredData = data.filter(
             (item) => item.postId === parseInt(params.id)
@@ -108,15 +108,15 @@ function Detail() {
     // 게시글 삭제
     const handleDeleteButtonClick = (event) => {
         event.preventDefault();
-        const postId = filteredData[0]?.id;
+        const postId = filteredData[0]?.postId;
         deleteMutation.mutate(parseInt(postId));
     };
 
     // 게시글 수정
     const handleSubmitButtonClick = (event) => {
         event.preventDefault();
-        const postId = parseInt(filteredData[0]?.id);
-
+        const postId = parseInt(filteredData[0]?.postId);
+        console.log(postId)
         const updatedPost = {
             postTitle,
             postContents,
@@ -127,7 +127,7 @@ function Detail() {
     // 덧글 추가
     const handleCommentSubmitButtonClick = (event) => {
         event.preventDefault();
-        const postId = parseInt(filteredData[0]?.id);
+        const postId = parseInt(filteredData[0]?.postId);
 
         const newComment = {
             cmtContent,
@@ -139,138 +139,153 @@ function Detail() {
     const handleCommentDeleteButtonClick = (commentId) => {
         deleteCommentMutation.mutate(parseInt(commentId));
     };
-    updateCommentMutation.mutate({ commentId, updatedComment });
-  };
-  const handleSubmitLikeButtonClick = (e) => {
-    // event.preventDefault();
-    const postId = parseInt(filteredData[0]?.id);
-    setChecked(e);
-    likePostMutation.mutate(postId);
-  };
 
-  return (
-    <Container>
-      <Header />
-      <PostSection>
-        <DetailBox2>
-          <TextWrap>게시글</TextWrap>
-        </DetailBox2>
-        <DetailBox>
-          <BtnWrap>
-            {update ? (
-              <Sttitle>
-                제목{" "}
-                <Input
-                  value={postTitle}
-                  onChange={(e) => setPostTitle(e.target.value)}
-                />
-              </Sttitle>
-            ) : (
-              <Sttitle>{oldTitle}</Sttitle>
-            )}
+    // 덧글 수정
+    const handleCommentUpdateButtonClick = (commentId) => {
+        const updatedComment = {
+            cmtContent,
+        };
+        console.log(commentId)
+        setUpdateCommentState(null);
+        updateCommentMutation.mutate({ commentId, updatedComment });
+    };
 
-            <StView>
-              <span>5View</span>
-              <span>
-                <LikeBtn>
-                  <HeartCheckbox
-                    handleSubmitLikeButtonClick={handleSubmitLikeButtonClick}
-                    checked={checked}
-                    setChecked={setChecked}
-                  />
-                </LikeBtn>
-                {/* <LikeBtn>❤️</LikeBtn> 10 */}
-              </span>
-            </StView>
-            <Button onClick={() => setUpdate(true)}>수정</Button>
-            <Button onClick={handleSubmitButtonClick}>수정완료</Button>
-            <Button onClick={handleDeleteButtonClick}>삭제</Button>
-          </BtnWrap>
-          <InputWrap>
-            <div>
-              <ContentsWrap>
-                {/* 여기 내용들어가는 부분 코드인데 확인한번만 부탁드리겠습니다! */}
-                {/* {update ? (
-                  <Input
-                    value={postContents}
-                    onChange={(e) => setPostContents(e.target.value)}
-                  />
-                ) : (
-                  <h4 class="contents">{oldContents}</h4>
-                )} */}
-              </ContentsWrap>
+    const handleSubmitLikeButtonClick = (e) => {
+        // event.preventDefault();
+        const postId = parseInt(filteredData[0]?.postId);
+        setChecked(e);
+        likePostMutation.mutate(postId);
+    };
 
-              <CommentWrap>
-                <StText>Comment</StText>
-                <Input
-                  value={cmtContent}
-                  onChange={(e) => setCmtContent(e.target.value)}
-                  size="custom"
-                  height={"30px"}
-                  width={"580px"}
-                />
-                <Button onClick={handleCommentSubmitButtonClick}>입력</Button>
-              </CommentWrap>
+    return (
+        <Container>
+            <Header />
+            <PostSection>
+                <DetailBox2>
+                    <TextWrap>게시글</TextWrap>
+                </DetailBox2>
+                <DetailBox>
+                    <BtnWrap>
+                        {update ? (
+                            <Sttitle>
+                                <Input
+                                    value={postTitle}
+                                    onChange={(e) => setPostTitle(e.target.value)}
+                                />
+                            </Sttitle>
+                        ) : (
+                            <Sttitle>{oldTitle}</Sttitle>
+                        )}
 
-              <div>
-                <CommentBox>
-                  {comments?.map((cmtContent) => (
-                    <CommentBox key={cmtContent.cmtId}>
-                      <UserIDLine>
-                        <StText>
-                          {cmtContent.userYear}기 {cmtContent.cmtUserName}
-                        </StText>
-                      </UserIDLine>
-                      {updateCommentState ? (
-                        <CommentLine>
-                          <Stcommentbox>
-                            <Input
-                              value={cmtContent}
-                              onChange={(e) => setCmtContent(e.tartget.value)}
-                            />
-                          </Stcommentbox>
-                        </CommentLine>
-                      ) : (
-                        <CommentLine>
-                          <Stcommentbox>{cmtContent.cmtContent}</Stcommentbox>
-                        </CommentLine>
-                      )}
-                      {updateCommentState ? (
-                        <ButtonLine>
-                          <Stbtn onClick={() => setUpdateCommentState(true)}>
-                            수정
-                          </Stbtn>
-                          <Stbtn
-                            onClick={() =>
-                              handleCommentDeleteButtonClick(cmtContent.cmtId)
-                            }
-                          >
-                            삭제
-                          </Stbtn>
-                        </ButtonLine>
-                      ) : (
-                        <ButtonLine>
-                          <Stbtn
-                            onClick={() =>
-                              handleCommentUpdateButtonClick(cmtContent.cmtId)
-                            }
-                          >
-                            수정완료
-                          </Stbtn>
-                        </ButtonLine>
-                      )}
-                    </CommentBox>
-                  ))}
-                </CommentBox>
-              </div>
-            </div>
-          </InputWrap>
-        </DetailBox>
-      </PostSection>
-    </Container>
-  );
+                        <StView>
+                            <span>5View</span>
+                            <span>
+                                <LikeBtn>
+                                    <HeartCheckbox
+                                        handleSubmitLikeButtonClick={handleSubmitLikeButtonClick}
+                                        checked={checked}
+                                        setChecked={setChecked}
+                                    />
+                                </LikeBtn>
+                                {/* <LikeBtn>❤️</LikeBtn> 10 */}
+                            </span>
+                        </StView>
+                        {update ? (
+                            <>
+                            <Button onClick={handleSubmitButtonClick}>수정완료</Button>
+                            </>
+                        ) : (
+                            <>
+                                <Button onClick={() => setUpdate(true)}>수정</Button>
+                                <Button onClick={handleDeleteButtonClick}>삭제</Button>
+                            </>
+                        )}
+                    </BtnWrap>
+                    <InputWrap>
+                        <div>
+                            <ContentsWrap>
+                                {/* 여기 내용들어가는 부분 코드인데 확인한번만 부탁드리겠습니다! */}
+                                {update ? (
+                                    <Input
+                                        value={postContents}
+                                        onChange={(e) => setPostContents(e.target.value)}
+                                    />
+                                ) : (
+                                    <h4 class="contents">{oldContents}</h4>
+                                )}
+                            </ContentsWrap>
+
+                            <CommentWrap>
+                                <StText>Comment</StText>
+                                <Input
+                                    value={cmtContent}
+                                    onChange={(e) => setCmtContent(e.target.value)}
+                                    size="custom"
+                                    height={"30px"}
+                                    width={"580px"}
+                                />
+                                <Button onClick={handleCommentSubmitButtonClick}>입력</Button>
+                            </CommentWrap>
+
+                            <div>
+                                <CommentBox>
+                                    {comments?.map((cmtContent) => (
+                                        <CommentBox key={cmtContent.cmtId}>
+                                            {updateCommentState === cmtContent.cmtId ? (
+                                                <>
+                                                    <UserIDLine>
+                                                        <StText>
+                                                            {cmtContent.userYear}기 {cmtContent.cmtUserName}
+                                                        </StText>
+                                                    </UserIDLine>
+                                                    <CommentLine>
+                                                        <Stcommentbox>
+                                                            <Input
+                                                                value={oldCmtContent}
+                                                                onChange={(e) => setCmtContent(e.target.value)}
+                                                            />
+                                                        </Stcommentbox>
+                                                    </CommentLine>
+                                                    <ButtonLine>
+                                                        <Stbtn
+                                                            onClick={() => handleCommentUpdateButtonClick(cmtContent.cmtId)}
+                                                        >
+                                                            수정완료
+                                                        </Stbtn>
+                                                    </ButtonLine>
+
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <UserIDLine>
+                                                        <StText>
+                                                            {cmtContent.userYear}기 {cmtContent.cmtUserName}
+                                                        </StText>
+                                                    </UserIDLine>
+                                                    <CommentLine>
+                                                        <Stcommentbox>{cmtContent.cmtContent}</Stcommentbox>
+                                                    </CommentLine>
+                                                    <ButtonLine>
+                                                        <Stbtn onClick={() => setUpdateCommentState(cmtContent.cmtId)}>수정</Stbtn>
+                                                        <Stbtn
+                                                            onClick={() => handleCommentDeleteButtonClick(cmtContent.cmtId)}
+                                                        >
+                                                            삭제
+                                                        </Stbtn>
+                                                    </ButtonLine>
+                                                </>
+                                            )}
+                                        </CommentBox>
+                                    ))}
+                                </CommentBox>
+                            </div>
+                        </div>
+                    </InputWrap>
+                </DetailBox>
+            </PostSection>
+        </Container>
+    );
 }
-
 
 const Container = styled.div`
   display: flex;
@@ -418,6 +433,8 @@ const LikeBtn = styled.button`
 `;
 const Stbtn = styled.button`
   all: unset;
+  width: 100px;
+  height: 100px;
   font-weight: 700;
   :hover {
     color: gray;
