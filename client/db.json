@@ -10,13 +10,13 @@
       "comments": [
       {
       "cmtId": 1,
-      "cmtContent": "안녕하세요. 인사박습니다.",
+      "cmtContent": "안녕하세요. 인사올습니다.",
       "userYear" : 14,
       "cmtLikes": 5,
       "cmtCrdat": "2022-12-01T12:56:36.821474",
       "modifiedAt": "2022-12-01T12:56:36.821474",
       "cmtUserId" : "코멘트 작성자 아이디",
-      "cmtUserName" : "아아아아아아아아아아"
+      "cmtUserName" : "아아아아아아"
       },
       {
       "cmtId": 2,
