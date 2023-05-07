@@ -18,11 +18,12 @@ function SignUp() {
   const handleChange = (event) => {
     setUserRole(event.target.value);
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('/auth/signup', {
+      const response = await axios.post('http://localhost:8080/auth/signup', {
         userId,
         userName,
         userPassword,
@@ -34,22 +35,24 @@ function SignUp() {
         },
       });
 
-      // if (response.status === 200) {
-      //     alert('회원가입에 성공했습니다!');
-      // } else {
-      //     alert('회원가입에 실패했습니다.');
-      //     console.log('회원가입 오류:', response.data);
-      // }
+
+    const responseCode = response.data.code;
+      console.log(responseCode)
+
+    if (responseCode !== 'BAD_REQUEST') {
       alert('회원가입에 성공했습니다!');
       // navigate('/')
-      console.log(userId,userName, userPassword, userYear, userSkill,userRole)
-    } catch (error) {
-      console.error('회원가입 오류:', error.response.data);
-      alert(JSON.stringify(error.response.data));
-      console.log(userId,userName, userPassword, userYear, userSkill,userRole)
+      console.log(userId, userName, userPassword, userYear, userSkill, userRole);
+    } else {
+      alert(response.data.msg);
+      console.error('회원가입 오류:', response);
     }
+  } catch (error) {
+    console.error('회원가입 오류:', error.response.data);
+    alert(JSON.stringify(error.response.data));
+    console.log(userId, userName, userPassword, userYear, userSkill, userRole);
   }
-
+}
   return (
     <StLayout>
       <StsignBox>
