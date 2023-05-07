@@ -15,28 +15,32 @@ function Login() {
   const handleSubmitButtonClick = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('/auth/login', {
+      const response = await axios.post('http://localhost:8080/auth/login', {
         userId,
         userPassword,
-      }, {
-        headers: {
-        },
       });
 
-      // const { token } = response.data;
-      const rowToken = response.headers.get('access_token');
-      const token = rowToken.split(" ")[1]
-      Cookies.set('token', token, { expires: 1 / 24 });
-      
-      alert('로그인에 성공했습니다!');
-      resetId("")
-      resetPassword("")
-      // dispatch(setIsAuthenticated(true));
-      // dispatch(setUserId(id));
-      // navigate(`/`)
+
+      const responseCode = response.data.code
+      if (responseCode != "BAD_REQUEST") {
+        const rowToken = response.headers['access_key'];
+        console.log(rowToken)
+        const token = rowToken.split(" ")[1]
+        Cookies.set('token', token, { expires: 1 / 24 });
+  
+        alert('로그인에 성공했습니다!');
+        resetId("")
+        resetPassword("")
+        // dispatch(setIsAuthenticated(true));
+        // dispatch(setUserId(id));
+        // navigate(`/`)
+      } else {
+        alert(response.data.msg);
+        console.error(response.data.msg);
+      }
     } catch (error) {
-      console.error('로그인 오류:', error.response.data);
-      alert(JSON.stringify(error.response.data));
+      console.error('로그인 오류:', error);
+      alert(JSON.stringify(error));
       console.log(userId, userPassword)
     }
   }

@@ -1,10 +1,46 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import logo from '../assets/logo.png'
 import Button from "../components/Button";
 import Write from '../components/Write';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserId } from '../redux/modules/authReducer';
 
+
+function Header() {
+    const [modal, setModal] = useState(false)
+    const navigate = useNavigate();
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+    const userId = useSelector((state) => state.auth.userId)
+
+    return (
+        <>
+            <div>
+                {modal && (<Write Open={() => {
+                    setModal(false)
+                }} />)}
+            </div>
+
+            <HeaderBar>
+                <Logo class="logo" src={logo} onClick={() => {
+                    navigate("/")
+                }} />
+                {
+                    <IdBtn onClick={() => {
+                        navigate("/mypage")
+                    }}>{userId} 님</IdBtn>
+                }
+                <BtnBox class="btn-box">
+                    <Button onClick={() => {
+                        setModal(true)
+                    }}>글쓰기</Button>
+                    <Button>로그아웃</Button>
+                </BtnBox>
+            </HeaderBar>
+        </>
+    )
+}
 
 const HeaderBar = styled.div`
     position: relative;
@@ -39,36 +75,4 @@ const IdBtn = styled.button`
         border-bottom: 2px solid white;
     }
 `
-
-function Header() {
-    const [modal,setModal] = useState(false)
-    const navigate = useNavigate();
-
-
-    return (
-        <>
-        <div>
-            {modal && (<Write Open = {() => {
-                setModal(false)
-            }} />)}
-        </div>
-        
-        <HeaderBar>
-            <Logo class="logo" src={logo} onClick={()=>{
-                navigate("/")
-            }}/>
-                <IdBtn onClick={()=>{
-                navigate("/mypage")
-            }}>HangHae 님</IdBtn>
-                <BtnBox class="btn-box">
-                    <Button onClick = {() => {
-                        setModal(true)
-                    }}>글쓰기</Button>
-                    <Button>로그아웃</Button>
-                </BtnBox>
-        </HeaderBar>
-        </>
-    )
-}
-
 export default Header
