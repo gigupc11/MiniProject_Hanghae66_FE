@@ -6,11 +6,12 @@ import logo from "../assets/logo.png"
 import useInput from "../hooks/useInput";
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [userId, handleIdChange, resetId] = useInput('');
   const [userPassword, handlePasswordChange, resetPassword] = useInput('');
-
+  const navigate = useNavigate()
   const handleSubmitButtonClick = async (event) => {
     event.preventDefault();
     try {
@@ -55,7 +56,7 @@ function Login() {
             placeholder={"비밀번호를 입력해주세요"} type="password" size="large" />
         </StInputbox>
         <StButtonbox>
-          <Button size="large">회원가입</Button>
+          <Button size="large" onClick = {()=> {navigate("/signup")}}>회원가입</Button>
           <Button onClick={(event) => { handleSubmitButtonClick(event) }} size="large">로그인</Button>
         </StButtonbox>
       </StLoginBox>

@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import Select from "../components/Select";
 import useInput from "../hooks/useInput";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
   const [userId, setUserId] = useState('');
@@ -18,6 +19,7 @@ function SignUp() {
   const handleChange = (event) => {
     setUserRole(event.target.value);
   };
+  const navigate = useNavigate()
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -114,7 +116,7 @@ function SignUp() {
       </StButtonbox>
         </StInputbox>
         <StButtonbox>
-          <Button size="custom">취소</Button>
+          <Button size="custom" onClick={()=> {navigate("/login")}}>취소</Button>
           <Button onClick={handleSubmit} size="large">가입완료</Button>
         </StButtonbox>
 

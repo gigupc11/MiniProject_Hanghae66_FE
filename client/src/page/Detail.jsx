@@ -30,7 +30,7 @@ function Detail() {
 
     console.log(update)
     useEffect(() => {
-        const filteredData = data.filter(
+        const filteredData = data?.filter(
             (item) => item.postId === parseInt(params.id)
         );
         const oldTitle = filteredData[0]?.postTitle;
@@ -88,7 +88,7 @@ function Detail() {
     });
 
     const { isLoading, isError, data } = useQuery("posts", getPosts);
-
+    console.log(data)
     if (isLoading) {
         return <h1>로딩중</h1>;
     }
@@ -111,7 +111,6 @@ function Detail() {
         const postId = filteredData[0]?.postId;
         deleteMutation.mutate(parseInt(postId));
     };
-
     // 게시글 수정
     const handleSubmitButtonClick = (event) => {
         event.preventDefault();
@@ -187,7 +186,6 @@ function Detail() {
                                         setChecked={setChecked}
                                     />
                                 </LikeBtn>
-                                {/* <LikeBtn>❤️</LikeBtn> 10 */}
                             </span>
                         </StView>
                         {update ? (
@@ -369,7 +367,7 @@ const CommentLine = styled.div`
   display: flex;
   align-items: center;
   position: fixed;
-  margin-left: 175px;
+  margin-left: 135px;
   width: 600px;
   border-bottom: 1px solid lightgray;
   /* background-color: red; */
@@ -382,7 +380,7 @@ const ButtonLine = styled.div`
   align-items: center;
   width: 80px;
 
-  margin-left: 700px;
+  margin-left: 640px;
   justify-content: center;
 `;
 const UserIDLine = styled.div`
