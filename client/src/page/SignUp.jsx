@@ -13,7 +13,7 @@ function SignUp() {
   const [userYear, setUserYear] = useState('');
   const [userSkill, setUserSkill] = useState(''); // 0=spring, 2=react, 3=nodejs
   const [userRole, setUserRole] = useState(''); // admin || user
-
+  console.log(userId,userName, userPassword, userYear, userSkill,userRole)
   console.log(userRole)
   const handleChange = (event) => {
     setUserRole(event.target.value);
@@ -46,6 +46,7 @@ function SignUp() {
     } catch (error) {
       console.error('회원가입 오류:', error.response.data);
       alert(JSON.stringify(error.response.data));
+      console.log(userId,userName, userPassword, userYear, userSkill,userRole)
     }
   }
 

@@ -8,14 +8,14 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 function Login() {
-  const [userName, handleNameChange, resetName] = useInput('');
+  const [userId, handleIdChange, resetId] = useInput('');
   const [userPassword, handlePasswordChange, resetPassword] = useInput('');
 
   const handleSubmitButtonClick = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.post('/auth/login', {
-        userName,
+        userId,
         userPassword,
       }, {
         headers: {
@@ -28,7 +28,7 @@ function Login() {
       Cookies.set('token', token, { expires: 1 / 24 });
       
       alert('로그인에 성공했습니다!');
-      resetName("")
+      resetId("")
       resetPassword("")
       // dispatch(setIsAuthenticated(true));
       // dispatch(setUserId(id));
@@ -36,7 +36,7 @@ function Login() {
     } catch (error) {
       console.error('로그인 오류:', error.response.data);
       alert(JSON.stringify(error.response.data));
-      console.log(userName, userPassword)
+      console.log(userId, userPassword)
     }
   }
 
@@ -46,13 +46,13 @@ function Login() {
         <Stlogo src={logo} alt="logo" />
         <StInputbox>
           <Input
-            value={userName}
-            onChange={handleNameChange}
+            value={userId}
+            onChange={handleIdChange}
             placeholder={"아이디를 입력해주세요"} size="large" />
           <Input
             value={userPassword}
             onChange={handlePasswordChange}
-            placeholder={"비밀번호를 입력해주세요"} type="userPassword" size="large" />
+            placeholder={"비밀번호를 입력해주세요"} type="password" size="large" />
         </StInputbox>
         <StButtonbox>
           <Button size="large">회원가입</Button>
