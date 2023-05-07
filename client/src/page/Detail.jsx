@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import styled from "styled-components";
 import Button from "../components/Button";
@@ -14,242 +14,257 @@ import HeartCheckbox from "../components/HeartCheckBox";
 // const
 
 function Detail() {
-  // 이전 컴포넌트에서 넘어온 parameter를 조회
-  const params = useParams();
-  // 리액트 쿼리 관련 코드
-  const queryClient = useQueryClient();
+    // 이전 컴포넌트에서 넘어온 parameter를 조회
+    const params = useParams();
+    // 리액트 쿼리 관련 코드
+    const queryClient = useQueryClient();
 
-  const navigate = useNavigate();
-  const [postTitle, setPostTitle] = useState("");
-  const [postContents, setPostContents] = useState("");
-  const [cmtContent, setCmtContent] = useState("");
-  const [update, setUpdate] = useState(false);
-  const [updateCommentState, setUpdateCommentState] = useState(false);
-  const [checked, setChecked] = useState(false);
+    const navigate = useNavigate();
+    const [postTitle, setPostTitle] = useState("");
+    const [postContents, setPostContents] = useState("");
+    const [cmtContent, setCmtContent] = useState("");
+    const [oldCmtContent, setOldCmtContent] = useState("");
+    const [update, setUpdate] = useState(false);
+    const [updateCommentState, setUpdateCommentState] = useState(false);
+    const [checked, setChecked] = useState(false);
 
-  const deleteMutation = useMutation(deletePost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
-  const updateMutation = useMutation(updatePost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
+    console.log(updateCommentState)
+    useEffect(() => {
+        const filteredData = data.filter(
+            (item) => item.postId === parseInt(params.id)
+        );
+        const oldTitle = filteredData[0]?.postTitle;
+        const oldContents = filteredData[0]?.postContents;
+        const comments = filteredData[0]?.comments;
 
-  const addCommentMutation = useMutation(addComment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
-  const deleteCommentMutation = useMutation(deleteComment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
+        console.log(filteredData)
+        setPostTitle(oldTitle)
+        setPostContents(oldContents)
+        setOldCmtContent(comments[0]?.cmtContent)
+    })
+    const deleteMutation = useMutation(deletePost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+            console.log("성공");
+            navigate(-1);
+        },
+    });
+    const updateMutation = useMutation(updatePost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+            console.log("성공");
+            navigate(-1);
+        },
+    });
 
-  const updateCommentMutation = useMutation(updateComment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-      navigate(-1);
-    },
-  });
+    const addCommentMutation = useMutation(addComment, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+            console.log("성공");
+            navigate(-1);
+        },
+    });
+    const deleteCommentMutation = useMutation(deleteComment, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+            console.log("성공");
+            navigate(-1);
+        },
+    });
 
-  const likePostMutation = useMutation(likePost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("posts");
-      console.log("성공");
-    },
-  });
+    const updateCommentMutation = useMutation(updateComment, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+            console.log("성공");
+            navigate(-1);
+        },
+    });
 
-  const { isLoading, isError, data } = useQuery("posts", getPosts);
+    const likePostMutation = useMutation(likePost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("posts");
+            console.log("성공");
+        },
+    });
 
-  if (isLoading) {
-    return <h1>로딩중</h1>;
-  }
+    const { isLoading, isError, data } = useQuery("posts", getPosts);
 
-  if (isError) {
-    return <h1>오류가 발생하였습니다</h1>;
-  }
+    if (isLoading) {
+        return <h1>로딩중</h1>;
+    }
 
-  const filteredData = data.filter(
-    (item) => item.postId === parseInt(params.id)
-  );
+    if (isError) {
+        return <h1>오류가 발생하였습니다</h1>;
+    }
 
-  const oldTitle = filteredData[0]?.postTitle;
-  const oldContents = filteredData[0]?.postContents;
-  const comments = filteredData[0]?.comments;
-  console.log(comments);
-  // 게시글 삭제
-  const handleDeleteButtonClick = (event) => {
-    event.preventDefault();
-    const postId = filteredData[0]?.id;
-    deleteMutation.mutate(parseInt(postId));
-  };
+    const filteredData = data.filter(
+        (item) => item.postId === parseInt(params.id)
+    );
 
-  // 게시글 수정
-  const handleSubmitButtonClick = (event) => {
-    event.preventDefault();
-    const postId = parseInt(filteredData[0]?.id);
-
-    const updatedPost = {
-      postTitle,
-      postContents,
+    const oldTitle = filteredData[0]?.postTitle;
+    const oldContents = filteredData[0]?.postContents;
+    const comments = filteredData[0]?.comments;
+    console.log(comments);
+    // 게시글 삭제
+    const handleDeleteButtonClick = (event) => {
+        event.preventDefault();
+        const postId = filteredData[0]?.id;
+        deleteMutation.mutate(parseInt(postId));
     };
-    updateMutation.mutate({ postId, updatedPost });
-  };
 
-  // 덧글 추가
-  const handleCommentSubmitButtonClick = (event) => {
-    event.preventDefault();
-    const postId = parseInt(filteredData[0]?.id);
+    // 게시글 수정
+    const handleSubmitButtonClick = (event) => {
+        event.preventDefault();
+        const postId = parseInt(filteredData[0]?.id);
 
-    const newComment = {
-      cmtContent,
+        const updatedPost = {
+            postTitle,
+            postContents,
+        };
+        updateMutation.mutate({ postId, updatedPost });
     };
-    addCommentMutation.mutate({ postId, newComment });
-  };
 
-  // 덧글 삭제
-  const handleCommentDeleteButtonClick = (commentId) => {
-    deleteCommentMutation.mutate(parseInt(commentId));
-  };
+    // 덧글 추가
+    const handleCommentSubmitButtonClick = (event) => {
+        event.preventDefault();
+        const postId = parseInt(filteredData[0]?.id);
 
-  // 덧글 수정
-  const handleCommentUpdateButtonClick = (commentId) => {
-    const updatedComment = {
-      cmtContent,
+        const newComment = {
+            cmtContent,
+        };
+        addCommentMutation.mutate({ postId, newComment });
     };
-    updateCommentMutation.mutate({ commentId, updatedComment });
-  };
-  const handleSubmitLikeButtonClick = (e) => {
-    // event.preventDefault();
-    const postId = parseInt(filteredData[0]?.id);
-    setChecked(e);
-    likePostMutation.mutate(postId);
-  };
 
-  return (
-    <Container>
-      <Header />
-      <PostSection>
-        <DetailBox2>
-          <TextWrap>게시글</TextWrap>
-        </DetailBox2>
-        <DetailBox>
-          <BtnWrap>
-            {update ? (
-              <Sttitle>
-                제목{" "}
-                <Input
-                  value={postTitle}
-                  onChange={(e) => setPostTitle(e.target.value)}
-                />
-              </Sttitle>
-            ) : (
-              <Sttitle>{oldTitle}</Sttitle>
-            )}
+    // 덧글 삭제
+    const handleCommentDeleteButtonClick = (commentId) => {
+        deleteCommentMutation.mutate(parseInt(commentId));
+    };
 
-            <StView>
-              <span>5View</span>
-              <span>
-                <LikeBtn>
-                  <HeartCheckbox
-                    handleSubmitLikeButtonClick={handleSubmitLikeButtonClick}
-                    checked={checked}
-                    setChecked={setChecked}
-                  />
-                </LikeBtn>
-                {/* <LikeBtn>❤️</LikeBtn> 10 */}
-              </span>
-            </StView>
-            <Button onClick={() => setUpdate(true)}>수정</Button>
-            <Button onClick={handleSubmitButtonClick}>수정완료</Button>
-            <Button onClick={handleDeleteButtonClick}>삭제</Button>
-          </BtnWrap>
-          <InputWrap>
-            <div>
-              <ContentsWrap>
-                {update ? (
-                  <Input
-                    value={postContents}
-                    onChange={(e) => setPostContents(e.target.value)}
-                  />
-                ) : (
-                  <h4 class="contents">{oldContents}</h4>
-                )}
-              </ContentsWrap>
+    // 덧글 수정
+    const handleCommentUpdateButtonClick = (commentId) => {
+        const updatedComment = {
+            cmtContent,
+        };
+        updateCommentMutation.mutate({ commentId, updatedComment });
+    };
+    const handleSubmitLikeButtonClick = (e) => {
+        // event.preventDefault();
+        const postId = parseInt(filteredData[0]?.id);
+        setChecked(e);
+        likePostMutation.mutate(postId);
+    };
 
-              <CommentWrap>
-                <StText>Comment</StText>
-                <Input
-                  value={cmtContent}
-                  onChange={(e) => setCmtContent(e.target.value)}
-                  size="custom"
-                  height={"30px"}
-                  width={"580px"}
-                />
-                <Button onClick={handleCommentSubmitButtonClick}>입력</Button>
-              </CommentWrap>
+    return (
+        <Container>
+            <Header />
+            <PostSection>
+                <DetailBox2>
+                    <TextWrap>게시글</TextWrap>
+                </DetailBox2>
+                <DetailBox>
+                    <BtnWrap>
+                        {update ? (
+                            <Sttitle>
+                                제목{" "}
+                                <Input
+                                    value={postTitle}
+                                    onChange={(e) => setPostTitle(e.target.value)}
+                                />
+                            </Sttitle>
+                        ) : (
+                            <Sttitle>{oldTitle}</Sttitle>
+                        )}
 
-              <div>
-                <CommentBox>
-                  {comments?.map((cmtContent) => (
-                    <CommentBox key={cmtContent.cmtId}>
-                      <UserIDLine>
-                        <StText>
-                          {cmtContent.userYear}기 {cmtContent.cmtUserName}
-                        </StText>
-                      </UserIDLine>
-                      {updateCommentState ? (
-                        <CommentLine>
-                          <Stcommentbox>
-                            <Input
-                              value={cmtContent}
-                              onChange={(e) => setCmtContent(e.tartget.value)}
-                            />
-                          </Stcommentbox>
-                        </CommentLine>
-                      ) : (
-                        <CommentLine>
-                          <Stcommentbox>{cmtContent.cmtContent}</Stcommentbox>
-                        </CommentLine>
-                      )}
-                      {updateCommentState ? (
-                        <ButtonLine>
-                          <Stbtn onClick={() => setUpdateCommentState(true)}>
-                            수정
-                          </Stbtn>
-                          <Stbtn
-                            onClick={() =>
-                              handleCommentDeleteButtonClick(cmtContent.cmtId)
-                            }
-                          >
-                            삭제
-                          </Stbtn>
-                        </ButtonLine>
-                      ) : (
-                        <ButtonLine>
-                          <Stbtn
-                            onClick={() =>
-                              handleCommentUpdateButtonClick(cmtContent.cmtId)
-                            }
-                          >
-                            수정완료
-                          </Stbtn>
-                        </ButtonLine>
-                      )}
-                      {/*                                                 
+                        <StView>
+                            <span>5View</span>
+                            <span>
+                                <LikeBtn>
+                                    <HeartCheckbox
+                                        handleSubmitLikeButtonClick={handleSubmitLikeButtonClick}
+                                        checked={checked}
+                                        setChecked={setChecked}
+                                    />
+                                </LikeBtn>
+                                {/* <LikeBtn>❤️</LikeBtn> 10 */}
+                            </span>
+                        </StView>
+                        <Button onClick={() => setUpdate(true)}>수정</Button>
+                        <Button onClick={handleSubmitButtonClick}>수정완료</Button>
+                        <Button onClick={handleDeleteButtonClick}>삭제</Button>
+                    </BtnWrap>
+                    <InputWrap>
+                        <div>
+                            <ContentsWrap>
+                                {update ? (
+                                    <Input
+                                        value={postContents}
+                                        onChange={(e) => setPostContents(e.target.value)}
+                                    />
+                                ) : (
+                                    <h4 class="contents">{oldContents}</h4>
+                                )}
+                            </ContentsWrap>
+
+                            <CommentWrap>
+                                <StText>Comment</StText>
+                                <Input
+                                    value={cmtContent}
+                                    onChange={(e) => setCmtContent(e.target.value)}
+                                    size="custom"
+                                    height={"30px"}
+                                    width={"580px"}
+                                />
+                                <Button onClick={handleCommentSubmitButtonClick}>입력</Button>
+                            </CommentWrap>
+
+                            <div>
+                                <CommentBox>
+                                    {comments?.map((cmtContent) => (
+                                        <CommentBox key={cmtContent.cmtId}>
+                                            <UserIDLine>
+                                                <StText>
+                                                    {cmtContent.userYear}기 {cmtContent.cmtUserName}
+                                                </StText>
+                                            </UserIDLine>
+                                            {updateCommentState ? (
+                                                <CommentLine>
+                                                    <Stcommentbox>
+                                                        <Input
+                                                            value={oldCmtContent}
+                                                            onChange={(e) => setCmtContent(e.tartget.value)}
+                                                        />
+                                                    </Stcommentbox>
+                                                </CommentLine>
+                                            ) : (
+                                                <CommentLine>
+                                                    <Stcommentbox>{cmtContent.cmtContent}</Stcommentbox>
+                                                </CommentLine>
+                                            )}
+                                            {updateCommentState ? (
+                                                <ButtonLine>
+                                                    <Stbtn onClick={() => setUpdateCommentState(true)}>
+                                                        수정
+                                                    </Stbtn>
+                                                    <Stbtn
+                                                        onClick={() =>
+                                                            handleCommentDeleteButtonClick(cmtContent.cmtId)
+                                                        }
+                                                    >
+                                                        삭제
+                                                    </Stbtn>
+                                                </ButtonLine>
+                                            ) : (
+                                                <ButtonLine>
+                                                    <Stbtn
+                                                        onClick={() =>
+                                                            handleCommentUpdateButtonClick(cmtContent.cmtId)
+                                                        }
+                                                    >
+                                                        수정완료
+                                                    </Stbtn>
+                                                </ButtonLine>
+                                            )}
+                                            {/*                                                 
                                             </CommentBox>
                                         ))
                                     }
@@ -262,52 +277,52 @@ function Detail() {
         </Container>
     );
 } */}
-                    </CommentBox>
-                  ))}
-                  <UserIDLine>
-                    <StText>14th Spring u*****</StText>
-                  </UserIDLine>
-                  <CommentLine>
-                    <Stcommentbox>짧은 댓글</Stcommentbox>
-                  </CommentLine>
-                  <ButtonLine>
-                    <Stbtn>수정</Stbtn>
-                    <Stbtn>삭제</Stbtn>
-                  </ButtonLine>
-                </CommentBox>
-                <CommentBox>
-                  <UserIDLine>
-                    <StText>14th React u*****</StText>
-                  </UserIDLine>
-                  <CommentLine>
-                    <Stcommentbox>
-                      긴댓글을을을을을을을을ㅇ릉을을을을을을ㅇ릉을을을을을을ㅇ릉을을을ㅇ릉릉ㄹ
-                    </Stcommentbox>
-                  </CommentLine>
-                  <ButtonLine>
-                    <Stbtn>수정</Stbtn>
-                    <Stbtn>삭제</Stbtn>
-                  </ButtonLine>
-                </CommentBox>
-                <CommentBox>
-                  <UserIDLine>
-                    <StText>14th Node.js u*****</StText>
-                  </UserIDLine>
-                  <CommentLine>
-                    <Stcommentbox>적당한 댓글 길이 인건가요</Stcommentbox>
-                  </CommentLine>
-                  <ButtonLine>
-                    <Stbtn>수정</Stbtn>
-                    <Stbtn>삭제</Stbtn>
-                  </ButtonLine>
-                </CommentBox>
-              </div>
-            </div>
-          </InputWrap>
-        </DetailBox>
-      </PostSection>
-    </Container>
-  );
+                                        </CommentBox>
+                                    ))}
+                                    <UserIDLine>
+                                        <StText>14th Spring u*****</StText>
+                                    </UserIDLine>
+                                    <CommentLine>
+                                        <Stcommentbox>짧은 댓글</Stcommentbox>
+                                    </CommentLine>
+                                    <ButtonLine>
+                                        <Stbtn>수정</Stbtn>
+                                        <Stbtn>삭제</Stbtn>
+                                    </ButtonLine>
+                                </CommentBox>
+                                <CommentBox>
+                                    <UserIDLine>
+                                        <StText>14th React u*****</StText>
+                                    </UserIDLine>
+                                    <CommentLine>
+                                        <Stcommentbox>
+                                            긴댓글을을을을을을을을ㅇ릉을을을을을을ㅇ릉을을을을을을ㅇ릉을을을ㅇ릉릉ㄹ
+                                        </Stcommentbox>
+                                    </CommentLine>
+                                    <ButtonLine>
+                                        <Stbtn>수정</Stbtn>
+                                        <Stbtn>삭제</Stbtn>
+                                    </ButtonLine>
+                                </CommentBox>
+                                <CommentBox>
+                                    <UserIDLine>
+                                        <StText>14th Node.js u*****</StText>
+                                    </UserIDLine>
+                                    <CommentLine>
+                                        <Stcommentbox>적당한 댓글 길이 인건가요</Stcommentbox>
+                                    </CommentLine>
+                                    <ButtonLine>
+                                        <Stbtn>수정</Stbtn>
+                                        <Stbtn>삭제</Stbtn>
+                                    </ButtonLine>
+                                </CommentBox>
+                            </div>
+                        </div>
+                    </InputWrap>
+                </DetailBox>
+            </PostSection>
+        </Container>
+    );
 }
 const Container = styled.div`
   display: flex;
