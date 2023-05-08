@@ -3,6 +3,7 @@ import jwt_decode from 'jwt-decode';
 import { setIsAuthenticated, setUserId } from "../redux/modules/authReducer"
 import axios from "axios"
 
+const getToken = () => Cookies.get("token");
 
 export const logout = async (dispatch) => {
     const token = getToken();
