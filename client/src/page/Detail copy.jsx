@@ -6,7 +6,7 @@ import Input from "../components/Input";
 import { useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { useMutation } from "react-query";
-import { getPosts, getPost, deletePost, updatePost, likePost } from "../api/post";
+import { getPosts, deletePost, updatePost, likePost } from "../api/post";
 import { Link, useNavigate } from "react-router-dom";
 import { addComment, deleteComment, updateComment } from "../api/comment";
 import HeartCheckbox from "../components/HeartCheckBox";
@@ -30,28 +30,30 @@ function Detail() {
     const [checked, setChecked] = useState(false);
 
     console.log(update)
-    const { isLoading, isError, data } = useQuery(["post", params.id], () => getPost(params.id));
+    const { isLoading, isError, data } = useQuery("posts", getPosts);
     // console.log(data)
 
     useEffect(() => {
         if (data) {
-            setPost(data);
-            setPostTitle(data.postTitle)
-            setPostContents(data.postContent)
-            console.log(data)
+            const filteredData = data?.filter((item) => item.postId === parseInt(params.id));
+            console.log(filteredData)
+            if (filteredData && filteredData.length > 0) {
+                const postData = filteredData[0];
+                setPost(postData);
+            }
         }
-    }, [data]);
-
+    }, [data, params.id]);
+    
     const deleteMutation = useMutation(deletePost, {
         onSuccess: () => {
-            queryClient.invalidateQueries(["post", params.id]);
+            queryClient.invalidateQueries("posts");
             console.log("성공");
             navigate(-1);
         },
     });
     const updateMutation = useMutation(updatePost, {
         onSuccess: () => {
-            queryClient.invalidateQueries(["post", params.id]);
+            queryClient.invalidateQueries("posts");
             console.log("성공");
             navigate(-1);
         },
@@ -59,14 +61,14 @@ function Detail() {
 
     const addCommentMutation = useMutation(addComment, {
         onSuccess: () => {
-            queryClient.invalidateQueries(["post", params.id]);
+            queryClient.invalidateQueries("posts");
             console.log("성공");
             navigate(-1);
         },
     });
     const deleteCommentMutation = useMutation(deleteComment, {
         onSuccess: () => {
-            queryClient.invalidateQueries(["post", params.id]);
+            queryClient.invalidateQueries("posts");
             console.log("성공");
             navigate(-1);
         },
@@ -74,7 +76,7 @@ function Detail() {
 
     const updateCommentMutation = useMutation(updateComment, {
         onSuccess: () => {
-            queryClient.invalidateQueries(["post", params.id]);
+            queryClient.invalidateQueries("posts");
             console.log("성공");
             navigate(-1);
         },
@@ -82,7 +84,7 @@ function Detail() {
 
     const likePostMutation = useMutation(likePost, {
         onSuccess: () => {
-            queryClient.invalidateQueries(["post", params.id]);
+            queryClient.invalidateQueries("posts");
             console.log("성공");
         },
     });
@@ -189,7 +191,7 @@ function Detail() {
                         </StView>
                         {update ? (
                             <>
-                                <Button onClick={handleSubmitButtonClick}>수정완료</Button>
+                            <Button onClick={handleSubmitButtonClick}>수정완료</Button>
                             </>
                         ) : (
                             <>
@@ -208,7 +210,7 @@ function Detail() {
                                         onChange={(e) => setPostContents(e.target.value)}
                                     />
                                 ) : (
-                                    <h4 class="contents">{post?.postContent !== undefined ? post.postContent : null}</h4>
+                                    <h4 class="contents"></h4>
                                 )}
                             </ContentsWrap>
 
