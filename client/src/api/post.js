@@ -103,4 +103,6 @@ const likePost = async (postId) => {
     console.error('인증에 실패했습니다:', error);
   }
 };
+
+
 export { getPosts, getPost, addPosts, deletePost, updatePost, likePost };

@@ -31,7 +31,7 @@ function Header() {
                 {isAuthenticated ?
                     <>
                         <IdBtn onClick={() => {
-                            navigate("/mypage")
+                            navigate(`/mypage/${userId}`)
                         }}>{userId} 님</IdBtn>
 
 
@@ -60,6 +60,8 @@ const HeaderBar = styled.div`
     justify-content: space-between;
     padding: 15px 5%;
     background: #000;
+    position: fixed;
+    z-index: 888;
 `
 
 const Logo = styled.img`
