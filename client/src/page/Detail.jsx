@@ -31,6 +31,7 @@ function Detail() {
     const [checked, setChecked] = useState(false);
 
     const { isLoading, isError, data } = useQuery(["post", params.id], () => getPost(params.id));
+    // const { isLoading, isError, data } = useQuery("post", getPost);
 
     useEffect(() => {
         if (data) {

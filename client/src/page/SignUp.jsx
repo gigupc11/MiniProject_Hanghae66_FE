@@ -17,6 +17,7 @@ function SignUp() {
   const [userSkill, setUserSkill] = useState(''); // 0=spring, 2=react, 3=nodejs
   const [userRole, setUserRole] = useState(''); // admin || user
   const [token, setToken] = useState(' ');
+  const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
 
   console.log(userId, userName, userPassword, userYear, userSkill, userRole, token)
   console.log(userRole)
@@ -28,7 +29,10 @@ function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    if (!isDuplicateChecked) {
+      alert('중복체크를 해주세요!')
+      return
+    }
     try {
       const response = await axios.post('http://localhost:8080/auth/signup', {
         userId,
@@ -78,13 +82,21 @@ function SignUp() {
     console.log(userId)
     try {
       const response = await axios.get(`http://localhost:8080/auth/userCheck/${userId}`)
-      alert(JSON.stringify(response.data.msg));
-      console.log(response.data)
+      // alert(JSON.stringify(response.data.msg));
+      const message = response.data.code;
+      if (message !== "BAD_REQUEST") {
+        alert(message);
+        setIsDuplicateChecked(true);
+      } else {
+        alert(message);
+        setIsDuplicateChecked(false);
+      }
     } catch (error) {
       console.error("오류", error)
       alert(error)
     }
   }
+
   const handleCheckChange = (event) => {
     if (event.target.checked) {
       setUserRole('admin');
@@ -107,7 +119,9 @@ function SignUp() {
           <StIdbox>
             <Input value={userId}
               onChange={(e) => setUserId(e.target.value)}
-              size="medium" placeholder="아이디는 4 ~ 10자 이내로 입력해주세요" />
+              size="medium" readOnly={isDuplicateChecked} 
+              style={{ backgroundColor: isDuplicateChecked ? 'lightgray' : 'white' }}
+              placeholder="아이디는 4 ~ 10자 이내로 입력해주세요" />
             <Button onClick={() => duplicateIdCheck(userId)} size="medium">중복체크</Button>
           </StIdbox>
           <StIDtext>닉네임</StIDtext>
