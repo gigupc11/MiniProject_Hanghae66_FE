@@ -20,6 +20,7 @@ function Detail() {
     const queryClient = useQueryClient();
 
     const navigate = useNavigate();
+    const [post, setPost] = useState({});
     const [postTitle, setPostTitle] = useState("");
     const [postContents, setPostContents] = useState("");
     const [cmtContent, setCmtContent] = useState("");
@@ -29,19 +30,20 @@ function Detail() {
     const [checked, setChecked] = useState(false);
 
     console.log(update)
-    useEffect(() => {
-        const filteredData = data?.filter(
-            (item) => item.postId === parseInt(params.id)
-        );
-        const oldTitle = filteredData[0]?.postTitle;
-        const oldContents = filteredData[0]?.postContents;
-        const comments = filteredData[0]?.comments;
+    const { isLoading, isError, data } = useQuery("posts", getPosts);
+    // console.log(data)
 
-        console.log(filteredData)
-        setPostTitle(oldTitle)
-        setPostContents(oldContents)
-        setOldCmtContent(comments[0]?.cmtContent)
-    })
+    useEffect(() => {
+        if (data) {
+            const filteredData = data?.filter((item) => item.postId === parseInt(params.id));
+    
+            if (filteredData && filteredData.length > 0) {
+                const postData = filteredData[0];
+                setPost(postData);
+            }
+        }
+    }, [data, params.id]);
+    
     const deleteMutation = useMutation(deletePost, {
         onSuccess: () => {
             queryClient.invalidateQueries("posts");
@@ -87,8 +89,7 @@ function Detail() {
         },
     });
 
-    const { isLoading, isError, data } = useQuery("posts", getPosts);
-    console.log(data)
+
     if (isLoading) {
         return <h1>로딩중</h1>;
     }
@@ -97,24 +98,24 @@ function Detail() {
         return <h1>오류가 발생하였습니다</h1>;
     }
 
-    const filteredData = data.filter(
-        (item) => item.postId === parseInt(params.id)
-    );
+    // const filteredData = data.filter(
+    //     (item) => item.postId === parseInt(params.id)
+    // );
 
-    const oldTitle = filteredData[0]?.postTitle;
-    const oldContents = filteredData[0]?.postContents;
-    const comments = filteredData[0]?.comments;
-    console.log(comments);
+    // const oldTitle = filteredData[0]?.postTitle;
+    // const oldContents = filteredData[0]?.postContents;
+    // const comments = filteredData[0]?.comments;
+    // console.log(comments);
     // 게시글 삭제
     const handleDeleteButtonClick = (event) => {
         event.preventDefault();
-        const postId = filteredData[0]?.postId;
+        const postId = post?.postId;
         deleteMutation.mutate(parseInt(postId));
     };
     // 게시글 수정
     const handleSubmitButtonClick = (event) => {
         event.preventDefault();
-        const postId = parseInt(filteredData[0]?.postId);
+        const postId = post?.postId;
         console.log(postId)
         const updatedPost = {
             postTitle,
@@ -126,7 +127,7 @@ function Detail() {
     // 덧글 추가
     const handleCommentSubmitButtonClick = (event) => {
         event.preventDefault();
-        const postId = parseInt(filteredData[0]?.postId);
+        const postId = post?.postId;
 
         const newComment = {
             cmtContent,
@@ -151,7 +152,7 @@ function Detail() {
 
     const handleSubmitLikeButtonClick = (e) => {
         // event.preventDefault();
-        const postId = parseInt(filteredData[0]?.postId);
+        const postId = post?.postId;
         setChecked(e);
         likePostMutation.mutate(postId);
     };
@@ -173,7 +174,7 @@ function Detail() {
                                 />
                             </Sttitle>
                         ) : (
-                            <Sttitle>{oldTitle}</Sttitle>
+                            <Sttitle>{post?.postTitle !== undefined ? post.postTitle : null}</Sttitle>
                         )}
 
                         <StView>
@@ -209,7 +210,7 @@ function Detail() {
                                         onChange={(e) => setPostContents(e.target.value)}
                                     />
                                 ) : (
-                                    <h4 class="contents">{oldContents}</h4>
+                                    <h4 class="contents"></h4>
                                 )}
                             </ContentsWrap>
 
@@ -226,7 +227,7 @@ function Detail() {
                             </CommentWrap>
 
                             <div>
-                                <CommentBox>
+                                {/* <CommentBox>
                                     {comments?.map((cmtContent) => (
                                         <CommentBox key={cmtContent.cmtId}>
                                             {updateCommentState === cmtContent.cmtId ? (
@@ -275,7 +276,7 @@ function Detail() {
                                             )}
                                         </CommentBox>
                                     ))}
-                                </CommentBox>
+                                </CommentBox> */}
                             </div>
                         </div>
                     </InputWrap>

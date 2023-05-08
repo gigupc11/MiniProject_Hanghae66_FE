@@ -13,14 +13,14 @@ function Main() {
 
     const { isLoading, isError, data, error } = useQuery("posts", getPosts);
 
-    // if (isLoading) {
-    //     return <h1>로딩중</h1>;
-    // }
+    if (isLoading) {
+        return <h1>로딩중</h1>;
+    }
 
-    // if (isError) {
-    //     console.error(error);
-    //     return <h1>오류가 발생하였습니다</h1>;
-    //   }
+    if (isError) {
+        console.error(error);
+        return <h1>오류가 발생하였습니다</h1>;
+      }
 
     const handleDetailPageLinkClick = (id) => {
         navigate(`/detail/${id}`);
@@ -40,7 +40,7 @@ function Main() {
                     </div>
                 </Buttonbox>
                 <div class="posts-box">
-                    {/* {data?.map((post) => {
+                    {data?.map((post) => {
                         return (
                             <TitleBox onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
                                 <Skillbox>{post.postSkill}</Skillbox>
@@ -60,7 +60,7 @@ function Main() {
                                 </Stunderbar>
                             </TitleBox>
                         );
-                    })} */}
+                    })}
                 </div>
             </PostSection>
         </Container>

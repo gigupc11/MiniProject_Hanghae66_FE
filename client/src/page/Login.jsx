@@ -36,8 +36,8 @@ function Login() {
         resetPassword("")
         // dispatch(setIsAuthenticated(true));
         dispatch(setUserId(userId));
-        window.location.reload();
         navigate(`/`)
+        window.location.reload();
       } else {
         alert(response.data.msg);
         console.error(response.data.msg);

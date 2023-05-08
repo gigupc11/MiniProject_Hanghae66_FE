@@ -17,7 +17,7 @@ const addPosts = async (newPost) => {
         newPost,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            ACCESS_KEY: `Bearer ${token}`,
           },
         }
       );
@@ -54,11 +54,11 @@ const addPosts = async (newPost) => {
     const token = getToken();
     try {
       const response = await axios.put(
-        `/post/${postId}`,
+        `http://localhost:8080/post/${postId}`,
         updatedPost,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            ACCESS_KEY: `Bearer ${token}`,
           },
         }
       );
