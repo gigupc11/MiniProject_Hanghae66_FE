@@ -6,6 +6,8 @@ import Select from "../components/Select";
 import useInput from "../hooks/useInput";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie"
+import jwt_decode from 'jwt-decode';
 
 function SignUp() {
   const [userId, setUserId] = useState('');
@@ -14,7 +16,7 @@ function SignUp() {
   const [userYear, setUserYear] = useState('');
   const [userSkill, setUserSkill] = useState(''); // 0=spring, 2=react, 3=nodejs
   const [userRole, setUserRole] = useState(''); // admin || user
-  console.log(userId,userName, userPassword, userYear, userSkill,userRole)
+  console.log(userId, userName, userPassword, userYear, userSkill, userRole)
   console.log(userRole)
   const handleChange = (event) => {
     setUserRole(event.target.value);
@@ -39,23 +41,48 @@ function SignUp() {
       });
 
 
-    const responseCode = response.data.code;
+      const responseCode = response.data.code;
       console.log(responseCode)
 
-    if (responseCode !== 'BAD_REQUEST') {
-      alert('회원가입에 성공했습니다!');
-      navigate('/')
+      if (responseCode !== 'BAD_REQUEST') {
+        alert('회원가입에 성공했습니다!');
+        navigate('/')
+        console.log(userId, userName, userPassword, userYear, userSkill, userRole);
+      } else {
+        alert(response.data.msg);
+        console.error('회원가입 오류:', response);
+      }
+    } catch (error) {
+      console.error('회원가입 오류:', error.message);
+      alert(JSON.stringify(error.message));
       console.log(userId, userName, userPassword, userYear, userSkill, userRole);
-    } else {
-      alert(response.data.msg);
-      console.error('회원가입 오류:', response);
     }
-  } catch (error) {
-    console.error('회원가입 오류:', error.message);
-    alert(JSON.stringify(error.message));
-    console.log(userId, userName, userPassword, userYear, userSkill, userRole);
   }
-}
+
+  // const duplicateIdCheck = async (id) => {
+  //   const userId = id
+  //   console.log(userId)
+  //   try {
+  //     const response =  await axios.post(`http://localhost:8080/auth/userCheck`, {userId: userId}, {})
+  //     alert(response.data)
+  //   } catch (error) {
+  //     console.error("오류", error)
+  //     alert(error)
+  //   }
+  // }
+  const duplicateIdCheck = async (id) => {
+    const userId = id
+    console.log(userId)
+    try {
+      const response =  await axios.get(`http://localhost:8080/auth/userCheck/${userId}`)
+      alert(JSON.stringify(response.data.msg));
+      console.log(response.data)
+    } catch (error) {
+      console.error("오류", error)
+      alert(error)  
+    }
+  }
+  
   return (
     <StLayout>
       <StsignBox>
@@ -66,7 +93,7 @@ function SignUp() {
             <Input value={userId}
               onChange={(e) => setUserId(e.target.value)}
               size="medium" placeholder="아이디는 4 ~ 10자 이내로 입력해주세요" />
-            <Button size="medium">중복체크</Button>
+            <Button onClick={() => duplicateIdCheck(userId)} size="medium">중복체크</Button>
           </StIdbox>
           <StIDtext>닉네임</StIDtext>
           <StIdbox>
@@ -95,18 +122,18 @@ function SignUp() {
             <Select.SelectboxB setUserSkill={setUserSkill} />
           </div>
           <StButtonbox>
-        <div>
-        <input
-          type="radio"
-          id="admin"
-          name="userRole"
-          value="0" //admin
-          // checked={userType === 'admin'}
-          onChange={handleChange}
-        />
-        <label htmlFor="admin">Admin</label>
-      </div>
-      {/* <div>
+            <div>
+              <input
+                type="radio"
+                id="admin"
+                name="userRole"
+                value="0" //admin
+                // checked={userType === 'admin'}
+                onChange={handleChange}
+              />
+              <label htmlFor="admin">Admin</label>
+            </div>
+            {/* <div>
         <input
           type="radio"
           id="user"
@@ -117,10 +144,10 @@ function SignUp() {
         />
         <label htmlFor="user">User</label>
       </div> */}
-      </StButtonbox>
+          </StButtonbox>
         </StInputbox>
         <StButtonbox>
-          <Button size="custom" onClick={()=> {navigate("/login")}}>취소</Button>
+          <Button size="custom" onClick={() => { navigate("/login") }}>취소</Button>
           <Button onClick={handleSubmit} size="large">가입완료</Button>
         </StButtonbox>
 
