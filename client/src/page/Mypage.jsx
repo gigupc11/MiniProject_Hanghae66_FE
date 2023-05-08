@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import styled from "styled-components";
+import Button from "../components/Button";
 import { useParams } from "react-router-dom";
 import { useGetUsers } from "../api/mypage";
+import { useQuery } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
@@ -56,7 +58,7 @@ function Mypage() {
                   onClick={() => handleDetailPageLinkClick(post.postId)}
                   class="title-box"
                 >
-                  <Skillbox>{post.PostSkill}</Skillbox>
+                    <Skillbox>{post.postSkill}</Skillbox>
                   {post.postTitle !== undefined ? (
                     <Stunderbar>
                       <Commentbox>{post.postTitle}</Commentbox>
@@ -65,7 +67,7 @@ function Mypage() {
                         <span>
                           <AiFillHeart color="red" />
                         </span>
-                        <span> {post.PostLikesCount}</span>
+                        <span> {post.postLikes}</span>
                         <span>
                           <BiCommentDetail />
                         </span>
@@ -81,7 +83,7 @@ function Mypage() {
         <Linesection>내 댓글 목록</Linesection>
         <PostSection>
           <div class="posts-box">
-            {userdata.commentList?.map((post) => {
+            {userdata.cmtList?.map((post) => {
               return (
                 <TitleBox
                   key={post.cmtId}
@@ -178,6 +180,7 @@ const TitleBox = styled.div`
 `;
 
 const Viewbox = styled.span`
+  /* margin-left: 90px; */
 `;
 
 const Commentbox = styled.span`
