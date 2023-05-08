@@ -31,7 +31,6 @@ function Detail() {
     const [checked, setChecked] = useState(false);
 
     const { isLoading, isError, data } = useQuery(["post", params.id], () => getPost(params.id));
-    console.log(comment)
 
     useEffect(() => {
         if (data) {
@@ -40,13 +39,15 @@ function Detail() {
             setPostTitle(data.postTitle)
             setPostContents(data.postContent)
             console.log(data)
-            if (data.comment) {
+            if (data.commentList) {
                 setComment(data.commentList)
             }
         }
     }, [data]);
 
-    
+    if (comment.length > 0) {
+        console.log(comment);
+    }
 
     const deleteMutation = useMutation(deletePost, {
         onSuccess: () => {
@@ -67,14 +68,12 @@ function Detail() {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
             console.log("성공");
-            navigate(-1);
         },
     });
     const deleteCommentMutation = useMutation(deleteComment, {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
             console.log("성공");
-            navigate(-1);
         },
     });
 
@@ -82,7 +81,6 @@ function Detail() {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
             console.log("성공");
-            navigate(-1);
         },
     });
 
@@ -131,6 +129,7 @@ function Detail() {
     // 덧글 추가
     const handleCommentSubmitButtonClick = (event) => {
         event.preventDefault();
+        event.stopPropagation(); 
         const postId = post?.postId;
 
         const newComment = {
@@ -244,7 +243,7 @@ function Detail() {
                                                     <CommentLine>
                                                         <Stcommentbox>
                                                             <Input
-                                                                value={oldCmtContent}
+                                                                value={cmtContent.cmtContent}
                                                                 onChange={(e) => setCmtContent(e.target.value)}
                                                             />
                                                         </Stcommentbox>
