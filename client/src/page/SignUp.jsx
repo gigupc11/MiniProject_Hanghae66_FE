@@ -16,11 +16,13 @@ function SignUp() {
   const [userYear, setUserYear] = useState('');
   const [userSkill, setUserSkill] = useState(''); // 0=spring, 2=react, 3=nodejs
   const [userRole, setUserRole] = useState(''); // admin || user
-  console.log(userId, userName, userPassword, userYear, userSkill, userRole)
+  const [token, setToken] = useState(' ');
+
+  console.log(userId, userName, userPassword, userYear, userSkill, userRole, token)
   console.log(userRole)
-  const handleChange = (event) => {
-    setUserRole(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setUserRole(event.target.value);
+  // };
 
   const navigate = useNavigate()
 
@@ -35,6 +37,7 @@ function SignUp() {
         userYear,
         userSkill,
         userRole,
+        adminToken: token
       }, {
         headers: {
         },
@@ -47,7 +50,7 @@ function SignUp() {
       if (responseCode !== 'BAD_REQUEST') {
         alert('회원가입에 성공했습니다!');
         navigate('/')
-        console.log(userId, userName, userPassword, userYear, userSkill, userRole);
+        console.log(userId, userName, userPassword, userYear, userSkill, userRole, token);
       } else {
         alert(response.data.msg);
         console.error('회원가입 오류:', response);
@@ -74,15 +77,27 @@ function SignUp() {
     const userId = id
     console.log(userId)
     try {
-      const response =  await axios.get(`http://localhost:8080/auth/userCheck/${userId}`)
+      const response = await axios.get(`http://localhost:8080/auth/userCheck/${userId}`)
       alert(JSON.stringify(response.data.msg));
       console.log(response.data)
     } catch (error) {
       console.error("오류", error)
-      alert(error)  
+      alert(error)
     }
   }
-  
+  const handleCheckChange = (event) => {
+    if (event.target.checked) {
+      setUserRole('admin');
+    } else {
+      setUserRole('user');
+      setToken('');
+    }
+  };
+
+  const handleTokenChange = (event) => {
+    setToken(event.target.value);
+  };
+
   return (
     <StLayout>
       <StsignBox>
@@ -124,14 +139,26 @@ function SignUp() {
           <StButtonbox>
             <div>
               <input
-                type="radio"
+                type="checkbox"
                 id="admin"
                 name="userRole"
-                value="0" //admin
+                value="admin"
                 // checked={userType === 'admin'}
-                onChange={handleChange}
+                onChange={handleCheckChange}
               />
               <label htmlFor="admin">Admin</label>
+              {userRole === 'admin' && (
+                <div>
+                  <label htmlFor="token">Token:</label>
+                  <input
+                    type="text"
+                    id="token"
+                    name="token"
+                    value={token}
+                    onChange={handleTokenChange}
+                  />
+                </div>
+              )}
             </div>
             {/* <div>
         <input
