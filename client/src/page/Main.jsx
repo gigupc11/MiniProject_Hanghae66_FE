@@ -120,7 +120,6 @@ const TitleBox = styled.div`
 `;
 
 const Viewbox = styled.span`
-  margin-left: 90px;
 `;
 
 const Commentbox = styled.span`

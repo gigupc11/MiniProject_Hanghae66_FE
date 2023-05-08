@@ -23,7 +23,6 @@ function Header() {
                     setModal(false)
                 }} />)}
             </div>
-
             <HeaderBar>
                 <Logo class="logo" src={logo} onClick={() => {
                     navigate("/")
@@ -57,6 +56,7 @@ const HeaderBar = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
+    height: 60px;
     justify-content: space-between;
     padding: 15px 5%;
     background: #000;

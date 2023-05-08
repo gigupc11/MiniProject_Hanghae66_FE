@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import styled from "styled-components";
-import Button from "../components/Button";
 import { useParams } from "react-router-dom";
-import { getUsers } from "../api/mypage";
-import { useQuery } from "react-query";
+import { useGetUsers } from "../api/mypage";
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 
 function Mypage() {
-  const { id } = useParams();
-
+  const { userId } = useParams();
+    const [userdata , setUserdata] = useState({})
   const navigate = useNavigate();
-  const { isLoading, isError, data } = useQuery("users", getUsers);
-
+  const { isLoading, isError, data } = useGetUsers(userId);
+    useEffect(() => {
+        if (data) {
+            setUserdata(data)
+        }
+    },[data])
   console.log(data);
   if (isLoading) {
     return <h1>로딩중</h1>;
@@ -24,9 +26,8 @@ function Mypage() {
     return <h1>오류가 발생하였습니다</h1>;
   }
 
-
-  const handleDetailPageLinkClick = (id) => {
-    navigate(`/detail/${id}`);
+  const handleDetailPageLinkClick = (userId) => {
+    navigate(`/detail/${userId}`);
   };
 
   return (
@@ -35,39 +36,43 @@ function Mypage() {
       <Allsection>
         <Infosection>
           <Mypagetext>마이 페이지</Mypagetext>
-          <Infotext>
-            <div>ID : {data[0].userId}</div>
-            <div>Username : {data[0].userName}</div>
-            <div>기수 : {data[0].userYear}기</div>
-            <div>주특기 : {data[0].userSkill}</div>
-            <div>생성일 : {data[0].userCrdat}</div>
-          </Infotext>
+          {userdata !== undefined ?
+            <Infotext>
+              <div>ID : {userdata.userId}</div>
+              <div>Username : {userdata.userName}</div>
+              <div>기수 : {userdata.userYear}기</div>
+              <div>주특기 : {userdata.userSkill}</div>
+              <div>생성일 : {userdata.userCrdat}</div>
+            </Infotext>
+          :null}
         </Infosection>
         <Linesection>내 글 목록</Linesection>
         <PostSection>
           <div class="posts-box">
-            {data.map((post) => {
+            {userdata.postList?.map((post) => {
               return (
                 <TitleBox
-                key={post.postId}
+                  key={post.postId}
                   onClick={() => handleDetailPageLinkClick(post.postId)}
                   class="title-box"
                 >
                   <Skillbox>{post.PostSkill}</Skillbox>
-                  {post.postTitle ? <Stunderbar>
-                    <Commentbox>{post.postTitle}</Commentbox>
-                    <Viewbox>{post.postVisitCnt} View</Viewbox>
-                    <Likecommentbox>
-                      <span>
-                        <AiFillHeart color="red" />
-                      </span>
-                      <span> {post.PostLikesCount}</span>
-                      <span>
-                        <BiCommentDetail />
-                      </span>
-                      <span>{post.cmtCount}</span>
-                    </Likecommentbox>
-                  </Stunderbar>:null}
+                  {post.postTitle !== undefined ? (
+                    <Stunderbar>
+                      <Commentbox>{post.postTitle}</Commentbox>
+                      <Viewbox>{post.postVisitCnt} View</Viewbox>
+                      <Likecommentbox>
+                        <span>
+                          <AiFillHeart color="red" />
+                        </span>
+                        <span> {post.PostLikesCount}</span>
+                        <span>
+                          <BiCommentDetail />
+                        </span>
+                        <span>{post.cmtCount}</span>
+                      </Likecommentbox>
+                    </Stunderbar>
+                  ) : null}
                 </TitleBox>
               );
             })}
@@ -76,23 +81,25 @@ function Mypage() {
         <Linesection>내 댓글 목록</Linesection>
         <PostSection>
           <div class="posts-box">
-            {data.map((post) => {
+            {userdata.commentList?.map((post) => {
               return (
                 <TitleBox
-                key={post.cmtId}
+                  key={post.cmtId}
                   onClick={() => handleDetailPageLinkClick(post.postId)}
                   class="title-box"
                 >
                   <Skillbox></Skillbox>
-                 {post.cmtContent? <Stunderbar>
-                    <Commentbox>{post.cmtContent}</Commentbox>
-                    <Likecommentbox>
-                      <span>
-                        <AiFillHeart color="red" />
-                      </span>
-                      <span> {post.cmtLikes}</span>
-                    </Likecommentbox>
-                  </Stunderbar> : null}
+                  {post.cmtContent !== undefined ? (
+                    <Stunderbar>
+                      <Commentbox>{post.cmtContent}</Commentbox>
+                      <Likecommentbox>
+                        <span>
+                          <AiFillHeart color="red" />
+                        </span>
+                        <span> {post.cmtLikes}</span>
+                      </Likecommentbox>
+                    </Stunderbar>
+                  ) : null}
                 </TitleBox>
               );
             })}
@@ -171,7 +178,6 @@ const TitleBox = styled.div`
 `;
 
 const Viewbox = styled.span`
-  margin-left: 90px;
 `;
 
 const Commentbox = styled.span`
