@@ -1,6 +1,6 @@
 {
-      "posts": [
-      {
+  "posts": [
+    {
       "postId": 1,
       "postTitle": "안녕하세요. 인사박습니다.",
       "postSkill": "REACT",
@@ -8,55 +8,92 @@
       "postVisitCnt": 6,
       "cmtCount": 2,
       "comments": [
-      {
-      "cmtId": 1,
-      "cmtContent": "안녕하세요. 인사올습니다.",
-      "userYear" : 14,
-      "cmtLikes": 5,
-      "cmtCrdat": "2022-12-01T12:56:36.821474",
-      "modifiedAt": "2022-12-01T12:56:36.821474",
-      "cmtUserId" : "코멘트 작성자 아이디",
-      "cmtUserName" : "아아아아아아"
-      },
-      {
-      "cmtId": 2,
-      "cmtContent": "안녕하세요. 인사올립니다.",
-      "userYear" : 14,
-      "cmtLikes": 5,
-      "cmtCrdat": "2022-12-01T12:56:36.821474",
-      "modifiedAt": "2022-12-01T12:56:36.821474",
-      "cmtUserId" : "코멘트 작성자 아이디",
-      "cmtUserName" : "닉네임"
-      }
+        {
+          "cmtId": 1,
+          "cmtContent": "안녕하세요. 인사올습니다.",
+          "userYear": 14,
+          "cmtLikes": 5,
+          "cmtCrdat": "2022-12-01T12:56:36.821474",
+          "modifiedAt": "2022-12-01T12:56:36.821474",
+          "cmtUserId": "코멘트 작성자 아이디",
+          "cmtUserName": "아아아아아아"
+        },
+        {
+          "cmtId": 2,
+          "cmtContent": "안녕하세요. 인사올립니다.",
+          "userYear": 14,
+          "cmtLikes": 5,
+          "cmtCrdat": "2022-12-01T12:56:36.821474",
+          "modifiedAt": "2022-12-01T12:56:36.821474",
+          "cmtUserId": "코멘트 작성자 아이디",
+          "cmtUserName": "닉네임"
+        }
       ]
-      },
-      {
+    },
+    {
       "postId": 2,
       "postTitle": "안녕하세요. 인사올립니다.",
-      "postContents" : "d" ,
+      "postContents": "d",
       "postSkill": "NODE",
       "postLikes": 5,
       "postVisitCnt": 6,
       "cmtCount": 2
-      },
-      {
+    },
+    {
       "postId": 3,
       "postTitle": "안녕하세요. 인사내립니다.",
       "postSkill": "SPRING",
       "postLikes": 5,
       "postVisitCnt": 6,
       "cmtCount": 2
-      }
-      ]
-      }
-      
+    }
+  ],
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
+  "mypage": [{
+      "userId": "user1",
+      "userName": "nickname",
+      "userYear": "14",
+      "userSkill": "SPRING",
+      "userCrdat": "2022-12-01T12:56:36.821474"
+    },
+    {
+      "postId": 1,
+      "postTitle": "안녕하세요. 인사박습니다.",
+      "PostSkill": "REACT",
+      "PostLikesCount": 5,
+      "postVisitCnt": 6,
+      "cmtCount": 2
+    },
+    {
+      "postId": 2,
+      "postTitle": "안녕하세요. 인사올립니다.",
+      "PostSkill": "NODE.JS",
+      "PostLikesCount": 5,
+      "postVisitCnt": 6,
+      "cmtCount": 2
+    },
+    {
+      "postId": 3,
+      "postTitle": "안녕하세요. 인사내립니다.",
+      "PostSkill": "SPRING",
+      "PostLikesCount": 5,
+      "postVisitCnt": 6,
+      "cmtCount": 2
+    },
+    {
+      "cmtId": 1,
+      "cmtContent": "안녕하세요. 인사박습니다.",
+      "cmtLikes": 5
+    },
+    {
+      "cmtId": 2,
+      "cmtContent": "안녕하세요. 인사박습니다.",
+      "cmtLikes": 5
+    },
+    {
+      "cmtId": 3,
+      "cmtContent": "안녕하세요. 인사박습니다.",
+      "cmtLikes": 5
+    }
+  ]
+}
