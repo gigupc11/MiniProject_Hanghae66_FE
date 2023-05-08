@@ -21,6 +21,7 @@ function Detail() {
 
     const navigate = useNavigate();
     const [post, setPost] = useState({});
+    const [comment, setComment] = useState([]);
     const [postTitle, setPostTitle] = useState("");
     const [postContents, setPostContents] = useState("");
     const [cmtContent, setCmtContent] = useState("");
@@ -29,16 +30,19 @@ function Detail() {
     const [updateCommentState, setUpdateCommentState] = useState(null);
     const [checked, setChecked] = useState(false);
 
-    console.log(update)
     const { isLoading, isError, data } = useQuery(["post", params.id], () => getPost(params.id));
-    // console.log(data)
+    console.log(comment)
 
     useEffect(() => {
         if (data) {
             setPost(data);
+
             setPostTitle(data.postTitle)
             setPostContents(data.postContent)
             console.log(data)
+            if (data.comment) {
+                setComment(data.commentList)
+            }
         }
     }, [data]);
 
@@ -176,7 +180,7 @@ function Detail() {
                         )}
 
                         <StView>
-                            <span>5View</span>
+                            <span>{post?.postVisitCnt}</span>
                             <span>
                                 <LikeBtn>
                                     <HeartCheckbox
@@ -225,8 +229,8 @@ function Detail() {
                             </CommentWrap>
 
                             <div>
-                                {/* <CommentBox>
-                                    {comments?.map((cmtContent) => (
+                                <CommentBox>
+                                    {comment?.map((cmtContent) => (
                                         <CommentBox key={cmtContent.cmtId}>
                                             {updateCommentState === cmtContent.cmtId ? (
                                                 <>
@@ -274,7 +278,7 @@ function Detail() {
                                             )}
                                         </CommentBox>
                                     ))}
-                                </CommentBox> */}
+                                </CommentBox>
                             </div>
                         </div>
                     </InputWrap>

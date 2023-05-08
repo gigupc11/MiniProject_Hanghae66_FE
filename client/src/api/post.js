@@ -63,6 +63,7 @@ const deletePost = async (postId) => {
 
 const updatePost = async ({ postId, updatedPost }) => {
   const token = getToken();
+  console.log("test1",token)
   try {
     const response = await axios.put(
       `http://localhost:8080/post/${postId}`,
@@ -76,9 +77,9 @@ const updatePost = async ({ postId, updatedPost }) => {
 
     console.log('인증에 성공했습니다:', response.data);
   } catch (error) {
-    alert(JSON.stringify(error.response.data));
-    console.log(token);
-    console.error('인증에 실패했습니다:', error.response.data);
+    alert(JSON.stringify(error.message));
+    console.log("test2" , token);
+    console.error('인증에 실패했습니다:', error.message);
   }
 };
 
@@ -86,10 +87,10 @@ const likePost = async (postId) => {
   const token = getToken();
   try {
     const response = await axios.post(
-      `/like/${postId}`,
+      `http://localhost:8080/like/${postId}`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          ACCESS_TOKEN: `Bearer ${token}`,
         },
       }
     );

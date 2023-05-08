@@ -5,13 +5,14 @@ const getToken = () => Cookies.get('token');
 
 const addComment = async ({postId, newComment}) => {
     const token = getToken();
+    console.log("dd",token)
     try {
       const response = await axios.post(
-        `/comment/${postId}`,
+        `http://localhost:8080/comment/${postId}`,
         newComment,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            ACCESS_KEY: `Bearer ${token}`,
           },
         }
       );
@@ -20,7 +21,7 @@ const addComment = async ({postId, newComment}) => {
     } catch (error) {
       alert(JSON.stringify(error.response.data));
       console.log(token);
-      console.error('인증에 실패했습니다:', error.response.data);
+      console.error('인증에 실패했습니다:', error);
     }
   };
 
@@ -31,7 +32,7 @@ const addComment = async ({postId, newComment}) => {
         `/comment/${commentId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            ACCESS_KEY: `Bearer ${token}`,
           },
         }
       );
@@ -52,7 +53,7 @@ const addComment = async ({postId, newComment}) => {
         updatedComment,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            ACCESS_KEY: `Bearer ${token}`,
           },
         }
       );
