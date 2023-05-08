@@ -40,7 +40,7 @@ function Write({ Open }) {
     resetContents();
     Open(false)
   };
-
+console.log("스킬",userSkill)
 
 const openAnimation = useSpring({
     from: { opacity: 0 },
@@ -63,7 +63,7 @@ const openAnimation = useSpring({
             <ContentsWrap>
               카테고리
               <div>
-                <Selectbox.SelectboxC setUserSkill={setUserSkill} />
+                <Selectbox.SelectboxB setUserSkill={setUserSkill} />
               </div>
               제목
               <div>

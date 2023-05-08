@@ -33,7 +33,7 @@ function SignUp() {
         userYear,
         userSkill,
         userRole,
-      }, {},{
+      }, {
         headers: {
         },
       });
@@ -51,8 +51,8 @@ function SignUp() {
       console.error('회원가입 오류:', response);
     }
   } catch (error) {
-    console.error('회원가입 오류:', error.response.data);
-    alert(JSON.stringify(error.response.data));
+    console.error('회원가입 오류:', error.message);
+    alert(JSON.stringify(error.message));
     console.log(userId, userName, userPassword, userYear, userSkill, userRole);
   }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import styled from "styled-components";
 import Button from "../components/Button";
@@ -10,9 +10,24 @@ import { BiCommentDetail } from "react-icons/bi";
 
 function Main() {
     const navigate = useNavigate();
+    const [filteredData, setFilteredData] = useState([]);
 
     const { isLoading, isError, data, error } = useQuery("posts", getPosts);
+    
+    useEffect(() => {
+        setFilteredData(data);
+    }, [data]);
 
+    const filterPosts = (skill) => {
+        if (skill === 'All') {
+            setFilteredData(data);
+        } else {
+            const filtered = data.filter((post) => post.postSkill === skill);
+            setFilteredData(filtered);
+        }
+    };
+
+    console.log(data)
     if (isLoading) {
         return <h1>로딩중</h1>;
     }
@@ -20,7 +35,7 @@ function Main() {
     if (isError) {
         console.error(error);
         return <h1>오류가 발생하였습니다</h1>;
-      }
+    }
 
     const handleDetailPageLinkClick = (id) => {
         navigate(`/detail/${id}`);
@@ -33,14 +48,14 @@ function Main() {
                 <StText>항해66 게시판</StText>
                 <Buttonbox>
                     <div>
-                        <Button>All</Button>
-                        <Button>Spring</Button>
-                        <Button>React</Button>
-                        <Button>Node.js</Button>
+                        <Button onClick={() => filterPosts('All')}>All</Button>
+                        <Button onClick={() => filterPosts('SPRING')}>Spring</Button>
+                        <Button onClick={() => filterPosts('REACT')}>React</Button>
+                        <Button onClick={() => filterPosts('NODE')}>Node.js</Button>
                     </div>
                 </Buttonbox>
                 <div class="posts-box">
-                    {data?.map((post) => {
+                    {filteredData?.map((post) => {
                         return (
                             <TitleBox onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
                                 <Skillbox>{post.postSkill}</Skillbox>
