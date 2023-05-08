@@ -88,18 +88,19 @@ const likePost = async (postId) => {
   try {
     const response = await axios.post(
       `http://localhost:8080/like/${postId}`,
+      {},
       {
         headers: {
-          ACCESS_TOKEN: `Bearer ${token}`,
+          ACCESS_KEY: `Bearer ${token}`,
         },
       }
     );
 
     console.log('인증에 성공했습니다:', response.data);
   } catch (error) {
-    alert(JSON.stringify(error.response.data));
+    alert(JSON.stringify(error));
     console.log(token);
-    console.error('인증에 실패했습니다:', error.response.data);
+    console.error('인증에 실패했습니다:', error);
   }
 };
 export { getPosts, getPost, addPosts, deletePost, updatePost, likePost };
