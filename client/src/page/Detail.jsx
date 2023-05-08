@@ -46,6 +46,8 @@ function Detail() {
         }
     }, [data]);
 
+    
+
     const deleteMutation = useMutation(deletePost, {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
@@ -121,7 +123,7 @@ function Detail() {
         console.log(postId)
         const updatedPost = {
             postTitle,
-            postContents,
+            postContent: postContents,
         };
         updateMutation.mutate({ postId, updatedPost });
     };
