@@ -1,9 +1,31 @@
 import axios from "axios";
+import { useQuery } from "react-query";
+import Cookies from "js-cookie";
+import jwt_decode from "jwt-decode";
 
+const getToken = () => Cookies.get("token");
 
-const getUsers = async (userId) => {
-    const response = await axios.get('http://localhost:4000/mypage');
-    return response.data;
-  }
+const useGetUsers = () => {
+  const token = getToken();
+  const decoded = jwt_decode(token);
+  const userId = decoded.sub;
+  const {
+    data: data,
+    isLoading,
+    isError,
+  } = useQuery(["users", userId], async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/mypage/${userId}`,
+        { headers: { ACCESS_KEY: `Bearer ${token}` } }
+      );
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  });
 
-  export { getUsers };
+  return { data, isLoading, isError };
+};
+export { useGetUsers };
