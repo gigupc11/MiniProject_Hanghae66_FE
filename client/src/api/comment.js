@@ -5,7 +5,6 @@ const getToken = () => Cookies.get('token');
 
 const addComment = async ({postId, newComment}) => {
     const token = getToken();
-    console.log("dd",token)
     try {
       const response = await axios.post(
         `http://localhost:8080/comment/${postId}`,
@@ -29,7 +28,7 @@ const addComment = async ({postId, newComment}) => {
     const token = getToken();
     try {
       const response = await axios.delete(
-        `/comment/${commentId}`,
+        `http://localhost:8080/comment/${commentId}`,
         {
           headers: {
             ACCESS_KEY: `Bearer ${token}`,
@@ -49,7 +48,7 @@ const addComment = async ({postId, newComment}) => {
     const token = getToken();
     try {
       const response = await axios.put(
-        `/comment/${commentId}`,
+        `http://localhost:8080/comment/${commentId}`,
         updatedComment,
         {
           headers: {

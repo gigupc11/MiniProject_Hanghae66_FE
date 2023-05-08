@@ -136,6 +136,7 @@ function Detail() {
             cmtContent,
         };
         addCommentMutation.mutate({ postId, newComment });
+        setCmtContent("")
     };
 
     // 덧글 삭제
@@ -146,7 +147,7 @@ function Detail() {
     // 덧글 수정
     const handleCommentUpdateButtonClick = (commentId) => {
         const updatedComment = {
-            cmtContent,
+            cmtContent: oldCmtContent,
         };
         console.log(commentId)
         setUpdateCommentState(null);
@@ -206,7 +207,6 @@ function Detail() {
                     <InputWrap>
                         <div>
                             <ContentsWrap>
-                                {/* 여기 내용들어가는 부분 코드인데 확인한번만 부탁드리겠습니다! */}
                                 {update ? (
                                     <Input
                                         value={postContents}
@@ -231,26 +231,26 @@ function Detail() {
 
                             <div>
                                 <CommentBox>
-                                    {comment?.map((cmtContent) => (
-                                        <CommentBox key={cmtContent.cmtId}>
-                                            {updateCommentState === cmtContent.cmtId ? (
+                                    {comment?.map((cmt) => (
+                                        <CommentBox key={cmt.cmtId}>
+                                            {updateCommentState === cmt.cmtId ? (
                                                 <>
                                                     <UserIDLine>
                                                         <StText>
-                                                            {cmtContent.userYear}기 {cmtContent.cmtUserName}
+                                                            {cmt.userYear}기 {cmt.cmtUserName}
                                                         </StText>
                                                     </UserIDLine>
                                                     <CommentLine>
-                                                        <Stcommentbox>
+                                                        <Stcommentbox>  
                                                             <Input
-                                                                value={cmtContent.cmtContent}
-                                                                onChange={(e) => setCmtContent(e.target.value)}
+                                                               defaultValue={cmt.cmtContent}
+                                                                onChange={(e) => setOldCmtContent(e.target.value)}
                                                             />
                                                         </Stcommentbox>
                                                     </CommentLine>
                                                     <ButtonLine>
                                                         <Stbtn
-                                                            onClick={() => handleCommentUpdateButtonClick(cmtContent.cmtId)}
+                                                            onClick={() => handleCommentUpdateButtonClick(cmt.cmtId)}
                                                         >
                                                             수정완료
                                                         </Stbtn>
@@ -261,16 +261,16 @@ function Detail() {
                                                 <>
                                                     <UserIDLine>
                                                         <StText>
-                                                            {cmtContent.userYear}기 {cmtContent.cmtUserName}
+                                                            {cmt.userYear}기 {cmt.cmtUserName}
                                                         </StText>
                                                     </UserIDLine>
                                                     <CommentLine>
-                                                        <Stcommentbox>{cmtContent.cmtContent}</Stcommentbox>
+                                                        <Stcommentbox>{cmt.cmtContent}</Stcommentbox>
                                                     </CommentLine>
                                                     <ButtonLine>
-                                                        <Stbtn onClick={() => setUpdateCommentState(cmtContent.cmtId)}>수정</Stbtn>
+                                                        <Stbtn onClick={() => setUpdateCommentState(cmt.cmtId)}>수정</Stbtn>
                                                         <Stbtn
-                                                            onClick={() => handleCommentDeleteButtonClick(cmtContent.cmtId)}
+                                                            onClick={() => handleCommentDeleteButtonClick(cmt.cmtId)}
                                                         >
                                                             삭제
                                                         </Stbtn>
