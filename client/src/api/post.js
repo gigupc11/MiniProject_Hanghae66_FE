@@ -4,13 +4,13 @@ import Cookies from 'js-cookie';
 const getToken = () => Cookies.get('token');
 
 const getPosts = async () => {
-  const response = await axios.get('http://localhost:8080/post');
+  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post`);
   return response.data;
 }
 
 const getPost = async (postId) => {
   const token = getToken();
-  const response = await axios.get(`http://localhost:8080/post/${postId}`,
+  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/${postId}`,
     {
       headers: {
         ACCESS_KEY: `Bearer ${token}`,
@@ -24,7 +24,7 @@ const addPosts = async (newPost) => {
   const token = getToken();
   try {
     const response = await axios.post(
-      `http://localhost:8080/post`,
+      `${process.env.REACT_APP_SERVER_URL}/post`,
       newPost,
       {
         headers: {
@@ -45,7 +45,7 @@ const deletePost = async (postId) => {
   const token = getToken();
   try {
     const response = await axios.delete(
-      `http://localhost:8080/post/${postId}`,
+      `${process.env.REACT_APP_SERVER_URL}/post/${postId}`,
       {
         headers: {
           ACCESS_KEY: `Bearer ${token}`,
@@ -66,7 +66,7 @@ const updatePost = async ({ postId, updatedPost }) => {
   console.log("test1",token)
   try {
     const response = await axios.put(
-      `http://localhost:8080/post/${postId}`,
+      `${process.env.REACT_APP_SERVER_URL}/post/${postId}`,
       updatedPost,
       {
         headers: {
@@ -87,7 +87,7 @@ const likePost = async (postId) => {
   const token = getToken();
   try {
     const response = await axios.post(
-      `http://localhost:8080/like/${postId}`,
+      `${process.env.REACT_APP_SERVER_URL}/like/${postId}`,
       {},
       {
         headers: {

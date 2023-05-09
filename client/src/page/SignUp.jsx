@@ -34,7 +34,7 @@ function SignUp() {
       return
     }
     try {
-      const response = await axios.post('http://localhost:8080/auth/signup', {
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, {
         userId,
         userName,
         userPassword,
@@ -81,7 +81,7 @@ function SignUp() {
     const userId = id
     console.log(userId)
     try {
-      const response = await axios.get(`http://localhost:8080/auth/userCheck/${userId}`)
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/userCheck/${userId}`)
       // alert(JSON.stringify(response.data.msg));
       const message = response.data.code;
       if (message !== "BAD_REQUEST") {

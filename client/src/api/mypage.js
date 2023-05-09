@@ -13,7 +13,7 @@ const userId = decoded.sub
       ['users', userId],
       async () => {
         try{
-            const response = await axios.get(`http://localhost:8080/mypage/${userId}`,{headers:{ACCESS_KEY:`Bearer ${token}`}});
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/mypage/${userId}`,{headers:{ACCESS_KEY:`Bearer ${token}`}});
             console.log(response)
             return response.data;
         }catch(error){
