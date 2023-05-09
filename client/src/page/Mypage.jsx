@@ -50,13 +50,12 @@ function Mypage() {
         </Infosection>
         <Linesection>내 글 목록</Linesection>
         <PostSection>
-          <div class="posts-box">
+          <div>
             {userdata.postList?.map((post) => {
               return (
                 <TitleBox
                   key={post.postId}
                   onClick={() => handleDetailPageLinkClick(post.postId)}
-                  class="title-box"
                 >
                     <Skillbox>{post.postSkill}</Skillbox>
                   {post.postTitle !== undefined ? (
@@ -82,13 +81,12 @@ function Mypage() {
         </PostSection>
         <Linesection>내 댓글 목록</Linesection>
         <PostSection>
-          <div class="posts-box">
+          <div>
             {userdata.commentList?.map((post) => {
               return (
                 <TitleBox
-                  key={post.cmtId}
-                  onClick={() => handleDetailPageLinkClick(post.cmtId)}
-                  class="title-box"
+                  key={post.postId}
+                  onClick={() => handleDetailPageLinkClick(post.postId)}
                 >
                   <Skillbox></Skillbox>
                   {post.cmtContent !== undefined ? (

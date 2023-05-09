@@ -37,7 +37,7 @@ function Detail() {
         refetchOnWindowFocus: false,
     });
     // const { isLoading, isError, data } = useQuery("post", getPost);
-
+    console.log(data)
     useEffect(() => {
         if (data) {
             setPost(data);
@@ -68,7 +68,8 @@ function Detail() {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
             console.log("성공");
-            navigate(-1);
+            setUpdate(false)
+            // navigate(-1);
         },
     });
 
@@ -94,7 +95,7 @@ function Detail() {
 
     const likePostMutation = useMutation(likePost, {
         onSuccess: () => {
-            queryClient.invalidateQueries(["post", params.id]);
+            // queryClient.invalidateQueries(["post", params.id]);
             console.log("성공");
         },
     });
@@ -187,7 +188,7 @@ function Detail() {
                 </DetailBox2>
                 <DetailBox>
                     <BtnWrap>
-                        <Stuserid>작성자 : {useridmask}</Stuserid>
+                        <Stuserid>작성자 : {useridmask}({post.userSkill})</Stuserid>
                         <StView>
                             <span>{post?.postVisitCnt + 'View'}</span>
                             <span>
@@ -396,7 +397,6 @@ const CommentLine = styled.div`
   margin-left: 135px;
   width: 600px;
   border-bottom: 1px solid lightgray;
-  /* background-color: red; */
 `;
 const ButtonLine = styled.div`
   gap: 20px;
@@ -442,7 +442,7 @@ const Sttitle = styled.h1`
 
 const Stinput = styled.span`
   font-size: 30px;
-  margin-left: 7px;
+  margin-left: 5px;
 `;
 const Stuserid = styled.span`
 font-weight: 700;
@@ -450,7 +450,6 @@ margin-right: 210px;
 width: 400px;
 `
 const StView = styled.span`
-  width: 170px;
   gap: 20px;
   display: flex;
   justify-content: center;

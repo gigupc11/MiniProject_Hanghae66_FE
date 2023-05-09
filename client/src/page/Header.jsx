@@ -14,7 +14,7 @@ function Header() {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
     const userId = useSelector((state) => state.auth.userId)
-    console.log(isAuthenticated)
+    // console.log(isAuthenticated)
 
     return (
         <>
