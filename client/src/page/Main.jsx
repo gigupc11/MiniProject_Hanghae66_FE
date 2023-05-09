@@ -11,11 +11,11 @@ import { BiCommentDetail } from "react-icons/bi";
 function Main() {
     const navigate = useNavigate();
     const [filteredData, setFilteredData] = useState([]);
-
     const { isLoading, isError, data, error } = useQuery("posts", getPosts);
-    
+
     useEffect(() => {
-        setFilteredData(data);
+        setFilteredData(data.sort((a, b) => a.postId - b.postId));
+        // const sortedData = filteredData.sort((a, b) => a.postId - b.postId);
     }, [data]);
 
     const filterPosts = (skill) => {
