@@ -282,7 +282,7 @@ function Detail() {
                                                 <>
                                                     <UserIDLine>
                                                         <StText>
-                                                            {cmt.userYear}기 {cmt.cmtUserName}
+                                                            {cmt.cmtUserYear}기 {cmt.cmtUserName}
                                                         </StText>
                                                     </UserIDLine>
                                                     <CommentLine>
