@@ -40,16 +40,16 @@ function Write({ Open }) {
     resetContents();
     Open(false)
   };
-console.log("스킬",userSkill)
+// console.log("스킬",userSkill)
 
-const openAnimation = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    config: { duration: 200 },
-  });
+// const openAnimation = useSpring({
+//     from: { opacity: 0 },
+//     to: { opacity: 1 },
+//     config: { duration: 800 },
+//   });
 
   return createPortal(
-    <animated.div style={openAnimation}>
+    // <animated.div style={openAnimation}>
     <Container>
       <Modalbox>
         <DetailBox2>
@@ -98,7 +98,8 @@ const openAnimation = useSpring({
         </InputWrap>
       </Modalbox>
     </Container>
-    </animated.div>,
+    // </animated.div>
+    ,
     document.getElementById("modal")
   );
 }
@@ -109,7 +110,7 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  z-index: 999;
   position: fixed;
 `;
 

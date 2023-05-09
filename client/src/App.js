@@ -7,14 +7,20 @@ import jwt_decode from 'jwt-decode';
 import './App.css';
 import { setIsAuthenticated, setUserId } from "./redux/modules/authReducer";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient(
+  {defaultOptions:{
+    queries:{
+      refetchOnWindowFocus:false
+    }
+  }}
+);
 
 function App() {
   
   const dispatch = useDispatch();
   useEffect (() => {
     const token = Cookies.get('token')
-    console.log(token)
+    // console.log(token)
     if(token) {
       try {
         const decoded = jwt_decode(token)

@@ -11,7 +11,8 @@ import { BiCommentDetail } from "react-icons/bi";
 function Main() {
     const navigate = useNavigate();
     const [filteredData, setFilteredData] = useState([]);
-    const { isLoading, isError, data, error } = useQuery("posts", getPosts);
+    const { isLoading, isError, data, error } = useQuery("posts", getPosts
+    );
 
     useEffect(() => {
         // setFilteredData(data.sort((a, b) => a.postId - b.postId));
@@ -30,7 +31,7 @@ function Main() {
         }
     };
 
-    console.log(data)
+    // console.log(data)
     if (isLoading) {
         return <h1>로딩중</h1>;
     }
@@ -57,10 +58,10 @@ function Main() {
                         <Button onClick={() => filterPosts('NODE')}>Node.js</Button>
                     </div>
                 </Buttonbox>
-                <div class="posts-box">
+                <div class="posts-box" >
                     {filteredData?.map((post) => {
                         return (
-                            <TitleBox onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
+                            <TitleBox key = {post.postId} onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
                                 <Skillbox>{post.postSkill}</Skillbox>
                                 <Stunderbar>
                                     <Commentbox>{post.postTitle}</Commentbox>
@@ -102,8 +103,10 @@ const PostSection = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
-  padding-top: 70px;
+  padding-top: 120px;
   min-height: 100vh;
+  z-index: 1;
+
 `;
 
 const StText = styled.div`
@@ -131,6 +134,10 @@ justify-content: center;
 const Commentbox = styled.span`
     width: 400px;
     padding-left:10px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `
 
 const Skillbox = styled.span`
