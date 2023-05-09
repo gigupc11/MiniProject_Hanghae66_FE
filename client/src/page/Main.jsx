@@ -95,8 +95,7 @@ const Container = styled.div`
   min-width: 1200px;
   margin: 0 auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
-  height: 100vh;
+  height: 100%;
 `;
 
 const PostSection = styled.div`
@@ -107,7 +106,7 @@ const PostSection = styled.div`
   align-items: center;
   gap: 2rem;
   padding-top: 120px;
-  min-height: 100vh;
+  height: 100;
   z-index: 1;
 
 `;
