@@ -6,6 +6,7 @@ import Input from "../components/Input";
 import { useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import { useMutation } from "react-query";
+import { useSelector, useDispatch } from 'react-redux';
 import { getPosts, getPost, deletePost, updatePost, likePost } from "../api/post";
 import { Link, useNavigate } from "react-router-dom";
 import { addComment, deleteComment, updateComment } from "../api/comment";
@@ -23,6 +24,7 @@ function Detail() {
     const [post, setPost] = useState({});
     const [comment, setComment] = useState([]);
     const [postTitle, setPostTitle] = useState("");
+    const [postUserId, setPostUserId] = useState("");
     const [postLike, setPostLike] = useState(false);
     const [postContents, setPostContents] = useState("");
     const [cmtContent, setCmtContent] = useState("");
@@ -30,7 +32,7 @@ function Detail() {
     const [update, setUpdate] = useState(false);
     const [updateCommentState, setUpdateCommentState] = useState(null);
     const [checked, setChecked] = useState(false);
-
+    const userId = useSelector((state) => state.auth.userId)
     const { isLoading, isError, data } = useQuery(["post", params.id], () => getPost(params.id));
     // const { isLoading, isError, data } = useQuery("post", getPost);
 
@@ -40,6 +42,7 @@ function Detail() {
 
             setPostTitle(data.postTitle)
             setPostContents(data.postContent)
+            setPostUserId(data.postUserId)
             setChecked(data.chkpostLikes)
             console.log(data)
             if (data.commentList) {
@@ -132,7 +135,7 @@ function Detail() {
     // 덧글 추가
     const handleCommentSubmitButtonClick = (event) => {
         event.preventDefault();
-        event.stopPropagation(); 
+        event.stopPropagation();
         const postId = post?.postId;
 
         const newComment = {
@@ -195,15 +198,17 @@ function Detail() {
                                 </LikeBtn>
                             </span>
                         </StView>
-                        {update ? (
-                            <>
-                                <Button onClick={handleSubmitButtonClick}>수정완료</Button>
-                            </>
-                        ) : (
-                            <>
-                                <Button onClick={() => setUpdate(true)}>수정</Button>
-                                <Button onClick={handleDeleteButtonClick}>삭제</Button>
-                            </>
+                        {userId == postUserId && (
+                            update ? (
+                                <>
+                                    <Button onClick={handleSubmitButtonClick}>수정완료</Button>
+                                </>
+                            ) : (
+                                <>
+                                    <Button onClick={() => setUpdate(true)}>수정</Button>
+                                    <Button onClick={handleDeleteButtonClick}>삭제</Button>
+                                </>
+                            )
                         )}
                     </BtnWrap>
                         {update ? (
@@ -253,9 +258,9 @@ function Detail() {
                                                         </StText>
                                                     </UserIDLine>
                                                     <CommentLine>
-                                                        <Stcommentbox>  
+                                                        <Stcommentbox>
                                                             <Input
-                                                               defaultValue={cmt.cmtContent}
+                                                                defaultValue={cmt.cmtContent}
                                                                 onChange={(e) => setOldCmtContent(e.target.value)}
                                                             />
                                                         </Stcommentbox>
