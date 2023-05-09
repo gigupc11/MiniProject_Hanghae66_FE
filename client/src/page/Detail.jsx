@@ -44,7 +44,7 @@ function Detail() {
             setPostContents(data.postContent)
             setPostUserId(data.postUserId)
             setChecked(data.chkpostLikes)
-            console.log(data)
+            // console.log(data.chkpostLikes)
             if (data.commentList) {
                 setComment(data.commentList)
             }
@@ -52,7 +52,7 @@ function Detail() {
     }, [data]);
 
     if (comment.length > 0) {
-        console.log(comment);
+        // console.log(comment);
     }
 
     const deleteMutation = useMutation(deletePost, {
@@ -124,7 +124,7 @@ function Detail() {
     const handleSubmitButtonClick = (event) => {
         event.preventDefault();
         const postId = post?.postId;
-        console.log(postId)
+        // console.log(postId)
         const updatedPost = {
             postTitle,
             postContent: postContents,
@@ -155,7 +155,7 @@ function Detail() {
         const updatedComment = {
             cmtContent: oldCmtContent,
         };
-        console.log(commentId)
+        // console.log(commentId)
         setUpdateCommentState(null);
         updateCommentMutation.mutate({ commentId, updatedComment });
     };
