@@ -444,7 +444,7 @@ const Stinput = styled.span`
 `;
 const Stuserid = styled.span`
 font-weight: 700;
-margin-right: 40px;
+margin-right: 210px;
 width: 400px;
 `
 const StView = styled.span`

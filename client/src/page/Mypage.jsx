@@ -19,7 +19,7 @@ function Mypage() {
             setUserdata(data)
         }
     },[data])
-  console.log(data);
+//   console.log(data);
   if (isLoading) {
     return <h1>로딩중</h1>;
   }

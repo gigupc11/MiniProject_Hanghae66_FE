@@ -48,12 +48,12 @@ function SignUp() {
       });
 
 
-      const responseCode = response.data.msg;
+      const responseCode = response.data.code;
       console.log(responseCode)
 
       if (responseCode !== 'BAD_REQUEST') {
         alert('회원가입에 성공했습니다!');
-        navigate('/')
+        navigate('/login')
         console.log(userId, userName, userPassword, userYear, userSkill, userRole, token);
       } else {
         alert(response.data.msg);
