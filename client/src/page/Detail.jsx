@@ -185,7 +185,7 @@ function Detail() {
                         )}
 
                         <StView>
-                            <span>{post?.postVisitCnt}</span>
+                            <span>{post?.postVisitCnt + 'View'}</span>
                             <span>
                                 <LikeBtn>
                                     <HeartCheckbox
