@@ -17,7 +17,7 @@ function Main() {
         // setFilteredData(data.sort((a, b) => a.postId - b.postId));
         // // const sortedData = filteredData.sort((a, b) => a.postId - b.postId);
         if (data) {
-            setFilteredData([...data].sort((a, b) => a.postId + b.postId));
+            setFilteredData([...data].sort((a, b) => b.postId - a.postId));
         }
     }, [data]);
 
