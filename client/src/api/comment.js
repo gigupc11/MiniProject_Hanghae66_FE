@@ -7,7 +7,7 @@ const addComment = async ({postId, newComment}) => {
     const token = getToken();
     try {
       const response = await axios.post(
-        `http://localhost:8080/comment/${postId}`,
+        `${process.env.REACT_APP_SERVER_URL}/comment/${postId}`,
         newComment,
         {
           headers: {
@@ -28,7 +28,7 @@ const addComment = async ({postId, newComment}) => {
     const token = getToken();
     try {
       const response = await axios.delete(
-        `http://localhost:8080/comment/${commentId}`,
+        `${process.env.REACT_APP_SERVER_URL}/comment/${commentId}`,
         {
           headers: {
             ACCESS_KEY: `Bearer ${token}`,
@@ -48,7 +48,7 @@ const addComment = async ({postId, newComment}) => {
     const token = getToken();
     try {
       const response = await axios.put(
-        `http://localhost:8080/comment/${commentId}`,
+        `${process.env.REACT_APP_SERVER_URL}/comment/${commentId}`,
         updatedComment,
         {
           headers: {

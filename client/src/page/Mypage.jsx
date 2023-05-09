@@ -83,11 +83,11 @@ function Mypage() {
         <Linesection>내 댓글 목록</Linesection>
         <PostSection>
           <div class="posts-box">
-            {userdata.cmtList?.map((post) => {
+            {userdata.commentList?.map((post) => {
               return (
                 <TitleBox
                   key={post.cmtId}
-                  onClick={() => handleDetailPageLinkClick(post.postId)}
+                  onClick={() => handleDetailPageLinkClick(post.cmtId)}
                   class="title-box"
                 >
                   <Skillbox></Skillbox>
