@@ -164,6 +164,15 @@ function Detail() {
         likePostMutation.mutate(postId);
     };
 
+    const userid = post?.postUserId
+
+    const useridmask = userid ? userid.charAt(0) + "*".repeat(userid.length - 1) : ""
+
+    for (let i = 0; i < comment.length; i++) {
+        const cmtUserName = comment[i].cmtUserName;
+        comment[i].cmtUserName = cmtUserName.charAt(0) + "*".repeat(cmtUserName.length - 1);
+        }
+
     return (
         <Container>
             <Header />
@@ -173,17 +182,7 @@ function Detail() {
                 </DetailBox2>
                 <DetailBox>
                     <BtnWrap>
-                        {update ? (
-                            <Sttitle>
-                                <Input
-                                    value={postTitle}
-                                    onChange={(e) => setPostTitle(e.target.value)}
-                                />
-                            </Sttitle>
-                        ) : (
-                            <Sttitle>{post?.postTitle !== undefined ? post.postTitle : null}</Sttitle>
-                        )}
-
+                        <Stuserid>작성자 : {useridmask}</Stuserid>
                         <StView>
                             <span>{post?.postVisitCnt + 'View'}</span>
                             <span>
@@ -192,7 +191,7 @@ function Detail() {
                                         handleSubmitLikeButtonClick={handleSubmitLikeButtonClick}
                                         checked={checked}
                                         setChecked={setChecked}
-                                    />
+                                        />
                                 </LikeBtn>
                             </span>
                         </StView>
@@ -207,6 +206,16 @@ function Detail() {
                             </>
                         )}
                     </BtnWrap>
+                        {update ? (
+                            <Stinput>
+                                <Input
+                                    value={postTitle}
+                                    onChange={(e) => setPostTitle(e.target.value)}
+                                />
+                            </Stinput>
+                        ) : (
+                            <Sttitle>{post?.postTitle !== undefined ? post.postTitle : null}</Sttitle>
+                        )}
                     <InputWrap>
                         <div>
                             <ContentsWrap>
@@ -233,7 +242,7 @@ function Detail() {
                             </CommentWrap>
 
                             <div>
-                                <CommentBox>
+                                <div>
                                     {comment?.map((cmt) => (
                                         <CommentBox key={cmt.cmtId}>
                                             {updateCommentState === cmt.cmtId ? (
@@ -282,7 +291,7 @@ function Detail() {
                                             )}
                                         </CommentBox>
                                     ))}
-                                </CommentBox>
+                                </div>
                             </div>
                         </div>
                     </InputWrap>
@@ -417,16 +426,26 @@ const StText = styled.p`
   font-weight: 600;
 `;
 const Sttitle = styled.h1`
-  font-size: 40px;
-  margin-right: 35px;
+  font-size: 30px;
+  margin-right: 270px;
 `;
 
+const Stinput = styled.span`
+  font-size: 30px;
+  margin-left: 7px;
+`;
+const Stuserid = styled.span`
+font-weight: 700;
+margin-right: 40px;
+width: 400px;
+`
 const StView = styled.span`
   width: 170px;
   gap: 20px;
   display: flex;
   justify-content: center;
-  font-weight: 600;
+  align-items: center;
+  font-weight: 700;
   font-size: 22px;
 `;
 const LikeBtn = styled.button`
@@ -439,8 +458,9 @@ const LikeBtn = styled.button`
 const Stbtn = styled.button`
   all: unset;
   width: 100px;
-  height: 100px;
   font-weight: 700;
+  cursor: pointer;
+  z-index: 500;
   :hover {
     color: gray;
   }

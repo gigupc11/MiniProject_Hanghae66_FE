@@ -66,13 +66,13 @@ function Main() {
                                     <Commentbox>{post.postTitle}</Commentbox>
                                     <Viewbox>{post.postVisitCnt} View</Viewbox>
                                     <Likecommentbox>
-                                        <span>
+                                        <Sticon>
                                             <AiFillHeart color="red" />
-                                        </span>
+                                        </Sticon>
                                         <span> {post.postLikes}</span>
-                                        <span>
+                                        <Sticon>
                                             <BiCommentDetail />
-                                        </span>
+                                        </Sticon>
                                         <span>{post.cmtCount}</span>
                                     </Likecommentbox>
                                 </Stunderbar>
@@ -113,16 +113,19 @@ const StText = styled.div`
 `
 
 const TitleBox = styled.div`
+cursor: pointer;
   display: flex;
   justify-content: space-between;
   font-weight: 700;
   font-size: 22px;
-
   padding-bottom: 2px;
   width: 800px;
 `;
 
 const Viewbox = styled.span`
+width: 130px;
+display: flex;
+justify-content: center;
 `;
 
 const Commentbox = styled.span`
@@ -142,7 +145,7 @@ const Likecommentbox = styled.span`
     align-items: center;
     justify-content: center;
     width: 120px;
-    gap: 4px;
+    gap: 10px;
     height: 30px;
 `
 
@@ -156,6 +159,11 @@ const Stunderbar = styled.div`
 `
 const Buttonbox = styled.div`
     width: 730px;
+`
+
+const Sticon = styled.span`
+    align-items: center;
+    display: flex;
 `
 
 export default Main;
