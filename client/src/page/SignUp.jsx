@@ -48,7 +48,7 @@ function SignUp() {
       });
 
 
-      const responseCode = response.data.code;
+      const responseCode = response.data.msg;
       console.log(responseCode)
 
       if (responseCode !== 'BAD_REQUEST') {
