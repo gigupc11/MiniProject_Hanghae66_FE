@@ -14,8 +14,11 @@ function Main() {
     const { isLoading, isError, data, error } = useQuery("posts", getPosts);
 
     useEffect(() => {
-        setFilteredData(data.sort((a, b) => a.postId - b.postId));
-        // const sortedData = filteredData.sort((a, b) => a.postId - b.postId);
+        // setFilteredData(data.sort((a, b) => a.postId - b.postId));
+        // // const sortedData = filteredData.sort((a, b) => a.postId - b.postId);
+        if (data) {
+            setFilteredData([...data].sort((a, b) => a.postId - b.postId));
+        }
     }, [data]);
 
     const filterPosts = (skill) => {
