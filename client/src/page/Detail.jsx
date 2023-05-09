@@ -95,7 +95,7 @@ function Detail() {
 
     const likePostMutation = useMutation(likePost, {
         onSuccess: () => {
-            // queryClient.invalidateQueries(["post", params.id]);
+            queryClient.invalidateQueries(["post", params.id]);
             console.log("성공");
         },
     });
@@ -198,6 +198,7 @@ function Detail() {
                                         checked={checked}
                                         setChecked={setChecked}
                                         />
+                                        {post.postLikes}
                                 </LikeBtn>
                             </span>
                         </StView>
@@ -254,7 +255,7 @@ function Detail() {
                                     {comment?.map((cmt) => (
                                         <CommentBox key={cmt.cmtId}>
                                             {updateCommentState === cmt.cmtId ? (
-                                                <>
+                                                <Comment>
                                                     <UserIDLine>
                                                         <StText>
                                                             {cmt.userYear}기 {cmt.cmtUserName}
@@ -267,7 +268,6 @@ function Detail() {
                                                                 onChange={(e) => setOldCmtContent(e.target.value)}
                                                             />
                                                         </Stcommentbox>
-                                                    </CommentLine>
                                                     {userId == cmt.cmtUserId && (
                                                         <ButtonLine>
                                                             <Stbtn
@@ -277,9 +277,10 @@ function Detail() {
                                                             </Stbtn>
                                                         </ButtonLine>
                                                     )}
-                                                </>
+                                                    </CommentLine>
+                                                </Comment>
                                             ) : (
-                                                <>
+                                                <Comment>
                                                     <UserIDLine>
                                                         <StText>
                                                             {cmt.cmtUserYear}기 {cmt.cmtUserName}
@@ -287,7 +288,6 @@ function Detail() {
                                                     </UserIDLine>
                                                     <CommentLine>
                                                         <Stcommentbox>{cmt.cmtContent}</Stcommentbox>
-                                                    </CommentLine>
                                                     {userId == cmt.cmtUserId && (
                                                         <ButtonLine>
                                                             <Stbtn onClick={() => setUpdateCommentState(cmt.cmtId)}>수정</Stbtn>
@@ -298,7 +298,8 @@ function Detail() {
                                                             </Stbtn>
                                                         </ButtonLine>
                                                     )}
-                                                </>
+                                                    </CommentLine>
+                                                </Comment>
                                             )}
                                         </CommentBox>
                                     ))}
@@ -389,31 +390,32 @@ const CommentWrap = styled.div`
   gap: 10px;
 `;
 
-const CommentLine = styled.div`
+const Comment = styled.div`
+    display: flex;
+    align-items: center;
+    width: 750px;
+`
+
+const CommentLine = styled.span`
   height: 40px;
   display: flex;
   align-items: center;
-  position: fixed;
-  margin-left: 135px;
   width: 600px;
   border-bottom: 1px solid lightgray;
 `;
-const ButtonLine = styled.div`
+const ButtonLine = styled.span`
   gap: 20px;
   height: 40px;
-  /* width: 200px; */
   display: flex;
   align-items: center;
-  width: 80px;
-
-  margin-left: 640px;
   justify-content: center;
+    width: 100px;
 `;
-const UserIDLine = styled.div`
+const UserIDLine = styled.span`
   height: 40px;
   display: flex;
   align-items: center;
-  position: fixed;
+  width: 120px;
 
 `;
 const CommentBox = styled.div`
@@ -450,6 +452,8 @@ margin-right: 210px;
 width: 400px;
 `
 const StView = styled.span`
+width: 300px;
+transform: translateX(-30px);
   gap: 20px;
   display: flex;
   justify-content: center;
@@ -460,13 +464,10 @@ const StView = styled.span`
 const LikeBtn = styled.button`
   all: unset;
   font-size: 20px;
-  :active {
-    transform: scale(120%);
-  }
 `;
 const Stbtn = styled.button`
   all: unset;
-  width: 100px;
+
   font-weight: 700;
   cursor: pointer;
   z-index: 500;
