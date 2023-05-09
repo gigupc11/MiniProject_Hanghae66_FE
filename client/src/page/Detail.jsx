@@ -33,7 +33,9 @@ function Detail() {
     const [updateCommentState, setUpdateCommentState] = useState(null);
     const [checked, setChecked] = useState(false);
     const userId = useSelector((state) => state.auth.userId)
-    const { isLoading, isError, data } = useQuery(["post", params.id], () => getPost(params.id));
+    const { isLoading, isError, data } = useQuery(["post", params.id], () => getPost(params.id), {
+        refetchOnWindowFocus: false,
+    });
     // const { isLoading, isError, data } = useQuery("post", getPost);
 
     useEffect(() => {
