@@ -85,10 +85,10 @@ function SignUp() {
       // alert(JSON.stringify(response.data.msg));
       const message = response.data.code;
       if (message !== "BAD_REQUEST") {
-        alert(message);
+        alert(response.data.msg);
         setIsDuplicateChecked(true);
       } else {
-        alert(message);
+        alert(response.data.msg);
         setIsDuplicateChecked(false);
       }
     } catch (error) {
