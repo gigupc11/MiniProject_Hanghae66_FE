@@ -23,6 +23,7 @@ function Detail() {
     const [post, setPost] = useState({});
     const [comment, setComment] = useState([]);
     const [postTitle, setPostTitle] = useState("");
+    const [postLike, setPostLike] = useState(false);
     const [postContents, setPostContents] = useState("");
     const [cmtContent, setCmtContent] = useState("");
     const [oldCmtContent, setOldCmtContent] = useState("");
@@ -39,6 +40,7 @@ function Detail() {
 
             setPostTitle(data.postTitle)
             setPostContents(data.postContent)
+            setChecked(data.chkpostLikes)
             console.log(data)
             if (data.commentList) {
                 setComment(data.commentList)
