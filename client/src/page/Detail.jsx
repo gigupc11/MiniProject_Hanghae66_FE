@@ -256,14 +256,15 @@ function Detail() {
                                                             />
                                                         </Stcommentbox>
                                                     </CommentLine>
-                                                    <ButtonLine>
-                                                        <Stbtn
-                                                            onClick={() => handleCommentUpdateButtonClick(cmt.cmtId)}
-                                                        >
-                                                            수정완료
-                                                        </Stbtn>
-                                                    </ButtonLine>
-
+                                                    {userId == cmt.cmtUserId && (
+                                                        <ButtonLine>
+                                                            <Stbtn
+                                                                onClick={() => handleCommentUpdateButtonClick(cmt.cmtId)}
+                                                            >
+                                                                수정완료
+                                                            </Stbtn>
+                                                        </ButtonLine>
+                                                    )}
                                                 </>
                                             ) : (
                                                 <>
@@ -275,14 +276,16 @@ function Detail() {
                                                     <CommentLine>
                                                         <Stcommentbox>{cmt.cmtContent}</Stcommentbox>
                                                     </CommentLine>
-                                                    <ButtonLine>
-                                                        <Stbtn onClick={() => setUpdateCommentState(cmt.cmtId)}>수정</Stbtn>
-                                                        <Stbtn
-                                                            onClick={() => handleCommentDeleteButtonClick(cmt.cmtId)}
-                                                        >
-                                                            삭제
-                                                        </Stbtn>
-                                                    </ButtonLine>
+                                                    {userId == cmt.cmtUserId && (
+                                                        <ButtonLine>
+                                                            <Stbtn onClick={() => setUpdateCommentState(cmt.cmtId)}>수정</Stbtn>
+                                                            <Stbtn
+                                                                onClick={() => handleCommentDeleteButtonClick(cmt.cmtId)}
+                                                            >
+                                                                삭제
+                                                            </Stbtn>
+                                                        </ButtonLine>
+                                                    )}
                                                 </>
                                             )}
                                         </CommentBox>
