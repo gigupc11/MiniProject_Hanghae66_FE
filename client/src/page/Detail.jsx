@@ -155,6 +155,10 @@ function Detail() {
 
     // 덧글 추가
     const handleCommentSubmitButtonClick = (event) => {
+        if(cmtContent === ""){
+            alert("댓글을 작성해주세요")
+            return
+        }
         event.preventDefault();
         event.stopPropagation();
         const postId = post?.postId;
@@ -192,7 +196,7 @@ function Detail() {
         // event.preventDefault();
         const cmtId = cmtid;
 
-        setChecked(e);
+        setCmtChecked(e);
         likeCmtMutation.mutate(cmtId);
     };
     console.log(comment.cmtId)
@@ -458,7 +462,6 @@ const UserIDLine = styled.span`
   display: flex;
   align-items: center;
   width: 120px;
-
 `;
 const CommentBox = styled.div`
   display: flex;
@@ -506,7 +509,19 @@ transform: translateX(-30px);
 const LikeBtn = styled.button`
   all: unset;
   font-size: 20px;
+  width: 100px;
+font-weight: 600;
 `;
+
+const CmtLikeBtn = styled.button`
+  all: unset;
+  font-size: 20px;
+  /* background-color: blue; */
+  transform: translateX(-20px);
+  width: 100px;
+  font-weight: 600;
+`;
+
 const Stbtn = styled.button`
   all: unset;
 
