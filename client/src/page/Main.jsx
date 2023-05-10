@@ -61,7 +61,7 @@ function Main() {
 
             const code = response.data.code;
             if (code != "ERR_BAD_REQUEST") {
-                setFilteredSearchPost(response.data)
+                setFilteredSearchPost([...response.data].sort((a, b) => b.postId - a.postId))
                 setSearchState(true)
             } else {
                 alert("글자를 넣어주세요!")
