@@ -2,9 +2,11 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 
 const getToken = () => Cookies.get('token');
+const getToken2 = () => Cookies.get('token');
 
 const addComment = async ({postId, newComment}) => {
     const token = getToken();
+    const token2 = getToken2();
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/comment/${postId}`,
@@ -12,6 +14,7 @@ const addComment = async ({postId, newComment}) => {
         {
           headers: {
             ACCESS_KEY: `Bearer ${token}`,
+            REFRESH_KEY: `Bearer ${token2}`,
           },
         }
       );
@@ -26,12 +29,14 @@ const addComment = async ({postId, newComment}) => {
 
   const deleteComment = async (commentId) => {
     const token = getToken();
+    const token2 = getToken2();
     try {
       const response = await axios.delete(
         `${process.env.REACT_APP_SERVER_URL}/comment/${commentId}`,
         {
           headers: {
             ACCESS_KEY: `Bearer ${token}`,
+            REFRESH_KEY: `Bearer ${token2}`,
           },
         }
       );
@@ -46,6 +51,7 @@ const addComment = async ({postId, newComment}) => {
 
   const updateComment = async ({ commentId, updatedComment }) => {
     const token = getToken();
+    const token2 = getToken2();
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_SERVER_URL}/comment/${commentId}`,
@@ -53,6 +59,7 @@ const addComment = async ({postId, newComment}) => {
         {
           headers: {
             ACCESS_KEY: `Bearer ${token}`,
+            REFRESH_KEY: `Bearer ${token2}`,
           },
         }
       );
@@ -67,6 +74,7 @@ const addComment = async ({postId, newComment}) => {
 
   const likeCmt = async (commentId) => {
     const token = getToken();
+    const token2 = getToken2();
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/comment/like/${commentId}`,
@@ -74,6 +82,7 @@ const addComment = async ({postId, newComment}) => {
         {
           headers: {
             ACCESS_KEY: `Bearer ${token}`,
+            REFRESH_KEY: `Bearer ${token2}`,
           },
         }
       );

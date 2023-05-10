@@ -34,6 +34,8 @@ function Detail() {
     const [checked, setChecked] = useState(false);
     const [cmtChecked, setCmtChecked] = useState(false);
     const userId = useSelector((state) => state.auth.userId)
+
+    const userRoleLS = localStorage.getItem('userRoleLS')
     const { isLoading, isError, data } = useQuery(["post", params.id], () => getPost(params.id), {
         refetchOnWindowFocus: false,
     });
@@ -221,7 +223,7 @@ function Detail() {
                                 </LikeBtn>
                             </span>
                         </StView>
-                        {userId == postUserId && (
+                        {userId == postUserId || userRoleLS == 'admin' (
                             update ? (
                                 <>
                                     <Button onClick={handleSubmitButtonClick}>수정완료</Button>
@@ -287,7 +289,7 @@ function Detail() {
                                                                 onChange={(e) => setOldCmtContent(e.target.value)}
                                                             />
                                                         </Stcommentbox>
-                                                        {userId == cmt.cmtUserId && (
+                                                        {userId == cmt.cmtUserId || userRoleLS == 'admin' && (
                                                             <ButtonLine>
                                                                 <Stbtn
                                                                     onClick={() => handleCommentUpdateButtonClick(cmt.cmtId)}
@@ -307,7 +309,7 @@ function Detail() {
                                                     </UserIDLine>
                                                     <CommentLine>
                                                         <Stcommentbox>{cmt.cmtContent}</Stcommentbox>
-                                                        {userId == cmt.cmtUserId && (
+                                                        {userId == cmt.cmtUserId || userRoleLS == 'admin' && (
                                                             <ButtonLine>
                                                                 <Stbtn onClick={() => setUpdateCommentState(cmt.cmtId)}>수정</Stbtn>
                                                                 <Stbtn

@@ -2,6 +2,7 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 
 const getToken = () => Cookies.get('token');
+const getToken2 = () => Cookies.get('token');
 
 const getPosts = async () => {
   const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post`);
@@ -14,11 +15,13 @@ const searchPosts = async ({ search, category }) => {
 }
 
 const getPost = async (postId) => {
-  const token = getToken();
+  const token  = getToken();
+  const token2 = getToken2();
   const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/${postId}`,
     {
       headers: {
         ACCESS_KEY: `Bearer ${token}`,
+        REFRESH_KEY: `Bearer ${token2}`,
       },
     }
   );
@@ -27,6 +30,7 @@ const getPost = async (postId) => {
 
 const addPosts = async (newPost) => {
   const token = getToken();
+  const token2 = getToken2();
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_SERVER_URL}/post`,
@@ -34,6 +38,7 @@ const addPosts = async (newPost) => {
       {
         headers: {
           ACCESS_KEY: `Bearer ${token}`,
+          REFRESH_KEY: `Bearer ${token2}`,
         },
       }
     );
@@ -48,12 +53,14 @@ const addPosts = async (newPost) => {
 
 const deletePost = async (postId) => {
   const token = getToken();
+  const token2 = getToken2();
   try {
     const response = await axios.delete(
       `${process.env.REACT_APP_SERVER_URL}/post/${postId}`,
       {
         headers: {
           ACCESS_KEY: `Bearer ${token}`,
+          REFRESH_KEY: `Bearer ${token2}`,
         },
       }
     );
@@ -68,6 +75,7 @@ const deletePost = async (postId) => {
 
 const updatePost = async ({ postId, updatedPost }) => {
   const token = getToken();
+  const token2 = getToken2();
   console.log("test1", token)
   try {
     const response = await axios.put(
@@ -76,6 +84,7 @@ const updatePost = async ({ postId, updatedPost }) => {
       {
         headers: {
           ACCESS_KEY: `Bearer ${token}`,
+          REFRESH_KEY: `Bearer ${token2}`,
         },
       }
     );
@@ -90,6 +99,7 @@ const updatePost = async ({ postId, updatedPost }) => {
 
 const likePost = async (postId) => {
   const token = getToken();
+  const token2 = getToken2();
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_SERVER_URL}/like/${postId}`,
@@ -97,6 +107,7 @@ const likePost = async (postId) => {
       {
         headers: {
           ACCESS_KEY: `Bearer ${token}`,
+          REFRESH_KEY: `Bearer ${token2}`,
         },
       }
     );

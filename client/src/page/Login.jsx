@@ -23,14 +23,19 @@ function Login() {
         userPassword},
         {withCredentials:true}
       );
-
-
       const responseCode = response.data.code
+
       if (responseCode != "BAD_REQUEST") {
         const rowToken = response.headers['access_key'];
+        const rowToken2 = response.headers['refresh_key'];
+        const userRole = response.headers['user_role'];
         console.log(rowToken)
         const token = rowToken.split(" ")[1]
+        const token2 = rowToken2.split(" ")[1]
         Cookies.set('token', token, { expires: 1 / 24 });
+        Cookies.set('token2', token2, { expires: 1 / 24 });
+
+        localStorage.setItem('userRoleLS', userRole)
   
         alert('로그인에 성공했습니다!');
         resetId("")
