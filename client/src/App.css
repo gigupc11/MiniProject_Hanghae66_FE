@@ -14,3 +14,9 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+hr {
+  width : 70%;
+  height : 2px;
+  background-color : gray;
+}

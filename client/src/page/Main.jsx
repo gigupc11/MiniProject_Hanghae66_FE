@@ -2,47 +2,84 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import styled from "styled-components";
 import Button from "../components/Button";
-import { getPosts } from "../api/post";
-import { useQuery } from "react-query";
+import { getPosts, searchPosts } from "../api/post";
+import { useMutation, useQueries, useQuery, useQueryClient } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
+import Input from "../components/Input";
+import axios from "axios";
+
 
 function Main() {
     const navigate = useNavigate();
     const [filteredData, setFilteredData] = useState([]);
-
+    const [search, setSearch] = useState('');
+    const [category, setCategory] = useState('');
+    const [searchState, setSearchState] = useState(false);
+    const [filteredSearchPost, setFilteredSearchPost] = useState([]);
+    const [searchClicked, setSearchClicked] = useState(false);
     // const { isLoading, isError, data, error } = useQuery("posts", getPosts);
-    const { isLoading, isError, data, error } = useQuery("posts", getPosts, {
-        refetchOnWindowFocus: false,
-      });
-      
+    const queryClient = useQueryClient();
+
+    console.log(search, category)
+    const [posts, searchPost] = useQueries([
+        { queryKey: "posts", queryFn: getPosts },
+        // { queryKey: ["searchPost", search, category, searchClicked], queryFn: searchPosts, enabled: searchClicked }
+    ])
+
     useEffect(() => {
-        // setFilteredData(data.sort((a, b) => a.postId - b.postId));
-        // // const sortedData = filteredData.sort((a, b) => a.postId - b.postId);
-        if (data) {
-            setFilteredData([...data].sort((a, b) => b.postId - a.postId));
+        if (posts.data) {
+            setFilteredData([...posts.data].sort((a, b) => b.postId - a.postId));
         }
-    }, [data]);
+    }, [posts.data]);
+
+    useEffect(() => {
+        console.log(filteredSearchPost);
+    }, [filteredSearchPost]);
+
+
 
     const filterPosts = (skill) => {
         if (skill === 'All') {
-            setFilteredData(data);
+            setFilteredData(posts.data);
         } else {
-            const filtered = data.filter((post) => post.postSkill === skill);
+            const filtered = posts.data.filter((post) => post.postSkill === skill);
             setFilteredData(filtered);
         }
     };
 
-    // console.log(data)
-    if (isLoading) {
-        return <h1>로딩중</h1>;
+    const filterSearch = (cate) => {
+        setCategory(cate)
     }
 
-    if (isError) {
-        console.error(error);
-        return <h1>오류가 발생하였습니다</h1>;
+
+    const handleSubmitButtonClick2 = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/search?keyword=${search}&sortBy=${category}`)
+
+            const code = response.data.code;
+            if (code != "ERR_BAD_REQUEST") {
+                setFilteredSearchPost(response.data)
+                setSearchState(true)
+            } else {
+                alert("글자를 넣어주세요!")
+            }
+        } catch (error) {
+            alert (error)
+            console.error(error)
+        }
     }
+
+    // if (isLoading || isLoading2) {
+    //     return <h1>로딩중</h1>;
+    // }
+
+    // if (isError || isError2) {
+    //     console.error(error);
+    //     return <h1>오류가 발생하였습니다</h1>;
+    // }
 
     const handleDetailPageLinkClick = (id) => {
         navigate(`/detail/${id}`);
@@ -53,37 +90,80 @@ function Main() {
             <Header />
             <PostSection>
                 <StText>항해66 게시판</StText>
-                <Buttonbox>
+                <SearchWrap>
+                <SerchCategoryWrap>
+                    <Button onClick={() => filterSearch('all')}>All</Button>
+                    <Button onClick={() => filterSearch('title')}>Title</Button>
+                    <Button onClick={() => filterSearch('content')}>Content</Button>
+                    <Button onClick={() => setSearchState(false)}>Reset</Button>
+                    </SerchCategoryWrap>    
+                    <InputWrap>
+                        <Input onChange={(e) => setSearch(e.target.value)} size={"large"} />
+                        <Button onClick={handleSubmitButtonClick2} size={"medium"}>검색</Button>
+                    </InputWrap>
+
+                   
+                </SearchWrap>
+                <hr />
+                {searchState ? (
+                    filteredSearchPost.length === 0 ? (
+                        <p>검색어를입력하세요...</p>
+                    ) : (
+                        filteredSearchPost.map((post) => {
+                            return (
+                                <TitleBox key={post.postId} onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
+                                    <Skillbox>{post.postSkill}</Skillbox>
+                                    <Stunderbar>
+                                        <Commentbox>{post.postTitle}</Commentbox>
+                                        <Viewbox>{post.postVisitCnt} View</Viewbox>
+                                        <Likecommentbox>
+                                            <Sticon>
+                                                <AiFillHeart color="red" />
+                                            </Sticon>
+                                            <span> {post.postLikes}</span>
+                                            <Sticon>
+                                                <BiCommentDetail />
+                                            </Sticon>
+                                            <span>{post.cmtCount}</span>
+                                        </Likecommentbox>
+                                    </Stunderbar>
+                                </TitleBox>
+                            )
+                        }))) : null}
+                {!searchState ? (
                     <div>
-                        <Button onClick={() => filterPosts('All')}>All</Button>
-                        <Button onClick={() => filterPosts('SPRING')}>Spring</Button>
-                        <Button onClick={() => filterPosts('REACT')}>React</Button>
-                        <Button onClick={() => filterPosts('NODE')}>Node.js</Button>
-                    </div>
-                </Buttonbox>
-                <div class="posts-box" >
-                    {filteredData?.map((post) => {
-                        return (
-                            <TitleBox key = {post.postId} onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
-                                <Skillbox>{post.postSkill}</Skillbox>
-                                <Stunderbar>
-                                    <Commentbox>{post.postTitle}</Commentbox>
-                                    <Viewbox>{post.postVisitCnt} View</Viewbox>
-                                    <Likecommentbox>
-                                        <Sticon>
-                                            <AiFillHeart color="red" />
-                                        </Sticon>
-                                        <span> {post.postLikes}</span>
-                                        <Sticon>
-                                            <BiCommentDetail />
-                                        </Sticon>
-                                        <span>{post.cmtCount}</span>
-                                    </Likecommentbox>
-                                </Stunderbar>
-                            </TitleBox>
-                        );
-                    })}
-                </div>
+                        <Buttonbox>
+                            <div>
+                                <Button onClick={() => filterPosts('All')}>All</Button>
+                                <Button onClick={() => filterPosts('SPRING')}>Spring</Button>
+                                <Button onClick={() => filterPosts('REACT')}>React</Button>
+                                <Button onClick={() => filterPosts('NODE')}>Node.js</Button>
+                            </div>
+                        </Buttonbox>
+                        <div class="posts-box" >
+                            {filteredData?.map((post) => {
+                                return (
+                                    <TitleBox key={post.postId} onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
+                                        <Skillbox>{post.postSkill}</Skillbox>
+                                        <Stunderbar>
+                                            <Commentbox>{post.postTitle}</Commentbox>
+                                            <Viewbox>{post.postVisitCnt} View</Viewbox>
+                                            <Likecommentbox>
+                                                <Sticon>
+                                                    <AiFillHeart color="red" />
+                                                </Sticon>
+                                                <span> {post.postLikes}</span>
+                                                <Sticon>
+                                                    <BiCommentDetail />
+                                                </Sticon>
+                                                <span>{post.cmtCount}</span>
+                                            </Likecommentbox>
+                                        </Stunderbar>
+                                    </TitleBox>
+                                );
+                            })}
+                        </div>
+                    </div>) : null}
             </PostSection>
         </Container>
     );
@@ -174,5 +254,24 @@ const Sticon = styled.span`
     align-items: center;
     display: flex;
 `
+const InputWrap = styled.div`
+  width: auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+`;
 
+const SearchWrap = styled.div`
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+` 
+
+const SerchCategoryWrap = styled.div`
+    justify-content: center;
+    align-items: center;
+    display: flex;
+`
 export default Main;
