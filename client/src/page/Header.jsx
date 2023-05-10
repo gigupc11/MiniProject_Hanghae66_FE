@@ -31,7 +31,7 @@ function Header() {
                     <>
                         <IdBtn onClick={() => {
                             navigate(`/mypage/${userId}`)
-                        }}>{userId} 님</IdBtn>
+                        }}>{userId} {"님"}</IdBtn>
 
 
                         <BtnBox class="btn-box">
@@ -78,11 +78,14 @@ const BtnBox = styled.div`
 const IdBtn = styled.button`
     all: unset;
     color: white;
+    width: 250px;
     font-size: 20px;
     font-weight: 600;
-    margin-left: 600px;
+    transform: translateX(240px);
+    text-align: right;
+    cursor: pointer;
     :hover {
-        border-bottom: 2px solid white;
+        color: lightgray;
     }
 `
 export default Header

@@ -19,6 +19,11 @@ function Main() {
     const [searchState, setSearchState] = useState(false);
     const [filteredSearchPost, setFilteredSearchPost] = useState([]);
     const [searchClicked, setSearchClicked] = useState(false);
+    const [clickedAll, setClickedAll] = useState(false);
+    const [clickedTitle, setClickedTitle] = useState(false);
+    const [clickedContent, setClickedContent] = useState(false);
+    const [clickedReset, setClickedReset] = useState(false);
+
     // const { isLoading, isError, data, error } = useQuery("posts", getPosts);
     const queryClient = useQueryClient();
 
@@ -51,7 +56,30 @@ function Main() {
 
     const filterSearch = (cate) => {
         setCategory(cate)
-    }
+        if (cate === "all") {
+          setClickedAll(true);
+          setClickedTitle(false);
+          setClickedContent(false);
+        } else if (cate === "title") {
+          setClickedAll(false);
+          setClickedTitle(true);
+          setClickedContent(false);
+        } else if (cate === "content") {
+          setClickedAll(false);
+          setClickedTitle(false);
+          setClickedContent(true);
+        }
+        else if (cate === "reset") {
+            setClickedAll(false);
+            setClickedTitle(false);
+            setClickedContent(false);
+            setSearchState(false)
+          }
+      };
+
+    
+
+      
 
 
     const handleSubmitButtonClick2 = async (event) => {
@@ -91,16 +119,16 @@ function Main() {
             <PostSection>
                 <StText>항해66 게시판</StText>
                 <SearchWrap>
-                <SerchCategoryWrap>
-                    <Button onClick={() => filterSearch('all')}>All</Button>
-                    <Button onClick={() => filterSearch('title')}>Title</Button>
-                    <Button onClick={() => filterSearch('content')}>Content</Button>
-                    <Button onClick={() => setSearchState(false)}>Reset</Button>
-                    </SerchCategoryWrap>    
                     <InputWrap>
-                        <Input onChange={(e) => setSearch(e.target.value)} size={"large"} />
+                        <Input placeholder = {'검색어를 입력해주세요'}onChange={(e) => setSearch(e.target.value)} size={"custom"} width ={"460px"} height={"46px"} fsize = {"20px"} />
                         <Button onClick={handleSubmitButtonClick2} size={"medium"}>검색</Button>
                     </InputWrap>
+                <SerchCategoryWrap>
+                    <Searchbtn clicked = {clickedAll} onClick={() => filterSearch('all')}>ALL</Searchbtn>
+                    <Searchbtn clicked = {clickedTitle} onClick={() => filterSearch('title')}>TITLE</Searchbtn>
+                    <Searchbtn clicked = {clickedContent} onClick={() => filterSearch('content')}>CONTENT</Searchbtn>
+                    <Searchbtn clicked = {clickedReset} onClick={() => filterSearch('reset')}>RESET</Searchbtn>
+                    </SerchCategoryWrap>    
 
                    
                 </SearchWrap>
@@ -270,8 +298,19 @@ const SearchWrap = styled.div`
 ` 
 
 const SerchCategoryWrap = styled.div`
+transform: translateX(-140px);
     justify-content: center;
     align-items: center;
     display: flex;
+    gap: 25px;
 `
+
+const Searchbtn = styled.button`
+    all: unset;
+    font-weight: 600;
+    font-size: 20px;
+    cursor: pointer;
+    color: ${(props) => (props.clicked ? "black" : "lightgray")};
+`;
+
 export default Main;
