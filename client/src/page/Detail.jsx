@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getPosts, getPost, deletePost, updatePost, likePost } from "../api/post";
 import { Link, useNavigate } from "react-router-dom";
 import { addComment, deleteComment, updateComment, likeCmt } from "../api/comment";
-import {HeartCheckbox, HeartCmpCheckbox} from "../components/HeartCheckBox";
+import { HeartCheckbox, HeartCmpCheckbox } from "../components/HeartCheckBox";
 
 // const
 
@@ -50,10 +50,10 @@ function Detail() {
             setPostUserId(data.postUserId)
             setChecked(data.chkpostLikes)
             // console.log(data.chkpostLikes)
-            if (data.commentList) { 
+            if (data.commentList) {
                 setComment(data.commentList)
                 setCmtChecked(data.commentList.map((comment) => comment.chkCommentLikes));
-                
+
             }
         }
     }, [data]);
@@ -203,142 +203,148 @@ function Detail() {
     return (
         <Container>
             <Header />
-            <PostSection>
-                <DetailBox2>
-                    <TextWrap>게시글</TextWrap>
-                </DetailBox2>
-                <DetailBox>
-                    <BtnWrap>
-                        <Stuserid>작성자 : {useridmask}({post.userSkill})</Stuserid>
-                        <StView>
-                            <span>{post?.postVisitCnt + 'View'}</span>
-                            <span>
-                                <LikeBtn>
-                                    <HeartCheckbox
-                                        handleSubmitLikeButtonClick={handleSubmitLikeButtonClick}
-                                        checked={checked}
-                                        setChecked={setChecked}
-                                    />
-                                    {post.postLikes}
-                                </LikeBtn>
-                            </span>
-                        </StView>
-                        {userId == postUserId || userRoleLS == 'admin' (
-                            update ? (
-                                <>
-                                    <Button onClick={handleSubmitButtonClick}>수정완료</Button>
-                                </>
-                            ) : (
-                                <>
-                                    <Button onClick={() => setUpdate(true)}>수정</Button>
-                                    <Button onClick={handleDeleteButtonClick}>삭제</Button>
-                                </>
-                            )
-                        )}
-                    </BtnWrap>
-                    {update ? (
-                        <Stinput>
-                            <Input
-                                value={postTitle}
-                                onChange={(e) => setPostTitle(e.target.value)}
-                            />
-                        </Stinput>
-                    ) : (
-                        <Sttitle>{post?.postTitle !== undefined ? post.postTitle : null}</Sttitle>
-                    )}
-                    <InputWrap>
-                        <div>
-                            <ContentsWrap>
-                                {update ? (
-                                    <Input
-                                        value={postContents}
-                                        onChange={(e) => setPostContents(e.target.value)}
-                                    />
+            {isLoading ? (
+                <h1>로딩중</h1>
+            ) : isError ? (
+                <h1>오류가 발생하였습니다</h1>
+            ) : (
+                <PostSection>
+                    <DetailBox2>
+                        <TextWrap>게시글</TextWrap>
+                    </DetailBox2>
+                    <DetailBox>
+                        <BtnWrap>
+                            <Stuserid>작성자 : {useridmask}({post.userSkill})</Stuserid>
+                            <StView>
+                                <span>{post?.postVisitCnt + 'View'}</span>
+                                <span>
+                                    <LikeBtn>
+                                        <HeartCheckbox
+                                            handleSubmitLikeButtonClick={handleSubmitLikeButtonClick}
+                                            checked={checked}
+                                            setChecked={setChecked}
+                                        />
+                                        {post.postLikes}
+                                    </LikeBtn>
+                                </span>
+                            </StView>
+                            {((userId === postUserId) || (userRoleLS === 'admin')) && (
+                                update ? (
+                                    <>
+                                        <Button onClick={handleSubmitButtonClick}>수정완료</Button>
+                                    </>
                                 ) : (
-                                    <h4 class="contents">{post?.postContent !== undefined ? post.postContent : null}</h4>
-                                )}
-                            </ContentsWrap>
-
-                            <CommentWrap>
-                                <StText>Comment</StText>
+                                    <>
+                                        <Button onClick={() => setUpdate(true)}>수정</Button>
+                                        <Button onClick={handleDeleteButtonClick}>삭제</Button>
+                                    </>
+                                )
+                            )}
+                        </BtnWrap>
+                        {update ? (
+                            <Stinput>
                                 <Input
-                                    value={cmtContent}
-                                    onChange={(e) => setCmtContent(e.target.value)}
-                                    size="custom"
-                                    height={"30px"}
-                                    width={"580px"}
+                                    value={postTitle}
+                                    onChange={(e) => setPostTitle(e.target.value)}
                                 />
-                                <Button onClick={handleCommentSubmitButtonClick}>입력</Button>
-                            </CommentWrap>
-
+                            </Stinput>
+                        ) : (
+                            <Sttitle>{post?.postTitle !== undefined ? post.postTitle : null}</Sttitle>
+                        )}
+                        <InputWrap>
                             <div>
+                                <ContentsWrap>
+                                    {update ? (
+                                        <Input
+                                            value={postContents}
+                                            onChange={(e) => setPostContents(e.target.value)}
+                                        />
+                                    ) : (
+                                        <h4 class="contents">{post?.postContent !== undefined ? post.postContent : null}</h4>
+                                    )}
+                                </ContentsWrap>
+
+                                <CommentWrap>
+                                    <StText>Comment</StText>
+                                    <Input
+                                        value={cmtContent}
+                                        onChange={(e) => setCmtContent(e.target.value)}
+                                        size="custom"
+                                        height={"30px"}
+                                        width={"580px"}
+                                    />
+                                    <Button onClick={handleCommentSubmitButtonClick}>입력</Button>
+                                </CommentWrap>
+
                                 <div>
-                                    {comment?.map((cmt, i) => (
-                                        <CommentBox key={cmt.cmtId}>
-                                            {updateCommentState === cmt.cmtId ? (
-                                                <Comment>
-                                                    <UserIDLine>
-                                                        <StText>
-                                                            {cmt.userYear}기 {cmt.cmtUserName}
-                                                        </StText>
-                                                    </UserIDLine>
-                                                    <CommentLine>
-                                                        <Stcommentbox>
-                                                            <Input
-                                                                defaultValue={cmt.cmtContent}
-                                                                onChange={(e) => setOldCmtContent(e.target.value)}
-                                                            />
-                                                        </Stcommentbox>
-                                                        {userId == cmt.cmtUserId || userRoleLS == 'admin' && (
-                                                            <ButtonLine>
-                                                                <Stbtn
-                                                                    onClick={() => handleCommentUpdateButtonClick(cmt.cmtId)}
-                                                                >
-                                                                    수정완료
-                                                                </Stbtn>
-                                                            </ButtonLine>
-                                                        )}
-                                                    </CommentLine>
-                                                </Comment>
-                                            ) : (
-                                                <Comment>
-                                                    <UserIDLine>
-                                                        <StText>
-                                                            {cmt.cmtUserYear}기 {cmt.cmtUserName}
-                                                        </StText>
-                                                    </UserIDLine>
-                                                    <CommentLine>
-                                                        <Stcommentbox>{cmt.cmtContent}</Stcommentbox>
-                                                        {userId == cmt.cmtUserId || userRoleLS == 'admin' && (
-                                                            <ButtonLine>
-                                                                <Stbtn onClick={() => setUpdateCommentState(cmt.cmtId)}>수정</Stbtn>
-                                                                <Stbtn
-                                                                    onClick={() => handleCommentDeleteButtonClick(cmt.cmtId)}
-                                                                >
-                                                                    삭제
-                                                                </Stbtn>
-                                                            </ButtonLine>
-                                                        )}
-                                                        
-                                                        <LikeBtn>
-                                                            <HeartCmpCheckbox
-                                                                handleSubmitCmtLikeButtonClick={(e)=>handleSubmitCmtLikeButtonClick(cmt.cmtId, e)}
-                                                                cmtChecked={cmtChecked[i]}
-                                                                setCmtChecked={setCmtChecked}
-                                                            />
-                                                            {cmt.cmtLikes}
-                                                        </LikeBtn>
-                                                    </CommentLine>
-                                                </Comment>
-                                            )}
-                                        </CommentBox>
-                                    ))}
+                                    <div>
+                                        {comment?.map((cmt, i) => (
+                                            <CommentBox key={cmt.cmtId}>
+                                                {updateCommentState === cmt.cmtId ? (
+                                                    <Comment>
+                                                        <UserIDLine>
+                                                            <StText>
+                                                                {cmt.userYear}기 {cmt.cmtUserName}
+                                                            </StText>
+                                                        </UserIDLine>
+                                                        <CommentLine>
+                                                            <Stcommentbox>
+                                                                <Input
+                                                                    defaultValue={cmt.cmtContent}
+                                                                    onChange={(e) => setOldCmtContent(e.target.value)}
+                                                                />
+                                                            </Stcommentbox>
+                                                            {((userId == cmt.cmtUserId) || (userRoleLS == 'admin')) && (
+                                                                <ButtonLine>
+                                                                    <Stbtn
+                                                                        onClick={() => handleCommentUpdateButtonClick(cmt.cmtId)}
+                                                                    >
+                                                                        수정완료
+                                                                    </Stbtn>
+                                                                </ButtonLine>
+                                                            )}
+                                                        </CommentLine>
+                                                    </Comment>
+                                                ) : (
+                                                    <Comment>
+                                                        <UserIDLine>
+                                                            <StText>
+                                                                {cmt.cmtUserYear}기 {cmt.cmtUserName}
+                                                            </StText>
+                                                        </UserIDLine>
+                                                        <CommentLine>
+                                                            <Stcommentbox>{cmt.cmtContent}</Stcommentbox>
+                                                            <LikeBtn>
+                                                                <HeartCmpCheckbox
+                                                                    handleSubmitCmtLikeButtonClick={(e) => handleSubmitCmtLikeButtonClick(cmt.cmtId, e)}
+                                                                    cmtChecked={cmtChecked[i]}
+                                                                    setCmtChecked={setCmtChecked}
+                                                                />
+                                                                {cmt.cmtLikes}
+                                                            </LikeBtn>
+                                                            {((userId == cmt.cmtUserId) || (userRoleLS == 'admin')) && (
+                                                                <ButtonLine>
+                                                                    <Stbtn onClick={() => setUpdateCommentState(cmt.cmtId)}>수정</Stbtn>
+                                                                    <Stbtn
+                                                                        onClick={() => handleCommentDeleteButtonClick(cmt.cmtId)}
+                                                                    >
+                                                                        삭제
+                                                                    </Stbtn>
+                                                                </ButtonLine>
+                                                            )}
+
+                                                        </CommentLine>
+                                                    </Comment>
+                                                )}
+                                            </CommentBox>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </InputWrap>
-                </DetailBox>
-            </PostSection>
+                        </InputWrap>
+                    </DetailBox>
+                </PostSection>
+            )}
         </Container>
     );
 }

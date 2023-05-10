@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Header from "./Header";
 import styled from "styled-components";
 import Button from "../components/Button";
@@ -44,7 +44,7 @@ function Main() {
         if (skill === 'All') {
             setFilteredData(posts.data);
         } else {
-            const filtered = posts.data.filter((post) => post.postSkill === skill);
+            const filtered = posts?.data?.filter((post) => post.postSkill === skill);
             setFilteredData(filtered);
         }
     };
@@ -106,10 +106,10 @@ function Main() {
                 </SearchWrap>
                 <hr />
                 {searchState ? (
-                    filteredSearchPost.length === 0 ? (
+                    filteredSearchPost?.length === 0 ? (
                         <p>검색어를입력하세요...</p>
                     ) : (
-                        filteredSearchPost.map((post) => {
+                        filteredSearchPost?.map((post) => {
                             return (
                                 <TitleBox key={post.postId} onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
                                     <Skillbox>{post.postSkill}</Skillbox>
