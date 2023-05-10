@@ -9,8 +9,8 @@ import { useMutation } from "react-query";
 import { useSelector, useDispatch } from 'react-redux';
 import { getPosts, getPost, deletePost, updatePost, likePost } from "../api/post";
 import { Link, useNavigate } from "react-router-dom";
-import { addComment, deleteComment, updateComment } from "../api/comment";
-import HeartCheckbox from "../components/HeartCheckBox";
+import { addComment, deleteComment, updateComment, likeCmt } from "../api/comment";
+import {HeartCheckbox, HeartCmpCheckbox} from "../components/HeartCheckBox";
 
 // const
 
@@ -32,6 +32,7 @@ function Detail() {
     const [update, setUpdate] = useState(false);
     const [updateCommentState, setUpdateCommentState] = useState(null);
     const [checked, setChecked] = useState(false);
+    const [cmtChecked, setCmtChecked] = useState(false);
     const userId = useSelector((state) => state.auth.userId)
     const { isLoading, isError, data } = useQuery(["post", params.id], () => getPost(params.id), {
         refetchOnWindowFocus: false,
@@ -49,6 +50,8 @@ function Detail() {
             // console.log(data.chkpostLikes)
             if (data.commentList) {
                 setComment(data.commentList)
+                setCmtChecked(data.commentList.chkCommentLikes)
+                console.log(data.commentList)
             }
         }
     }, [data]);
@@ -94,6 +97,13 @@ function Detail() {
     });
 
     const likePostMutation = useMutation(likePost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(["post", params.id]);
+            console.log("성공");
+        },
+    });
+
+    const likeCmtMutation = useMutation(likeCmt, {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
             console.log("성공");
@@ -170,6 +180,15 @@ function Detail() {
         likePostMutation.mutate(postId);
     };
 
+    const handleSubmitCmtLikeButtonClick = (cmtid, e) => {
+        // event.preventDefault();
+        const cmtId = cmtid;
+
+        setChecked(e);
+        likeCmtMutation.mutate(cmtId);
+    };
+    console.log(comment.cmtId)
+
     const userid = post?.postUserId
 
     const useridmask = userid ? userid.charAt(0) + "*".repeat(userid.length - 1) : ""
@@ -177,7 +196,7 @@ function Detail() {
     for (let i = 0; i < comment.length; i++) {
         const cmtUserName = comment[i].cmtUserName;
         comment[i].cmtUserName = cmtUserName.charAt(0) + "*".repeat(cmtUserName.length - 1);
-        }
+    }
 
     return (
         <Container>
@@ -197,8 +216,8 @@ function Detail() {
                                         handleSubmitLikeButtonClick={handleSubmitLikeButtonClick}
                                         checked={checked}
                                         setChecked={setChecked}
-                                        />
-                                        {post.postLikes}
+                                    />
+                                    {post.postLikes}
                                 </LikeBtn>
                             </span>
                         </StView>
@@ -215,16 +234,16 @@ function Detail() {
                             )
                         )}
                     </BtnWrap>
-                        {update ? (
-                            <Stinput>
-                                <Input
-                                    value={postTitle}
-                                    onChange={(e) => setPostTitle(e.target.value)}
-                                />
-                            </Stinput>
-                        ) : (
-                            <Sttitle>{post?.postTitle !== undefined ? post.postTitle : null}</Sttitle>
-                        )}
+                    {update ? (
+                        <Stinput>
+                            <Input
+                                value={postTitle}
+                                onChange={(e) => setPostTitle(e.target.value)}
+                            />
+                        </Stinput>
+                    ) : (
+                        <Sttitle>{post?.postTitle !== undefined ? post.postTitle : null}</Sttitle>
+                    )}
                     <InputWrap>
                         <div>
                             <ContentsWrap>
@@ -268,15 +287,15 @@ function Detail() {
                                                                 onChange={(e) => setOldCmtContent(e.target.value)}
                                                             />
                                                         </Stcommentbox>
-                                                    {userId == cmt.cmtUserId && (
-                                                        <ButtonLine>
-                                                            <Stbtn
-                                                                onClick={() => handleCommentUpdateButtonClick(cmt.cmtId)}
-                                                            >
-                                                                수정완료
-                                                            </Stbtn>
-                                                        </ButtonLine>
-                                                    )}
+                                                        {userId == cmt.cmtUserId && (
+                                                            <ButtonLine>
+                                                                <Stbtn
+                                                                    onClick={() => handleCommentUpdateButtonClick(cmt.cmtId)}
+                                                                >
+                                                                    수정완료
+                                                                </Stbtn>
+                                                            </ButtonLine>
+                                                        )}
                                                     </CommentLine>
                                                 </Comment>
                                             ) : (
@@ -288,16 +307,24 @@ function Detail() {
                                                     </UserIDLine>
                                                     <CommentLine>
                                                         <Stcommentbox>{cmt.cmtContent}</Stcommentbox>
-                                                    {userId == cmt.cmtUserId && (
-                                                        <ButtonLine>
-                                                            <Stbtn onClick={() => setUpdateCommentState(cmt.cmtId)}>수정</Stbtn>
-                                                            <Stbtn
-                                                                onClick={() => handleCommentDeleteButtonClick(cmt.cmtId)}
-                                                            >
-                                                                삭제
-                                                            </Stbtn>
-                                                        </ButtonLine>
-                                                    )}
+                                                        {userId == cmt.cmtUserId && (
+                                                            <ButtonLine>
+                                                                <Stbtn onClick={() => setUpdateCommentState(cmt.cmtId)}>수정</Stbtn>
+                                                                <Stbtn
+                                                                    onClick={() => handleCommentDeleteButtonClick(cmt.cmtId)}
+                                                                >
+                                                                    삭제
+                                                                </Stbtn>
+                                                            </ButtonLine>
+                                                        )}
+                                                        <LikeBtn>
+                                                            <HeartCmpCheckbox
+                                                                handleSubmitCmtLikeButtonClick={(e)=>handleSubmitCmtLikeButtonClick(cmt.cmtId, e)}
+                                                                cmtChecked={cmtChecked}
+                                                                setCmtChecked={setCmtChecked}
+                                                            />
+                                                            {cmt.cmtLikes}
+                                                        </LikeBtn>
                                                     </CommentLine>
                                                 </Comment>
                                             )}

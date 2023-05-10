@@ -65,4 +65,25 @@ const addComment = async ({postId, newComment}) => {
     }
   };
 
-  export {addComment, deleteComment, updateComment}
+  const likeCmt = async (commentId) => {
+    const token = getToken();
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/comment/like/${commentId}`,
+        {},
+        {
+          headers: {
+            ACCESS_KEY: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      console.log('인증에 성공했습니다:', response.data);
+    } catch (error) {
+      alert(JSON.stringify(error));
+      console.log(token);
+      console.error('인증에 실패했습니다:', error);
+    }
+  };
+  
+  export {addComment, deleteComment, updateComment, likeCmt}
