@@ -37,7 +37,7 @@ export const HeartCmpCheckbox = ({cmtChecked, setCmtChecked, handleSubmitCmtLike
       <FormControlLabel
         control={
           <Checkbox
-          cmtChecked={cmtChecked}
+          checked={cmtChecked}
             onChange={(e)=>handleSubmitCmtLikeButtonClick(e.target.checked)}
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}

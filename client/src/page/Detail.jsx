@@ -48,14 +48,14 @@ function Detail() {
             setPostUserId(data.postUserId)
             setChecked(data.chkpostLikes)
             // console.log(data.chkpostLikes)
-            if (data.commentList) {
+            if (data.commentList) { 
                 setComment(data.commentList)
-                setCmtChecked(data.commentList.chkCommentLikes)
-                console.log(data.commentList)
+                setCmtChecked(data.commentList.map((comment) => comment.chkCommentLikes));
+                
             }
         }
     }, [data]);
-
+    console.log([cmtChecked])
     if (comment.length > 0) {
         // console.log(comment);
     }
@@ -271,7 +271,7 @@ function Detail() {
 
                             <div>
                                 <div>
-                                    {comment?.map((cmt) => (
+                                    {comment?.map((cmt, i) => (
                                         <CommentBox key={cmt.cmtId}>
                                             {updateCommentState === cmt.cmtId ? (
                                                 <Comment>
@@ -317,10 +317,11 @@ function Detail() {
                                                                 </Stbtn>
                                                             </ButtonLine>
                                                         )}
+                                                        
                                                         <LikeBtn>
                                                             <HeartCmpCheckbox
                                                                 handleSubmitCmtLikeButtonClick={(e)=>handleSubmitCmtLikeButtonClick(cmt.cmtId, e)}
-                                                                cmtChecked={cmtChecked}
+                                                                cmtChecked={cmtChecked[i]}
                                                                 setCmtChecked={setCmtChecked}
                                                             />
                                                             {cmt.cmtLikes}
