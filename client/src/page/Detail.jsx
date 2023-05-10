@@ -11,6 +11,7 @@ import { getPosts, getPost, deletePost, updatePost, likePost } from "../api/post
 import { Link, useNavigate } from "react-router-dom";
 import { addComment, deleteComment, updateComment, likeCmt } from "../api/comment";
 import { HeartCheckbox, HeartCmpCheckbox } from "../components/HeartCheckBox";
+import CommentSection from "./CommentSection";
 
 // const
 
@@ -155,7 +156,7 @@ function Detail() {
 
     // 덧글 추가
     const handleCommentSubmitButtonClick = (event) => {
-        if(cmtContent === ""){
+        if (cmtContent === "") {
             alert("댓글을 작성해주세요")
             return
         }
@@ -199,7 +200,7 @@ function Detail() {
         setCmtChecked(e);
         likeCmtMutation.mutate(cmtId);
     };
-    console.log(comment.cmtId)
+    console.log(comment)
 
     const userid = post?.postUserId
 
@@ -285,70 +286,20 @@ function Detail() {
                                     />
                                     <Button onClick={handleCommentSubmitButtonClick}>입력</Button>
                                 </CommentWrap>
-
                                 <div>
-                                    <div>
-                                        {comment?.map((cmt, i) => (
-                                            <CommentBox key={cmt.cmtId}>
-                                                {updateCommentState === cmt.cmtId ? (
-                                                    <Comment>
-                                                        <UserIDLine>
-                                                            <StText>
-                                                                {cmt.userYear}기 {cmt.cmtUserName}
-                                                            </StText>
-                                                        </UserIDLine>
-                                                        <CommentLine>
-                                                            <Stcommentbox>
-                                                                <Input
-                                                                    defaultValue={cmt.cmtContent}
-                                                                    onChange={(e) => setOldCmtContent(e.target.value)}
-                                                                />
-                                                            </Stcommentbox>
-                                                            {((userId == cmt.cmtUserId) || (userRoleLSState == 'ADMIN')) && (
-                                                                <ButtonLine>
-                                                                    <Stbtn
-                                                                        onClick={() => handleCommentUpdateButtonClick(cmt.cmtId)}
-                                                                    >
-                                                                        수정완료
-                                                                    </Stbtn>
-                                                                </ButtonLine>
-                                                            )}
-                                                        </CommentLine>
-                                                    </Comment>
-                                                ) : (
-                                                    <Comment>
-                                                        <UserIDLine>
-                                                            <StText>
-                                                                {cmt.cmtUserYear}기 {cmt.cmtUserName}
-                                                            </StText>
-                                                        </UserIDLine>
-                                                        <CommentLine>
-                                                            <Stcommentbox>{cmt.cmtContent}</Stcommentbox>
-                                                            <LikeBtn>
-                                                                <HeartCmpCheckbox
-                                                                    handleSubmitCmtLikeButtonClick={(e) => handleSubmitCmtLikeButtonClick(cmt.cmtId, e)}
-                                                                    cmtChecked={cmtChecked[i]}
-                                                                    setCmtChecked={setCmtChecked}
-                                                                />
-                                                                {cmt.cmtLikes}
-                                                            </LikeBtn>
-                                                            {((userId == cmt.cmtUserId) || (userRoleLSState == 'ADMIN')) && (
-                                                                <ButtonLine>
-                                                                    <Stbtn onClick={() => setUpdateCommentState(cmt.cmtId)}>수정</Stbtn>
-                                                                    <Stbtn
-                                                                        onClick={() => handleCommentDeleteButtonClick(cmt.cmtId)}
-                                                                    >
-                                                                        삭제
-                                                                    </Stbtn>
-                                                                </ButtonLine>
-                                                            )}
-
-                                                        </CommentLine>
-                                                    </Comment>
-                                                )}
-                                            </CommentBox>
-                                        ))}
-                                    </div>
+                                    <CommentSection
+                                        comment={comment}
+                                        userId={userId}
+                                        userRoleLSState={userRoleLSState}
+                                        updateCommentState={updateCommentState}
+                                        setUpdateCommentState={setUpdateCommentState}
+                                        handleCommentUpdateButtonClick={handleCommentUpdateButtonClick}
+                                        handleCommentDeleteButtonClick={handleCommentDeleteButtonClick}
+                                        handleSubmitCmtLikeButtonClick={handleSubmitCmtLikeButtonClick}
+                                        cmtChecked={cmtChecked}
+                                        setCmtChecked={setCmtChecked}
+                                        setOldCmtContent={setOldCmtContent}
+                                    />
                                 </div>
                             </div>
                         </InputWrap>
@@ -436,20 +387,20 @@ const CommentWrap = styled.div`
   gap: 10px;
 `;
 
-const Comment = styled.div`
+export const Comment = styled.div`
     display: flex;
     align-items: center;
     width: 750px;
 `
 
-const CommentLine = styled.span`
+export const CommentLine = styled.span`
   height: 40px;
   display: flex;
   align-items: center;
   width: 600px;
   border-bottom: 1px solid lightgray;
 `;
-const ButtonLine = styled.span`
+export const ButtonLine = styled.span`
   gap: 20px;
   height: 40px;
   display: flex;
@@ -457,13 +408,13 @@ const ButtonLine = styled.span`
   justify-content: center;
     width: 100px;
 `;
-const UserIDLine = styled.span`
+export const UserIDLine = styled.span`
   height: 40px;
   display: flex;
   align-items: center;
   width: 120px;
 `;
-const CommentBox = styled.div`
+export const CommentBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
@@ -479,7 +430,7 @@ const TextWrap = styled.div`
   font-weight: 900;
 `;
 
-const StText = styled.p`
+export const StText = styled.p`
   font-weight: 600;
 `;
 const Sttitle = styled.h1`
@@ -506,7 +457,7 @@ transform: translateX(-30px);
   font-weight: 700;
   font-size: 22px;
 `;
-const LikeBtn = styled.button`
+export const LikeBtn = styled.button`
   all: unset;
   font-size: 20px;
   width: 100px;
@@ -522,7 +473,7 @@ const CmtLikeBtn = styled.button`
   font-weight: 600;
 `;
 
-const Stbtn = styled.button`
+export const Stbtn = styled.button`
   all: unset;
 
   font-weight: 700;
@@ -536,7 +487,7 @@ const Stbtn = styled.button`
   }
 `;
 
-const Stcommentbox = styled.div`
+export const Stcommentbox = styled.div`
   width: 500px;
   font-weight: 700;
 `;
