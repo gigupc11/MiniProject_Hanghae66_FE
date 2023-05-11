@@ -14,7 +14,7 @@ function Header() {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
     const userId = useSelector((state) => state.auth.userId)
-    // console.log(isAuthenticated)
+
 
     return (
         <>
@@ -24,7 +24,7 @@ function Header() {
                 }} />)}
             </div>
             <HeaderBar>
-                <Logo class="logo" src={logo} onClick={() => {
+                <Logo src={logo} onClick={() => {
                     navigate("/")
                 }} />
                 {isAuthenticated ?
@@ -34,7 +34,7 @@ function Header() {
                         }}>{userId} {"님"}</IdBtn>
 
 
-                        <BtnBox class="btn-box">
+                        <BtnBox>
                             <Button onClick={() => {
                                 setModal(true)
                             }}>글쓰기</Button>

@@ -7,9 +7,9 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 export const HeartCheckbox = ({checked, setChecked, handleSubmitLikeButtonClick}) => {
 
   
-    // const handleChange = (event) => {
-    //   setChecked(event.target.checked);
-    // };
+
+
+
   
     return (
       <FormControlLabel
@@ -22,16 +22,16 @@ export const HeartCheckbox = ({checked, setChecked, handleSubmitLikeButtonClick}
             name="heartCheckbox"
           />
         }
-        // label="Heart Checkbox"
+
       />
     );
   };
 export const HeartCmpCheckbox = ({cmtChecked, setCmtChecked, handleSubmitCmtLikeButtonClick}) => {
 
   
-    // const handleChange = (event) => {
-    //   setChecked(event.target.checked);
-    // };
+
+
+
   
     return (
       <FormControlLabel
@@ -44,7 +44,7 @@ export const HeartCmpCheckbox = ({cmtChecked, setCmtChecked, handleSubmitCmtLike
             name="heartCheckbox"
           />
         }
-        // label="Heart Checkbox"
+
       />
     );
   };

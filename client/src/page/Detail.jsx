@@ -40,8 +40,8 @@ function Detail() {
     const { isLoading, isError, data } = useQuery(["post", params.id], () => getPost(params.id), {
         refetchOnWindowFocus: false,
     });
-    // const { isLoading, isError, data } = useQuery("post", getPost);
-    console.log(data)
+
+
     useEffect(() => {
         if (data) {
             setPost(data);
@@ -50,7 +50,7 @@ function Detail() {
             setPostContents(data.postContent)
             setPostUserId(data.postUserId)
             setChecked(data.chkpostLikes)
-            // console.log(data.chkpostLikes)
+
             if (data.commentList) {
                 setComment(data.commentList)
                 setCmtChecked(data.commentList.map((comment) => comment.chkCommentLikes));
@@ -66,7 +66,7 @@ function Detail() {
     })
     console.log([cmtChecked])
     if (comment.length > 0) {
-        // console.log(comment);
+
     }
 
     const deleteMutation = useMutation(deletePost, {
@@ -81,7 +81,7 @@ function Detail() {
             queryClient.invalidateQueries(["post", params.id]);
             console.log("성공");
             setUpdate(false)
-            // navigate(-1);
+
         },
     });
 
@@ -128,14 +128,14 @@ function Detail() {
         return <h1>오류가 발생하였습니다</h1>;
     }
 
-    // const filteredData = data.filter(
-    //     (item) => item.postId === parseInt(params.id)
-    // );
 
-    // const oldTitle = filteredData[0]?.postTitle;
-    // const oldContents = filteredData[0]?.postContents;
-    // const comments = filteredData[0]?.comments;
-    // console.log(comments);
+
+
+
+
+
+
+
     // 게시글 삭제
     const handleDeleteButtonClick = (event) => {
         event.preventDefault();
@@ -181,20 +181,20 @@ function Detail() {
         const updatedComment = {
             cmtContent: oldCmtContent,
         };
-        // console.log(commentId)
+
         setUpdateCommentState(null);
         updateCommentMutation.mutate({ commentId, updatedComment });
     };
 
     const handleSubmitLikeButtonClick = (e) => {
-        // event.preventDefault();
+
         const postId = post?.postId;
         setChecked(e);
         likePostMutation.mutate(postId);
     };
 
     const handleSubmitCmtLikeButtonClick = (cmtid, e) => {
-        // event.preventDefault();
+
         const cmtId = cmtid;
 
         setCmtChecked(e);
@@ -271,7 +271,7 @@ function Detail() {
                                             onChange={(e) => setPostContents(e.target.value)}
                                         />
                                     ) : (
-                                        <h4 class="contents">{post?.postContent !== undefined ? post.postContent : null}</h4>
+                                        <h4>{post?.postContent !== undefined ? post.postContent : null}</h4>
                                     )}
                                 </ContentsWrap>
 
@@ -337,8 +337,8 @@ const DetailBox2 = styled.div`
   height: 50px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 7px;
   overflow: hidden; /* 필요한 경우 오버플로우 숨김 */
-  /* display: flex; */
-  /* position: absolute; */
+
+
   flex-direction: column;
   z-index: 12;
 `;
@@ -467,7 +467,7 @@ font-weight: 600;
 const CmtLikeBtn = styled.button`
   all: unset;
   font-size: 20px;
-  /* background-color: blue; */
+
   transform: translateX(-20px);
   width: 100px;
   font-weight: 600;

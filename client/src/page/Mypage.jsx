@@ -19,7 +19,7 @@ function Mypage() {
             setUserdata(data)
         }
     },[data])
-//   console.log(data);
+
   if (isLoading) {
     return <h1>로딩중</h1>;
   }
@@ -134,7 +134,7 @@ const Infosection = styled.div`
 
 const Linesection = styled.div`
   width: 800px;
-  /* background-color: red; */
+
   margin-top: 25px;
   font-size: 20px;
   font-weight: 600;
@@ -178,7 +178,7 @@ const TitleBox = styled.div`
 `;
 
 const Viewbox = styled.span`
-  /* margin-left: 90px; */
+
 `;
 
 const Commentbox = styled.span`

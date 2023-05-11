@@ -24,13 +24,13 @@ function Main() {
     const [clickedContent, setClickedContent] = useState(false);
     const [clickedReset, setClickedReset] = useState(false);
 
-    // const { isLoading, isError, data, error } = useQuery("posts", getPosts);
+
     const queryClient = useQueryClient();
 
-    console.log(search, category)
+
     const [posts, searchPost] = useQueries([
         { queryKey: "posts", queryFn: getPosts },
-        // { queryKey: ["searchPost", search, category, searchClicked], queryFn: searchPosts, enabled: searchClicked }
+
     ])
 
     useEffect(() => {
@@ -39,9 +39,9 @@ function Main() {
         }
     }, [posts.data]);
 
-    useEffect(() => {
-        console.log(filteredSearchPost);
-    }, [filteredSearchPost]);
+
+
+    
 
 
 
@@ -100,14 +100,14 @@ function Main() {
         }
     }
 
-    // if (isLoading || isLoading2) {
-    //     return <h1>로딩중</h1>;
-    // }
 
-    // if (isError || isError2) {
-    //     console.error(error);
-    //     return <h1>오류가 발생하였습니다</h1>;
-    // }
+
+
+
+
+
+
+
 
     const handleDetailPageLinkClick = (id) => {
         navigate(`/detail/${id}`);
@@ -139,7 +139,7 @@ function Main() {
                     ) : (
                         filteredSearchPost?.map((post) => {
                             return (
-                                <TitleBox key={post.postId} onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
+                                <TitleBox key={post.postId} onClick={() => handleDetailPageLinkClick(post.postId)}>
                                     <Skillbox>{post.postSkill == "NODE" ? `${post.postSkill}.JS` :post.postSkill }</Skillbox>
                                     <Stunderbar>
                                         <Commentbox>{post.postTitle}</Commentbox>
@@ -168,10 +168,10 @@ function Main() {
                                 <Button onClick={() => filterPosts('NODE')}>Node.js</Button>
                             </div>
                         </Buttonbox>
-                        <div class="posts-box" >
+                        <div >
                             {filteredData?.map((post) => {
                                 return (
-                                    <TitleBox key={post.postId} onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
+                                    <TitleBox key={post.postId} onClick={() => handleDetailPageLinkClick(post.postId)}>
                                         <Skillbox>{post.postSkill == "NODE" ? `${post.postSkill}.JS` :post.postSkill }</Skillbox>
                                         <Stunderbar>
                                             <Commentbox>{post.postTitle}</Commentbox>

@@ -34,8 +34,8 @@ const SelectboxA = ({setUserYear}) => {
       paddingleft: "10px"
     }),
     option:(styles, { data, isDisabled, isFocused, isSelected }) => {
-        // const color = chroma(data.color);
-        // console.log({ data, isDisabled, isFocused, isSelected });
+
+
         return {
           ...styles,
           backgroundColor: isFocused ? "red" : "null",
@@ -59,8 +59,8 @@ const SelectboxA = ({setUserYear}) => {
         })}
         placeholder="기수를 선택해주세요."
         // onChange={(value) => {
-        //   onChange(value.value);
-        // }}
+
+
         onChange={(selectedOption) => {
           setChoice(Number(selectedOption.value));
           setUserYear(Number(selectedOption.value));
@@ -91,8 +91,8 @@ const SelectboxB = ({setUserSkill}) => {
         height: "46px"
       }),
       option:(styles, { data, isDisabled, isFocused, isSelected }) => {
-          // const color = chroma(data.color);
-          // console.log({ data, isDisabled, isFocused, isSelected });
+
+
           return {
             ...styles,
             backgroundColor: isFocused ? "red" : "null",
@@ -115,9 +115,9 @@ const SelectboxB = ({setUserSkill}) => {
             return op.value === choice;
           })}
           placeholder="주특기를 선택해주세요."
-          // onChange={(value) => {
-          //   onChange(value.value);
-          // }}
+
+
+
           onChange={(selectedOption) => {
             setChoice(selectedOption.value);
             setUserSkill(selectedOption.value);
@@ -148,7 +148,7 @@ const SelectboxB = ({setUserSkill}) => {
         width:"270px"
       }),
       option:(styles, { data, isDisabled, isFocused, isSelected }) => {
-          // const color = chroma(data.color);
+
           console.log({ data, isDisabled, isFocused, isSelected });
           return {
             ...styles,
