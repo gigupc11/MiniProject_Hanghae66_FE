@@ -172,7 +172,7 @@ function Main() {
                             {filteredData?.map((post) => {
                                 return (
                                     <TitleBox key={post.postId} onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
-                                        <Skillbox>{post.postSkill}</Skillbox>
+                                        <Skillbox>{post.postSkill}.JS</Skillbox>
                                         <Stunderbar>
                                             <Commentbox>{post.postTitle}</Commentbox>
                                             <Viewbox>{post.postVisitCnt} View</Viewbox>
