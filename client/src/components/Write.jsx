@@ -80,9 +80,11 @@ function Write({ Open }) {
                 <Input
                   value={contents}
                   onChange={handleContentsChange}
+                  placeholder="내용을 입력해주세요"
                   size="custom"
                   width="100%"
                   height="340px"
+                  padding="0px 0px 290px 10px"
                 />
               </div>
             </ContentsWrap>
