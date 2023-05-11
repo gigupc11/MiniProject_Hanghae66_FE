@@ -19,10 +19,10 @@ const addComment = async ({postId, newComment}) => {
         }
       );
   
-      console.log('인증에 성공했습니다:', response.data);
+      // console.log('인증에 성공했습니다:', response.data);
     } catch (error) {
       alert(JSON.stringify(error.response.data));
-      console.log(token);
+      // console.log(token);
       console.error('인증에 실패했습니다:', error);
     }
   };
@@ -41,10 +41,10 @@ const addComment = async ({postId, newComment}) => {
         }
       );
   
-      console.log('인증에 성공했습니다:', response.data);
+      // console.log('인증에 성공했습니다:', response.data);
     } catch (error) {
       alert(JSON.stringify(error.response.data));
-      console.log(token);
+      // console.log(token);
       console.error('인증에 실패했습니다:', error.response.data);
     }
   };
@@ -64,10 +64,10 @@ const addComment = async ({postId, newComment}) => {
         }
       );
   
-      console.log('인증에 성공했습니다:', response.data);
+      // console.log('인증에 성공했습니다:', response.data);
     } catch (error) {
       alert(JSON.stringify(error.response.data));
-      console.log(token);
+      // console.log(token);
       console.error('인증에 실패했습니다:', error.response.data);
     }
   };
@@ -87,10 +87,10 @@ const addComment = async ({postId, newComment}) => {
         }
       );
   
-      console.log('인증에 성공했습니다:', response.data);
+      // console.log('인증에 성공했습니다:', response.data);
     } catch (error) {
       alert(JSON.stringify(error));
-      console.log(token);
+      // console.log(token);
       console.error('인증에 실패했습니다:', error);
     }
   };

@@ -13,7 +13,7 @@ import { addComment, deleteComment, updateComment, likeCmt } from "../api/commen
 import { HeartCheckbox, HeartCmpCheckbox } from "../components/HeartCheckBox";
 import CommentSection from "./CommentSection";
 
-// const
+
 
 function Detail() {
     // 이전 컴포넌트에서 넘어온 parameter를 조회
@@ -62,9 +62,9 @@ function Detail() {
     useEffect(() => {
         const userRoleLS = localStorage.getItem('userRoleLS')
         setUserRoleLSState(userRoleLS)
-        console.log(userRoleLS)
+
     })
-    console.log([cmtChecked])
+
     if (comment.length > 0) {
 
     }
@@ -72,14 +72,14 @@ function Detail() {
     const deleteMutation = useMutation(deletePost, {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
-            console.log("성공");
+            // console.log("성공");
             navigate(-1);
         },
     });
     const updateMutation = useMutation(updatePost, {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
-            console.log("성공");
+            // console.log("성공");
             setUpdate(false)
 
         },
@@ -88,34 +88,34 @@ function Detail() {
     const addCommentMutation = useMutation(addComment, {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
-            console.log("성공");
+            // console.log("성공");
         },
     });
     const deleteCommentMutation = useMutation(deleteComment, {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
-            console.log("성공");
+            // console.log("성공");
         },
     });
 
     const updateCommentMutation = useMutation(updateComment, {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
-            console.log("성공");
+            // console.log("성공");
         },
     });
 
     const likePostMutation = useMutation(likePost, {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
-            console.log("성공");
+            // console.log("성공");
         },
     });
 
     const likeCmtMutation = useMutation(likeCmt, {
         onSuccess: () => {
             queryClient.invalidateQueries(["post", params.id]);
-            console.log("성공");
+            // console.log("성공");
         },
     });
 
@@ -146,7 +146,7 @@ function Detail() {
     const handleSubmitButtonClick = (event) => {
         event.preventDefault();
         const postId = post?.postId;
-        // console.log(postId)
+
         const updatedPost = {
             postTitle,
             postContent: postContents,
@@ -200,11 +200,11 @@ function Detail() {
         setCmtChecked(e);
         likeCmtMutation.mutate(cmtId);
     };
-    console.log(comment)
 
-    const userid = post?.postUserId
 
-    const useridmask = userid ? userid.charAt(0) + "*".repeat(userid.length - 1) : ""
+    const UserName = post?.postUserName
+
+    const useridmask = UserName ? UserName.charAt(0) + "*".repeat(UserName.length - 1) : ""
 
     for (let i = 0; i < comment.length; i++) {
         const cmtUserName = comment[i].cmtUserName;

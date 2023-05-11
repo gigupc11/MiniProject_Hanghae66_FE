@@ -16,13 +16,13 @@ function Write({ Open }) {
   const [contents, handleContentsChange, resetContents] = useInput("");
   const [userSkill, setUserSkill] = useState("");
 
-  console.log(title, contents, userSkill);
+
   const queryClient = useQueryClient();
 
   const mutation = useMutation(addPosts, {
     onSuccess: () => {
       queryClient.invalidateQueries("posts");
-      console.log("성공");
+    //   console.log("성공");
     },
   });
 
