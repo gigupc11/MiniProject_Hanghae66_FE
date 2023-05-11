@@ -47,10 +47,10 @@ function Main() {
 
     const filterPosts = (skill) => {
         if (skill === 'All') {
-            setFilteredData(posts.data);
+            setFilteredData([...posts.data].sort((a, b) => b.postSkill - a.postSkill));
         } else {
             const filtered = posts?.data?.filter((post) => post.postSkill === skill);
-            setFilteredData(filtered);
+            setFilteredData(filtered.sort((a, b) => b.postSkill - a.postSkill));
         }
     };
 
@@ -172,7 +172,7 @@ function Main() {
                             {filteredData?.map((post) => {
                                 return (
                                     <TitleBox key={post.postId} onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
-                                        <Skillbox>{post.postSkill}.JS</Skillbox>
+                                        <Skillbox>{post.postSkill == "NODE" ? `${post.postSkill}.JS` :post.postSkill }</Skillbox>
                                         <Stunderbar>
                                             <Commentbox>{post.postTitle}</Commentbox>
                                             <Viewbox>{post.postVisitCnt} View</Viewbox>
