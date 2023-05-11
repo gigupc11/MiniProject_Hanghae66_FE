@@ -73,6 +73,7 @@ https://www.notion.so/S-A-afa6ceba07db4022bebde44ccb35807a
     - 댓글에 좋아요 버튼을 눌러 좋아요 표시 가능 <br>
     - 버튼을 한 번 더 누르면 취소 <br>
 
+
 ## 🚩 트러블 슈팅
 문제점
 useQuery 사용시 자동 데이터 리패칭 기능으로 인한 axios 요청 이슈
