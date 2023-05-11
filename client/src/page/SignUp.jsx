@@ -66,17 +66,17 @@ function SignUp() {
     }
   }
 
-  // const duplicateIdCheck = async (id) => {
-  //   const userId = id
-  //   console.log(userId)
-  //   try {
-  //     const response =  await axios.post(`http://localhost:8080/auth/userCheck`, {userId: userId}, {})
-  //     alert(response.data)
-  //   } catch (error) {
-  //     console.error("오류", error)
-  //     alert(error)
-  //   }
-  // }
+
+
+
+
+
+
+
+
+
+
+
   const duplicateIdCheck = async (id) => {
     const userId = id
     console.log(userId)
@@ -138,10 +138,10 @@ function SignUp() {
               onChange={(e) => setUserPassword(e.target.value)}
               size="custom" width="460px" height="46px" fsize="16px" placeholder="비밀번호는 8~15자 이내로 입력해주세요" />
           </div>
-          {/* <div>
-            <Sttext>패스워드 확인</Sttext>
-            <Input size="custom" width="460px" height="46px" fsize="16px" placeholder="비밀번호를 확인해주세요" />
-          </div> */}
+
+
+
+
           <div>
             <Sttext>기수</Sttext>
             <Select.SelectboxA setUserYear={setUserYear} />
@@ -157,7 +157,7 @@ function SignUp() {
                 id="admin"
                 name="userRole"
                 value="admin"
-                // checked={userType === 'admin'}
+
                 onChange={handleCheckChange}
               />
               <label htmlFor="admin">Admin</label>
@@ -174,17 +174,17 @@ function SignUp() {
                 </div>
               )}
             </div>
-            {/* <div>
-        <input
-          type="radio"
-          id="user"
-          name="userRole"
-          value="1" //user
-          // checked={userType === 'user'}
-          onChange={handleChange}
-        />
-        <label htmlFor="user">User</label>
-      </div> */}
+
+
+
+
+
+
+
+
+
+
+
           </StButtonbox>
         </StInputbox>
         <StButtonbox>

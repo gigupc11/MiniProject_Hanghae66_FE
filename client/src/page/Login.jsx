@@ -40,7 +40,7 @@ function Login() {
         alert('로그인에 성공했습니다!');
         resetId("")
         resetPassword("")
-        // dispatch(setIsAuthenticated(true));
+
         dispatch(setUserId(userId));
         navigate(`/`)
         window.location.reload();

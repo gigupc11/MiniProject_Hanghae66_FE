@@ -40,16 +40,16 @@ function Write({ Open }) {
     resetContents();
     Open(false)
   };
-// console.log("스킬",userSkill)
 
-// const openAnimation = useSpring({
-//     from: { opacity: 0 },
-//     to: { opacity: 1 },
-//     config: { duration: 800 },
-//   });
+
+
+
+
+
+
 
   return createPortal(
-    // <animated.div style={openAnimation}>
+
     <Container>
       <Modalbox>
         <DetailBox2>
@@ -98,7 +98,7 @@ function Write({ Open }) {
         </InputWrap>
       </Modalbox>
     </Container>
-    // </animated.div>
+
     ,
     document.getElementById("modal")
   );
