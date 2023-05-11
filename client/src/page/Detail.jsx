@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import styled from "styled-components";
@@ -12,7 +13,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { addComment, deleteComment, updateComment, likeCmt } from "../api/comment";
 import { HeartCheckbox, HeartCmpCheckbox } from "../components/HeartCheckBox";
 import CommentSection from "./CommentSection";
-
 
 
 function Detail() {
@@ -37,10 +37,13 @@ function Detail() {
     const userId = useSelector((state) => state.auth.userId)
     const [userRoleLSState, setUserRoleLSState] = useState();
 
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
     const { isLoading, isError, data } = useQuery(["post", params.id], () => getPost(params.id), {
         refetchOnWindowFocus: false,
+        // enabled: isAuthenticated === true,
     });
-
+    console.log(isAuthenticated)
 
     useEffect(() => {
         if (data) {
@@ -59,6 +62,13 @@ function Detail() {
         }
     }, [data]);
 
+    useEffect(() => {
+        if (!isAuthenticated) {
+            alert('로그인이 필요합니다');
+            navigate(-1);
+        }
+    }, [isAuthenticated]);
+    
     useEffect(() => {
         const userRoleLS = localStorage.getItem('userRoleLS')
         setUserRoleLSState(userRoleLS)
@@ -119,7 +129,6 @@ function Detail() {
         },
     });
 
-
     if (isLoading) {
         return <h1>로딩중</h1>;
     }
@@ -127,11 +136,6 @@ function Detail() {
     if (isError) {
         return <h1>오류가 발생하였습니다</h1>;
     }
-
-
-
-
-
 
 
 
@@ -215,7 +219,7 @@ function Detail() {
         <Container>
             <Header />
             {isLoading ? (
-                <h1>로딩중</h1>
+                <h1>로딩중입니다.</h1>
             ) : isError ? (
                 <h1>오류가 발생하였습니다</h1>
             ) : (
