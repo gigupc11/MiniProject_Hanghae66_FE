@@ -29,7 +29,7 @@ function Login() {
         const rowToken = response.headers['access_key'];
         const rowToken2 = response.headers['refresh_key'];
         const userRole = response.headers['user_role'];
-        console.log(rowToken)
+        // console.log(rowToken)
         const token = rowToken.split(" ")[1]
         const token2 = rowToken2.split(" ")[1]
         Cookies.set('token', token, { expires: 1 / 24 });
@@ -51,7 +51,7 @@ function Login() {
     } catch (error) {
       console.error('로그인 오류:', error);
       alert(JSON.stringify(error));
-      console.log(userId, userPassword)
+      // console.log(userId, userPassword)
     }
   }
 

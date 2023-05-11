@@ -149,7 +149,7 @@ const SelectboxB = ({setUserSkill}) => {
       }),
       option:(styles, { data, isDisabled, isFocused, isSelected }) => {
 
-          console.log({ data, isDisabled, isFocused, isSelected });
+
           return {
             ...styles,
             backgroundColor: isFocused ? "red" : "null",

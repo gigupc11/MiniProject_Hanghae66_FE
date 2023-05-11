@@ -43,10 +43,10 @@ const addPosts = async (newPost) => {
       }
     );
 
-    console.log('인증에 성공했습니다:', response.data);
+    // console.log('인증에 성공했습니다:', response.data);
   } catch (error) {
     alert(JSON.stringify(error.response.data));
-    console.log(token);
+    // console.log(token);
     console.error('인증에 실패했습니다:', error.response.data);
   }
 };
@@ -65,10 +65,10 @@ const deletePost = async (postId) => {
       }
     );
 
-    console.log('인증에 성공했습니다:', response.data);
+    // console.log('인증에 성공했습니다:', response.data);
   } catch (error) {
     alert(JSON.stringify(error.response.data));
-    console.log(token);
+    // console.log(token);
     console.error('인증에 실패했습니다:', error.response.data);
   }
 };
@@ -89,10 +89,10 @@ const updatePost = async ({ postId, updatedPost }) => {
       }
     );
 
-    console.log('인증에 성공했습니다:', response.data);
+    // console.log('인증에 성공했습니다:', response.data);
   } catch (error) {
     alert(JSON.stringify(error.message));
-    console.log("test2", token);
+    // console.log("test2", token);
     console.error('인증에 실패했습니다:', error.message);
   }
 };
@@ -112,10 +112,10 @@ const likePost = async (postId) => {
       }
     );
 
-    console.log('인증에 성공했습니다:', response.data);
+    // console.log('인증에 성공했습니다:', response.data);
   } catch (error) {
     alert(JSON.stringify(error));
-    console.log(token);
+    // console.log(token);
     console.error('인증에 실패했습니다:', error);
   }
 };

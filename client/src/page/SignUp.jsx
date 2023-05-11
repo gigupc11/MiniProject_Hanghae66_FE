@@ -19,8 +19,8 @@ function SignUp() {
   const [token, setToken] = useState(' ');
   const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
 
-  console.log(userId, userName, userPassword, userYear, userSkill, userRole, token)
-  console.log(userRole)
+  // console.log(userId, userName, userPassword, userYear, userSkill, userRole, token)
+  // console.log(userRole)
   // const handleChange = (event) => {
   //   setUserRole(event.target.value);
   // };
@@ -49,12 +49,12 @@ function SignUp() {
 
 
       const responseCode = response.data.code;
-      console.log(responseCode)
+      // console.log(responseCode)
 
       if (responseCode !== 'BAD_REQUEST') {
         alert('회원가입에 성공했습니다!');
         navigate('/login')
-        console.log(userId, userName, userPassword, userYear, userSkill, userRole, token);
+        // console.log(userId, userName, userPassword, userYear, userSkill, userRole, token);
       } else {
         alert(response.data.msg);
         console.error('회원가입 오류:', response);
@@ -62,7 +62,7 @@ function SignUp() {
     } catch (error) {
       console.error('회원가입 오류:', error.message);
       alert(JSON.stringify(error.message));
-      console.log(userId, userName, userPassword, userYear, userSkill, userRole);
+      // console.log(userId, userName, userPassword, userYear, userSkill, userRole);
     }
   }
 

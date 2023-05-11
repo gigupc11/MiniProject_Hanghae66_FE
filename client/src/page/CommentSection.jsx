@@ -27,7 +27,7 @@ const CommentSection= ({
     setOldCmtContent,
   }) => {
 
-    console.log(comment)
+
     return (
         <div>
         {comment?.map((cmt, i) => (
@@ -36,7 +36,7 @@ const CommentSection= ({
                     <Comment>
                         <UserIDLine>
                             <StText>
-                                {cmt.userYear}기 {cmt.cmtUserName}
+                                {cmt.cmtUserYear}기 {cmt.cmtUserName}
                             </StText>
                         </UserIDLine>
                         <CommentLine>
