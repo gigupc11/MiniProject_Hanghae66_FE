@@ -140,7 +140,7 @@ function Main() {
                         filteredSearchPost?.map((post) => {
                             return (
                                 <TitleBox key={post.postId} onClick={() => handleDetailPageLinkClick(post.postId)} class="title-box">
-                                    <Skillbox>{post.postSkill}</Skillbox>
+                                    <Skillbox>{post.postSkill == "NODE" ? `${post.postSkill}.JS` :post.postSkill }</Skillbox>
                                     <Stunderbar>
                                         <Commentbox>{post.postTitle}</Commentbox>
                                         <Viewbox>{post.postVisitCnt} View</Viewbox>
