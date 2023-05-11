@@ -47,10 +47,10 @@ function Main() {
 
     const filterPosts = (skill) => {
         if (skill === 'All') {
-            setFilteredData([...posts.data].sort((a, b) => b.postSkill - a.postSkill));
+            setFilteredData([...posts.data].sort((a, b) => b.postId - a.postId));
         } else {
             const filtered = posts?.data?.filter((post) => post.postSkill === skill);
-            setFilteredData(filtered.sort((a, b) => b.postSkill - a.postSkill));
+            setFilteredData(filtered.sort((a, b) => b.postId - a.postId));
         }
     };
 
