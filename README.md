@@ -88,4 +88,4 @@ const queryClient = new QueryClient(
   }}
 );
 ```
-전역으로 defaultOption을 변경하여 창이 포커스되었을때 리패치하는 기능을 꺼서 
+전역으로 defaultOption을 변경하여 창이 포커스되었을때 리패치하는 기능을 꺼서 해결
